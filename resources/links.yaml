@@ -22,22 +22,6 @@ links:
     pointer: "Ch. 3 'Linear transformations and matrices', 4 'Matrix multiplication as composition', 5 '3D linear transformations', 6 'The determinant', 13 'Change of basis', 14 'Eigenvectors and eigenvalues'"
     required: true
     verified_on: 2026-10-02
-  - id: rep103
-    title: "ROS REP-103: Standard Units of Measure and Coordinate Conventions"
-    url: https://www.ros.org/reps/rep-0103.html
-    type: docs
-    modules: [m0, m1]
-    pointer: "Sections 'Units', 'Coordinate Frame Conventions' (Chirality, Axis Orientation, Rotation Representation)"
-    required: true
-    verified_on: 2026-10-02
-  - id: rep105
-    title: "ROS REP-105: Coordinate Frames for Mobile Platforms"
-    url: https://www.ros.org/reps/rep-0105.html
-    type: docs
-    modules: [m0, m1]
-    pointer: "Section 'Coordinate Frames' (base_link, odom, map, earth) and 'Relationship between Frames'"
-    required: true
-    verified_on: 2026-10-02
   - id: cpp_core_guidelines
     title: "C++ Core Guidelines"
     url: https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines
@@ -241,6 +225,15 @@ links:
     required: false
     verified_on: 2026-10-03
 
+  - id: stachniss_slam_intro
+    title: "Introduction to SLAM (Cyrill Stachniss)"
+    url: https://www.youtube.com/watch?v=0I30M6yTklo
+    type: video
+    modules: [m0, m5]
+    pointer: "Whole lecture: odometry vs globally consistent mapping, why corrections make the map frame jump"
+    required: true
+    verified_on: 2026-10-04
+
   # ---------------- Module 1 ----------------
   - id: modern_robotics
     title: "Lynch & Park — Modern Robotics (free book + videos)"
@@ -281,22 +274,6 @@ links:
     modules: [m1]
     pointer: "Class references: Quaternion (coefficient storage order), Transform, AngleAxis"
     required: true
-    verified_on: 2026-10-02
-  - id: tf2_concepts
-    title: "ROS 2 (Jazzy) — About tf2"
-    url: https://docs.ros.org/en/jazzy/Concepts/Intermediate/About-Tf2.html
-    type: docs
-    modules: [m1]
-    pointer: "Whole page: transform tree, lookup semantics, time travel"
-    required: true
-    verified_on: 2026-10-02
-  - id: tf2_tutorials
-    title: "ROS 2 (Jazzy) — tf2 tutorials"
-    url: https://docs.ros.org/en/jazzy/Tutorials/Intermediate/Tf2/Tf2-Main.html
-    type: docs
-    modules: [m1]
-    pointer: "'Introducing tf2' and 'Writing a static broadcaster' (concepts only; the program does not depend on ROS)"
-    required: false
     verified_on: 2026-10-02
   - id: navipedia_frames
     title: "ESA Navipedia — Reference Frames in GNSS"
@@ -485,30 +462,6 @@ links:
     modules: [m3]
     pointer: "Section V 'Experiments': the KITTI-corrected vs KITTI-raw paragraph and how per-point timestamps are estimated from azimuth"
     required: false
-    verified_on: 2026-10-02
-  - id: foxglove_docs
-    title: "Foxglove documentation"
-    url: https://docs.foxglove.dev/docs
-    type: docs
-    modules: [m3]
-    pointer: "Visualization panels: 3D, Plot, Raw Messages"
-    required: false
-    verified_on: 2026-10-02
-  - id: mcap_docs
-    title: "MCAP — file format and libraries"
-    url: https://mcap.dev/
-    type: docs
-    modules: [m3]
-    pointer: "Specification overview; 'Guides' section"
-    required: true
-    verified_on: 2026-10-02
-  - id: mcap_guides
-    title: "MCAP — Guides"
-    url: https://mcap.dev/guides
-    type: docs
-    modules: [m3]
-    pointer: "Python reading/writing guides"
-    required: true
     verified_on: 2026-10-02
 
   # ---------------- Module 4 ----------------
@@ -838,7 +791,7 @@ links:
     title: "KITTI raw data"
     url: https://www.cvlibs.net/datasets/kitti/raw_data.php
     type: dataset
-    modules: [m0, m1, m2, m3, m4, m5, m6, m7, m8]
+    modules: [m0, m0b, m1, m2, m3, m4, m5, m6, m7, m8]
     pointer: "Download list per drive; devkit readme (OXTS field definitions, sensor setup)"
     license: "CC BY-NC-SA 3.0"
     commercial_use: false
@@ -1001,3 +954,5 @@ links:
 #     course is no longer listed on Coursera. Replaced by the free ESA GNSS book (esa_gnss_book) plus Navipedia.
 #   Trento hyperspectral + LiDAR dataset: no official public download found; dropped from Track A alternatives.
 #   NXP AN5087 "Allan Variance" (optional extra) returned 404; not needed, Kalibr wiki covers it.
+#   ROS material (REP-103/105, tf2, MCAP, Foxglove) removed 2026-10-04: the team does not use ROS yet;
+#     a ROS 2 module for all members is planned (see the mentors repository README).

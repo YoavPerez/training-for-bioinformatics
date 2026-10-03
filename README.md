@@ -28,6 +28,9 @@ The program has four **phases**. Each phase ends with a cumulative phase-gate se
 
 Efforts are estimates, not deadlines. There is no fixed schedule, and modules can stretch or shrink for each trainee. Do the modules in order, because each one builds on the last.
 
+## About ROS
+This program does not use ROS, and none of it requires ROS knowledge. The pipeline is plain C++/Python. Frames, transforms and conventions are taught from first principles. A dedicated ROS 2 module for the whole team is planned for later.
+
 ## How every module is organised
 
 C++ runs through the whole program: module 0b builds the foundations, and modules 1–7 each have a **C++ focus** task (testing, class design, generic code, performance, API design, error handling, tooling) reviewed with the rest of the module.

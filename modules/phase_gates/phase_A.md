@@ -6,7 +6,7 @@ Closed-book, 45 minutes. Score yourself with `phase_A_answers.md`.
 
 **PA-02.** A point is (2, 0, 0) in the lidar frame. `T_world_lidar` is a 90° rotation about z plus a translation (10, 0, 0). Where is the point in the world frame?
 
-**PA-03.** Which REP-105 frame should a GNSS-fused global pose be expressed in, and which frame is continuous but drifts?
+**PA-03.** In which kind of frame should a GNSS-fused global pose be expressed, and which kind of frame is continuous but drifts?
 
 **PA-04.** Give two quaternions that represent the identity rotation.
 

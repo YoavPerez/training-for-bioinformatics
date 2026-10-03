@@ -10,9 +10,9 @@ Answer every question in writing **before** opening the answers file. Then score
 
 ## Self-check 1 — Readiness
 
-**M0-R01.** In REP-103, which direction does the y axis of a body frame point (forward/left/up convention)?
+**M0-R01.** In the KITTI IMU/vehicle frame (x forward, z up), which direction does the y axis point?
 
-**M0-R02.** Which REP-105 frame is continuous (no jumps) but drifts over time: `map`, `odom` or `base_link`?
+**M0-R02.** An odometry frame and a globally corrected map frame: which one is continuous (no jumps) but drifts over time, and which one can jump when a correction arrives?
 
 **M0-R03.** In this program `T_a_b` maps points from frame b to frame a. Given `T_world_lidar` and `T_lidar_imu`, write the expression for `T_world_imu`.
 
@@ -22,7 +22,7 @@ Answer every question in writing **before** opening the answers file. Then score
 
 **M0-R06.** Eigen's `Quaterniond(w, x, y, z)` constructor takes the scalar first. In what order does `coeffs()` store the four values in memory?
 
-**M0-R07.** REP-103: what is the base unit for angles, and what is it for time?
+**M0-R07.** In the KITTI OXTS data, in which units are latitude/longitude given, and in which units are roll/pitch/yaw given?
 
 **M0-R08.** Which git command shows you which lines of a file were last changed by which commit?
 

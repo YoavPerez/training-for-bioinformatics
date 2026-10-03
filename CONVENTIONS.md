@@ -10,7 +10,7 @@
 | `______` | | | | |
 | `______` | | | | |
 
-*Format example:* `` `<name>` | <what it is attached to> | <where the origin is> | <x dir> / <y dir> / <z dir> | <REP or datasheet section> ``
+*Format example:* `` `<name>` | <what it is attached to> | <where the origin is> | <x dir> / <y dir> / <z dir> | <datasheet or devkit section> ``
 
 ## 2. Transform naming
 

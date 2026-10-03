@@ -34,8 +34,8 @@ The Trento hyperspectral + LiDAR dataset from the original curriculum was droppe
   2. Quantify hyperspectral-to-LiDAR misregistration and its effect on classification accuracy.
   3. Change detection between repeat flights over the same site.
 
-## Track B — Robotics (forest SLAM and place recognition)
-- **Data:** Wild-Places (forest LiDAR, revisits over months); BotanicGarden (LiDAR, cameras, IMU, ground truth); FOR-instance (tree segmentation).
+## Track B — Forest SLAM and place recognition
+- **Data:** Wild-Places (forest LiDAR, revisits over months); BotanicGarden (LiDAR, cameras, IMU, ground truth); FOR-instance (tree segmentation). Some files are ROS bags: read them with the `rosbags` Python package (no ROS installation or ROS knowledge needed), as `data/download.py --static-imu` does.
 - **Why it fits:** forests defeat urban-tuned methods because scenes look alike, and sequence matching is the trainees' home turf.
 - **Project options:**
   1. SeqSLAM-style sequence matching over LiDAR descriptors vs single-scan place recognition (your module 6 Scan Context).

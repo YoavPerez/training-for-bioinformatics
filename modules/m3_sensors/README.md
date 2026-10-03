@@ -17,8 +17,6 @@ Know how each sensor lies and how to correct for it: characterize IMU noise, und
 - [Coursera — State Estimation and Localization for Self-Driving Cars](https://www.coursera.org/learn/state-estimation-localization-self-driving-cars) — course — Module 3 "GNSS/INS Sensing for Pose Estimation" and Module 4 "LIDAR Sensing"
 - [LiDAR Odometry — 5 Minutes with Cyrill](https://www.youtube.com/watch?v=9FhKgAEQTOg) — video — whole video (scanning model, motion distortion)
 - [Dellenbach et al. — CT-ICP](https://arxiv.org/abs/2109.12979) — paper — Section V "Experiments", the paragraph on KITTI-corrected vs KITTI-raw (only that part)
-- [MCAP](https://mcap.dev/) and [MCAP guides](https://mcap.dev/guides) — docs — format overview; Python reading guide
-- [Foxglove docs](https://docs.foxglove.dev/docs) — docs — 3D and Plot panels (optional, for inspecting recordings)
 
 Note: the Stanford "GPS: An Introduction to Satellite Navigation" course from the original curriculum is no longer offered on Coursera; the ESA book replaces it.
 

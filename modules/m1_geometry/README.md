@@ -13,12 +13,11 @@ Become fluent with rotations, rigid transforms and Earth-referenced coordinates,
 - [Solà et al. — A micro Lie theory for state estimation in robotics](https://arxiv.org/abs/1812.01537) — paper — Sections II-A to II-E; Appendix B (SO(3)); Appendix D (SE(3))
 - [Eigen — Space transformations tutorial](https://eigen.tuxfamily.org/dox/group__TutorialGeometry.html) — docs — "Transformation types"; Isometry vs Affine
 - [Eigen — Geometry module](https://eigen.tuxfamily.org/dox/group__Geometry__Module.html) — docs — Quaternion class reference (storage order)
-- [ROS 2 — About tf2](https://docs.ros.org/en/jazzy/Concepts/Intermediate/About-Tf2.html) — docs — transform trees (concepts only; no ROS dependency in this program)
 - [ESA Navipedia — Reference Frames in GNSS](https://gssc.esa.int/navipedia/index.php/Reference_Frames_in_GNSS) — docs — whole page
 - [ESA Navipedia — Ellipsoidal and Cartesian Coordinates Conversion](https://gssc.esa.int/navipedia/index.php/Ellipsoidal_and_Cartesian_Coordinates_Conversion) — docs — "From Ellipsoidal to Cartesian coordinates"
 - [ESA Navipedia — Transformations between ECEF and ENU](https://gssc.esa.int/navipedia/index.php/Transformations_between_ECEF_and_ENU_coordinates) — docs — whole page
 
-Optional: [Modern Robotics PDF](https://hades.mech.northwestern.edu/images/7/7f/MR.pdf) Appendix B "Other Representations of Rotations"; [tf2 tutorials](https://docs.ros.org/en/jazzy/Tutorials/Intermediate/Tf2/Tf2-Main.html).
+Optional: [Modern Robotics PDF](https://hades.mech.northwestern.edu/images/7/7f/MR.pdf) Appendix B "Other Representations of Rotations".
 
 ## Segment 2 — Self-check 1: Readiness
 Answer the Readiness part of [`quiz/self_check.md`](quiz/self_check.md) before coding, then grade yourself.
