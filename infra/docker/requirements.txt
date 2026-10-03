@@ -1,0 +1,16 @@
+# Pinned Python dependencies for the dev image and CI (clang-format is pinned here so CI and dev machines agree).
+numpy==2.2.6
+scipy==1.15.3
+matplotlib==3.10.9
+evo==1.37.1
+pyyaml==6.0.3
+mcap==1.5.0
+open3d==0.20.0
+small-gicp==1.0.1
+pytest==9.1.1
+ruff==0.16.10
+nbformat==5.11.1
+nbclient==0.11.0
+ipykernel==7.3.0
+clang-format==23.1.2
+rosbags==0.11.5

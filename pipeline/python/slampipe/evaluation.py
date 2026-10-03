@@ -1,0 +1,90 @@
+"""Module 6: trajectory evaluation on top of evo.
+
+    python -m slampipe.evaluation <estimate.tum> <reference.tum> [--out metrics.json]
+
+Prints and optionally writes ATE/RPE summaries with bootstrap confidence intervals.
+"""
+
+import argparse
+import json
+from collections.abc import Callable
+from pathlib import Path
+
+import numpy as np
+from evo.core.trajectory import PoseTrajectory3D
+from evo.tools import file_interface
+
+
+def load_tum(path: Path) -> PoseTrajectory3D:
+    """Provided."""
+    return file_interface.read_tum_trajectory_file(str(path))
+
+
+def ate_errors(est: PoseTrajectory3D, ref: PoseTrajectory3D, align: bool = True, max_diff: float = 0.05) -> np.ndarray:
+    """Per-pose absolute translation errors [m] after time association and (optionally) SE(3) alignment.
+
+    Must not modify the inputs.
+    """
+    # TODO(m6): use evo (sync, alignment, metrics.APE).
+    raise NotImplementedError("ate_errors")
+
+
+def rpe_errors(
+    est: PoseTrajectory3D, ref: PoseTrajectory3D, delta_m: float = 10.0, max_diff: float = 0.05
+) -> np.ndarray:
+    """Relative translation errors [m] over segments of delta_m metres of travelled distance."""
+    # TODO(m6): use evo (metrics.RPE).
+    raise NotImplementedError("rpe_errors")
+
+
+def bootstrap_ci(
+    values: np.ndarray,
+    statistic: Callable[[np.ndarray], float] = np.mean,
+    n_boot: int = 2000,
+    alpha: float = 0.05,
+    seed: int = 0,
+) -> tuple[float, float]:
+    """Percentile bootstrap (1 - alpha) confidence interval of statistic(values)."""
+    # TODO(m6): implement.
+    raise NotImplementedError("bootstrap_ci")
+
+
+def summarize(errors: np.ndarray) -> dict[str, float]:
+    """Provided: distribution summary with a bootstrap CI on the mean."""
+    errors = np.asarray(errors, dtype=float)
+    lo, hi = bootstrap_ci(errors)
+    return {
+        "n": int(errors.size),
+        "rmse": float(np.sqrt(np.mean(errors**2))),
+        "mean": float(np.mean(errors)),
+        "median": float(np.median(errors)),
+        "p95": float(np.quantile(errors, 0.95)),
+        "max": float(np.max(errors)),
+        "mean_ci95": [lo, hi],
+    }
+
+
+def evaluate(est_path: Path, ref_path: Path, rpe_delta_m: float = 10.0) -> dict[str, dict[str, float]]:
+    est, ref = load_tum(est_path), load_tum(ref_path)
+    result = {"ate": summarize(ate_errors(est, ref))}
+    if ref.path_length > 2.0 * rpe_delta_m:
+        result["rpe"] = summarize(rpe_errors(est, ref, rpe_delta_m))
+    return result
+
+
+def main() -> None:
+    parser = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
+    parser.add_argument("estimate", type=Path)
+    parser.add_argument("reference", type=Path)
+    parser.add_argument("--out", type=Path)
+    parser.add_argument("--rpe-delta", type=float, default=10.0)
+    args = parser.parse_args()
+    result = evaluate(args.estimate, args.reference, args.rpe_delta)
+    text = json.dumps(result, indent=2)
+    print(text)
+    if args.out:
+        args.out.write_text(text + "\n")
+
+
+if __name__ == "__main__":
+    main()

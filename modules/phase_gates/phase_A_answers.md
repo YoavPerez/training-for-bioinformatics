@@ -1,0 +1,14 @@
+# Phase gate A — answers
+
+**PA-01.** `T_world_lidar = T_world_imu * inverse(T_lidar_imu)`. See: modern_robotics — Ch. 3.3.1
+**PA-02.** (10, 2, 0). See: modern_robotics — Ch. 3.3.1
+**PA-03.** `map` (or an earth-fixed frame); `odom` drifts but is continuous. See: rep105 — "Coordinate Frames"
+**PA-04.** (1, 0, 0, 0) and (−1, 0, 0, 0) in (w, x, y, z). See: sola_eskf — Section 2.4
+**PA-05.** The scalar part is read as x: the rotation becomes roughly 180° about x instead of a small z rotation. See: sola_eskf — Section 3
+**PA-06.** (π, 0, 0); not unique: (−π, 0, 0) is equally valid. See: micro_lie — Appendix B-A
+**PA-07.** q and −q are the same rotation; without the flip SLERP takes the long way round. See: sola_eskf — Section 2.7
+**PA-08.** 3×3 identity (the right Jacobian at zero). See: micro_lie — Appendix B-C
+**PA-09.** WGS84 ellipsoid; ECEF, then local ENU (plus the geodetic lat/lon/h input). See: navipedia_ecef_enu — whole page
+**PA-10.** About 111 km × cos 60° ≈ 56 km. See: navipedia_geodetic_ecef — "From Ellipsoidal to Cartesian coordinates"
+**PA-11.** `git reset --soft HEAD~1` (or `--mixed`). See: missing_semester — lecture 6 "Version Control (Git)"
+**PA-12.** The world/map frame and its origin; positions from different origins cannot be compared or fused. See: rep105 — "Relationship between Frames"

@@ -1,0 +1,28 @@
+# Module 7 STARTER: copy to .github/workflows/regression.yml once complete.
+# Runs the pipeline on the CI sample and fails the build when ATE regresses.
+# The dev image is the one ci.yml builds: ghcr.io/<owner>/slam-onboarding-dev:<hash of infra/docker/**>.
+name: regression
+
+on:
+  pull_request:
+
+jobs:
+  image-tag:
+    runs-on: ubuntu-24.04
+    outputs:
+      tag: ${{ steps.tag.outputs.tag }}
+    steps:
+      - uses: actions/checkout@v4
+      - id: tag
+        run: echo "tag=${{ hashFiles('infra/docker/**') }}" >> "$GITHUB_OUTPUT"
+
+  regression:
+    needs: image-tag
+    runs-on: ubuntu-24.04
+    container: ghcr.io/${{ github.repository_owner }}/slam-onboarding-dev:${{ needs.image-tag.outputs.tag }}
+    steps:
+      - uses: actions/checkout@v4
+      # TODO(m7): restore the cached sample (or download it), build, prepare the sample drive,
+      # run run_pipeline, evaluate with slampipe.evaluation into metrics.json, then run the gate:
+      #   python -m slampipe.gate metrics.json modules/m7_production/baseline.json --tolerance <x>
+      - run: echo "TODO regression gate" && exit 1

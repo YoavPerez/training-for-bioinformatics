@@ -1,0 +1,33 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "slampipe"
+version = "0.1.0"
+description = "Python side of the SLAM onboarding pipeline"
+requires-python = ">=3.11"
+dependencies = ["numpy", "scipy", "matplotlib", "evo", "pyyaml"]
+
+[tool.setuptools.packages.find]
+where = ["pipeline/python"]
+
+[tool.pytest.ini_options]
+testpaths = ["pipeline/python/tests", "modules"]
+python_files = ["test_*.py"]
+addopts = "--import-mode=importlib"
+markers = [
+  "data: needs the KITTI sample (python data/download.py --sample)",
+  "build: needs the C++ build directory (cmake --build build)",
+]
+
+[tool.ruff]
+line-length = 120
+target-version = "py311"
+extend-exclude = [".cache", "build"]
+
+[tool.ruff.lint]
+select = ["E", "F", "W", "I", "B", "UP", "NPY"]
+
+[tool.ruff.lint.isort]
+known-first-party = ["slampipe"]

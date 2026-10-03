@@ -1,0 +1,73 @@
+# Module 7 STARTER: complete every TODO. Run the pipeline over N prepared sequences in parallel and publish a metrics summary.
+# Sized by default for 4 trainees x 3 sequences (one workflow per trainee, parallelism 3).
+#
+#   argo submit --from workflowtemplate/slam-pipeline-eval -p image=<registry>/slam-pipeline:<tag> \
+#     -p sequences='[{"name": "0027", "drive": "kitti/2011_09_30/2011_09_30_drive_0027_sync", "prep": "prep/0027"}]'
+apiVersion: argoproj.io/v1alpha1
+kind: WorkflowTemplate
+metadata:
+  name: slam-pipeline-eval
+spec:
+  entrypoint: main
+  parallelism: 3
+  arguments:
+    parameters:
+      - name: image
+        value: ghcr.io/example/slam-pipeline:0.1.0   # TODO(m7): your pushed runtime image, pinned tag, never :latest
+      - name: data-claim
+        value: slam-data                             # PVC with data/ and outputs/
+      - name: run-id
+        value: "{{workflow.name}}"
+      - name: flags
+        value: "--imu --loops"
+      - name: sequences
+        value: '[{"name": "sample", "drive": "samples/kitti/2011_09_26/2011_09_26_drive_0002_sync", "prep": "prep/sample"}]'
+  volumes:
+    - name: data
+      persistentVolumeClaim:
+        claimName: "{{workflow.parameters.data-claim}}"
+  templates:
+    - name: main
+      steps:
+        - - name: run-sequence
+            template: run-one
+            arguments:
+              parameters:
+                - name: name
+                  value: "{{item.name}}"
+                - name: drive
+                  value: "{{item.drive}}"
+                - name: prep
+                  value: "{{item.prep}}"
+            # TODO(m7): fan out over the `sequences` parameter (see the Argo "Loops" walk-through).
+        # TODO(m7): after all sequences finished, run the `summarize` step.
+
+    - name: run-one
+      inputs:
+        parameters:
+          - name: name
+          - name: drive
+          - name: prep
+      # TODO(m7): decide on a retry strategy.
+      container:
+        image: "{{workflow.parameters.image}}"
+        command: [bash, -c]
+        args:
+          - |
+            set -euo pipefail
+            out=/data/outputs/{{workflow.parameters.run-id}}/{{inputs.parameters.name}}
+            mkdir -p "$out"
+            run_pipeline /data/{{inputs.parameters.drive}} /data/{{inputs.parameters.prep}} "$out" {{workflow.parameters.flags}}
+            python -m slampipe.evaluation "$out/optimized.tum" /data/{{inputs.parameters.prep}}/gt.tum --out "$out/metrics.json"
+        # TODO(m7): set resource requests and limits from a measured run.
+        volumeMounts:
+          - name: data
+            mountPath: /data
+
+    - name: summarize
+      # TODO(m7): read every outputs/<run-id>/*/metrics.json, write summary.json next to them,
+      # print one line per sequence, and expose summary.json as an output artifact.
+      container:
+        image: "{{workflow.parameters.image}}"
+        command: [python, -c]
+        args: ["print('TODO')"]

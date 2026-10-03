@@ -1,0 +1,817 @@
+# Every external resource used by the program. Verified by fetching each URL.
+# Fields: id, title, url, type (video|course|docs|paper|book|repo|dataset|talk),
+#         modules, pointer (where to look), required (true = core, false = optional), verified_on.
+# Datasets also carry license and commercial_use.
+# Re-verify with: python tools/check_links.py --online
+
+links:
+  # ---------------- Module 0 ----------------
+  - id: missing_semester
+    title: "MIT Missing Semester of Your CS Education (2020)"
+    url: https://missing.csail.mit.edu/2020/
+    type: course
+    modules: [m0, m7]
+    pointer: "Lectures 1 'Course Overview + The Shell', 6 'Version Control (Git)', 7 'Debugging and Profiling'"
+    required: true
+    verified_on: 2026-10-02
+  - id: 3b1b_linear_algebra
+    title: "3Blue1Brown — Essence of linear algebra (playlist)"
+    url: https://www.youtube.com/playlist?list=PLZHQObOWTQDPD3MizzM2xVFitgF8hE_ab
+    type: video
+    modules: [m0, m1]
+    pointer: "Ch. 3 'Linear transformations and matrices', 4 'Matrix multiplication as composition', 5 '3D linear transformations', 6 'The determinant', 13 'Change of basis', 14 'Eigenvectors and eigenvalues'"
+    required: true
+    verified_on: 2026-10-02
+  - id: rep103
+    title: "ROS REP-103: Standard Units of Measure and Coordinate Conventions"
+    url: https://www.ros.org/reps/rep-0103.html
+    type: docs
+    modules: [m0, m1]
+    pointer: "Sections 'Units', 'Coordinate Frame Conventions' (Chirality, Axis Orientation, Rotation Representation)"
+    required: true
+    verified_on: 2026-10-02
+  - id: rep105
+    title: "ROS REP-105: Coordinate Frames for Mobile Platforms"
+    url: https://www.ros.org/reps/rep-0105.html
+    type: docs
+    modules: [m0, m1]
+    pointer: "Section 'Coordinate Frames' (base_link, odom, map, earth) and 'Relationship between Frames'"
+    required: true
+    verified_on: 2026-10-02
+  - id: cpp_core_guidelines
+    title: "C++ Core Guidelines"
+    url: https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines
+    type: docs
+    modules: [m0, m4, m7]
+    pointer: "Sections 'R: Resource management', 'F.call: Parameter passing', 'T: Templates and generic programming', 'Per: Performance' (m4)"
+    required: true
+    verified_on: 2026-10-02
+  - id: eigen_quickref
+    title: "Eigen — Quick reference guide"
+    url: https://eigen.tuxfamily.org/dox/group__QuickRefPage.html
+    type: docs
+    modules: [m0, m1]
+    pointer: "Sections 'Matrix and vector types', 'Coefficient-wise and array operators', 'Geometry'"
+    required: true
+    verified_on: 2026-10-02
+
+  # ---------------- Module 1 ----------------
+  - id: modern_robotics
+    title: "Lynch & Park — Modern Robotics (free book + videos)"
+    url: https://hades.mech.northwestern.edu/index.php/Modern_Robotics
+    type: book
+    modules: [m1]
+    pointer: "Chapter 3 'Rigid-Body Motions' (sections 3.1–3.3: rotations, exponential coordinates, homogeneous transforms) and the matching Chapter 3 videos on the same page"
+    required: true
+    verified_on: 2026-10-02
+  - id: modern_robotics_pdf
+    title: "Modern Robotics — book PDF"
+    url: https://hades.mech.northwestern.edu/images/7/7f/MR.pdf
+    type: book
+    modules: [m1]
+    pointer: "Chapter 3 'Rigid-Body Motions' (PDF p. 77); Appendix B 'Other Representations of Rotations' (PDF p. 593)"
+    required: false
+    verified_on: 2026-10-02
+  - id: micro_lie
+    title: "Solà, Deray, Atchuthan — A micro Lie theory for state estimation in robotics (arXiv 1812.01537)"
+    url: https://arxiv.org/abs/1812.01537
+    type: paper
+    modules: [m1, m2, m5]
+    pointer: "Section II-A to II-E (group, tangent space, exp map, plus/minus); Appendix B 'The 3D rotation groups S3 and SO(3)'; Appendix D 'SE(3)'"
+    required: true
+    verified_on: 2026-10-02
+  - id: eigen_geometry_tutorial
+    title: "Eigen — Space transformations tutorial"
+    url: https://eigen.tuxfamily.org/dox/group__TutorialGeometry.html
+    type: docs
+    modules: [m1]
+    pointer: "Sections 'Transformation types' and 'Transform types' (Isometry vs Affine), Quaternion"
+    required: true
+    verified_on: 2026-10-02
+  - id: eigen_geometry_module
+    title: "Eigen — Geometry module reference"
+    url: https://eigen.tuxfamily.org/dox/group__Geometry__Module.html
+    type: docs
+    modules: [m1]
+    pointer: "Class references: Quaternion (coefficient storage order), Transform, AngleAxis"
+    required: true
+    verified_on: 2026-10-02
+  - id: tf2_concepts
+    title: "ROS 2 (Jazzy) — About tf2"
+    url: https://docs.ros.org/en/jazzy/Concepts/Intermediate/About-Tf2.html
+    type: docs
+    modules: [m1]
+    pointer: "Whole page: transform tree, lookup semantics, time travel"
+    required: true
+    verified_on: 2026-10-02
+  - id: tf2_tutorials
+    title: "ROS 2 (Jazzy) — tf2 tutorials"
+    url: https://docs.ros.org/en/jazzy/Tutorials/Intermediate/Tf2/Tf2-Main.html
+    type: docs
+    modules: [m1]
+    pointer: "'Introducing tf2' and 'Writing a static broadcaster' (concepts only; the program does not depend on ROS)"
+    required: false
+    verified_on: 2026-10-02
+  - id: navipedia_frames
+    title: "ESA Navipedia — Reference Frames in GNSS"
+    url: https://gssc.esa.int/navipedia/index.php/Reference_Frames_in_GNSS
+    type: docs
+    modules: [m1]
+    pointer: "Whole page: ECEF/ITRF, WGS84 datum"
+    required: true
+    verified_on: 2026-10-02
+  - id: navipedia_geodetic_ecef
+    title: "ESA Navipedia — Ellipsoidal and Cartesian Coordinates Conversion"
+    url: https://gssc.esa.int/navipedia/index.php/Ellipsoidal_and_Cartesian_Coordinates_Conversion
+    type: docs
+    modules: [m1]
+    pointer: "Section 'From Ellipsoidal to Cartesian coordinates'"
+    required: true
+    verified_on: 2026-10-02
+  - id: navipedia_ecef_enu
+    title: "ESA Navipedia — Transformations between ECEF and ENU coordinates"
+    url: https://gssc.esa.int/navipedia/index.php/Transformations_between_ECEF_and_ENU_coordinates
+    type: docs
+    modules: [m1]
+    pointer: "Whole page: rotation matrix from ECEF to local ENU"
+    required: true
+    verified_on: 2026-10-02
+
+  # ---------------- Module 2 ----------------
+  - id: coursera_state_estimation
+    title: "Coursera — State Estimation and Localization for Self-Driving Cars (University of Toronto, free to audit)"
+    url: https://www.coursera.org/learn/state-estimation-localization-self-driving-cars
+    type: course
+    modules: [m2, m3]
+    pointer: "Module 1 'Least Squares'; Module 2 'State Estimation - Linear and Nonlinear Kalman Filters' (incl. ES-EKF); Module 3 'GNSS/INS Sensing for Pose Estimation'; Module 4 'LIDAR Sensing' (for m3)"
+    required: true
+    verified_on: 2026-10-02
+  - id: labbe_kalman
+    title: "Roger Labbe — Kalman and Bayesian Filters in Python (notebooks)"
+    url: https://github.com/rlabbe/Kalman-and-Bayesian-Filters-in-Python
+    type: book
+    modules: [m2]
+    pointer: "Notebooks 02-Discrete-Bayes, 06-Multivariate-Kalman-Filters, 07-Kalman-Filter-Math, 08-Designing-Kalman-Filters (NEES section), 11-Extended-Kalman-Filters"
+    required: true
+    verified_on: 2026-10-02
+  - id: barfoot_ser
+    title: "Barfoot — State Estimation for Robotics, 2nd ed. (free PDF from the author)"
+    url: http://asrl.utias.utoronto.ca/~tdb/bib/barfoot_ser24.pdf
+    type: book
+    modules: [m2, m5]
+    pointer: "Ch. 'Linear-Gaussian Estimation' (PDF p. 63), 'Nonlinear Non-Gaussian Estimation' (PDF p. 125, Gauss-Newton and EKF sections), 'Matrix Lie Groups' (PDF p. 299)"
+    required: true
+    verified_on: 2026-10-02
+  - id: barfoot_site
+    title: "Tim Barfoot — author page (book links and errata)"
+    url: http://asrl.utias.utoronto.ca/~tdb/
+    type: docs
+    modules: [m2]
+    pointer: "Book section of the page"
+    required: false
+    verified_on: 2026-10-02
+  - id: sola_eskf
+    title: "Solà — Quaternion kinematics for the error-state Kalman filter (arXiv 1711.02508)"
+    url: https://arxiv.org/abs/1711.02508
+    type: paper
+    modules: [m0, m1, m2]
+    pointer: "Section 3 'Quaternion conventions' (m0); Sections 2.4 and 2.7 'SLERP' (m1); Section 5 'Error-state kinematics for IMU-driven systems'; Section 6 'Fusing IMU with complementary sensory data'"
+    required: true
+    verified_on: 2026-10-02
+  - id: ceres_tutorial
+    title: "Ceres Solver — Non-linear Least Squares tutorial"
+    url: http://ceres-solver.org/nnls_tutorial.html
+    type: docs
+    modules: [m2]
+    pointer: "Sections 'Hello World!', 'Curve Fitting', 'Robust Curve Fitting'"
+    required: true
+    verified_on: 2026-10-02
+  - id: scipy_least_squares
+    title: "SciPy — scipy.optimize.least_squares"
+    url: https://docs.scipy.org/doc/scipy/reference/generated/scipy.optimize.least_squares.html
+    type: docs
+    modules: [m2]
+    pointer: "Parameters 'jac', 'method', 'loss'; the 'Examples' section"
+    required: true
+    verified_on: 2026-10-02
+  - id: keshav_read_paper
+    title: "S. Keshav — How to Read a Paper"
+    url: http://ccr.sigcomm.org/online/files/p83-keshavA.pdf
+    type: paper
+    modules: [m2, m8]
+    pointer: "Section 2 'The three-pass approach' (2.1–2.3); Section 3 'Doing a literature survey'"
+    required: true
+    verified_on: 2026-10-02
+  - id: stachniss_kalman_5min
+    title: "Kalman Filter — 5 Minutes with Cyrill"
+    url: https://www.youtube.com/watch?v=o_HW6GnLqvg
+    type: video
+    modules: [m2]
+    pointer: "Whole video"
+    required: false
+    verified_on: 2026-10-02
+  - id: stachniss_bayes_5min
+    title: "Bayes Filter — 5 Minutes with Cyrill"
+    url: https://www.youtube.com/watch?v=oUq0a8jHSQg
+    type: video
+    modules: [m2]
+    pointer: "Whole video"
+    required: false
+    verified_on: 2026-10-02
+  - id: stachniss_least_squares
+    title: "Least Squares — An Informal Introduction (Cyrill Stachniss)"
+    url: https://www.youtube.com/watch?v=r2cyMQ5NB1o
+    type: video
+    modules: [m2]
+    pointer: "Whole lecture"
+    required: false
+    verified_on: 2026-10-02
+
+  # ---------------- Module 3 ----------------
+  - id: kalibr_imu_noise
+    title: "Kalibr wiki — IMU Noise Model"
+    url: https://github.com/ethz-asl/kalibr/wiki/IMU-Noise-Model
+    type: docs
+    modules: [m3, m2]
+    pointer: "Sections 'Additive White Noise', 'Bias', 'How to Obtain the Parameters for your IMU' → 'From the Allan standard deviation (AD)'"
+    required: true
+    verified_on: 2026-10-02
+  - id: esa_gnss_book
+    title: "ESA — GNSS Data Processing, Vol. I: Fundamentals and Algorithms (TM-23, free PDF)"
+    url: https://gssc.esa.int/navipedia/GNSS_Book/ESA_GNSS-Book_TM-23_Vol_I.pdf
+    type: book
+    modules: [m3]
+    pointer: "Ch. 1.1 'An Intuitive Approach to GNSS Positioning'; Ch. 4.2 'Measurement Features and Noise'; Ch. 5.4 'Atmospheric Effects Modelling'; Ch. 6.1 'Code-Based Positioning'"
+    required: true
+    verified_on: 2026-10-02
+  - id: navipedia_measurements
+    title: "ESA Navipedia — GNSS Measurements Modelling"
+    url: https://gssc.esa.int/navipedia/index.php/GNSS_Measurements_Modelling
+    type: docs
+    modules: [m3]
+    pointer: "Whole page: error budget terms"
+    required: true
+    verified_on: 2026-10-02
+  - id: navipedia_multipath
+    title: "ESA Navipedia — Multipath"
+    url: https://gssc.esa.int/navipedia/index.php/Multipath
+    type: docs
+    modules: [m3]
+    pointer: "Whole page"
+    required: true
+    verified_on: 2026-10-02
+  - id: navipedia_rtk
+    title: "ESA Navipedia — RTK Fundamentals"
+    url: https://gssc.esa.int/navipedia/index.php/RTK_Fundamentals
+    type: docs
+    modules: [m3]
+    pointer: "Whole page"
+    required: true
+    verified_on: 2026-10-02
+  - id: navipedia_ppp
+    title: "ESA Navipedia — Precise Point Positioning"
+    url: https://gssc.esa.int/navipedia/index.php/Precise_Point_Positioning
+    type: docs
+    modules: [m3]
+    pointer: "Whole page"
+    required: true
+    verified_on: 2026-10-02
+  - id: stachniss_channel
+    title: "Cyrill Stachniss — YouTube channel (Bonn lectures)"
+    url: https://www.youtube.com/@CyrillStachniss
+    type: video
+    modules: [m3, m4, m5, m6]
+    pointer: "Use the specific lecture links listed per module; the channel is for further browsing"
+    required: false
+    verified_on: 2026-10-02
+  - id: stachniss_lidar_odometry_5min
+    title: "LiDAR Odometry — 5 Minutes with Cyrill"
+    url: https://www.youtube.com/watch?v=9FhKgAEQTOg
+    type: video
+    modules: [m3, m5]
+    pointer: "Whole video (scan characteristics, motion distortion, scan-to-map)"
+    required: true
+    verified_on: 2026-10-02
+  - id: ct_icp_paper
+    title: "Dellenbach et al. — CT-ICP: Real-time Elastic LiDAR Odometry with Loop Closure (arXiv 2109.12979)"
+    url: https://arxiv.org/abs/2109.12979
+    type: paper
+    modules: [m3]
+    pointer: "Section V 'Experiments': the KITTI-corrected vs KITTI-raw paragraph and how per-point timestamps are estimated from azimuth"
+    required: false
+    verified_on: 2026-10-02
+  - id: foxglove_docs
+    title: "Foxglove documentation"
+    url: https://docs.foxglove.dev/docs
+    type: docs
+    modules: [m3]
+    pointer: "Visualization panels: 3D, Plot, Raw Messages"
+    required: false
+    verified_on: 2026-10-02
+  - id: mcap_docs
+    title: "MCAP — file format and libraries"
+    url: https://mcap.dev/
+    type: docs
+    modules: [m3]
+    pointer: "Specification overview; 'Guides' section"
+    required: true
+    verified_on: 2026-10-02
+  - id: mcap_guides
+    title: "MCAP — Guides"
+    url: https://mcap.dev/guides
+    type: docs
+    modules: [m3]
+    pointer: "Python reading/writing guides"
+    required: true
+    verified_on: 2026-10-02
+
+  # ---------------- Module 4 ----------------
+  - id: stachniss_icp_1
+    title: "ICP & Point Cloud Registration — Part 1: Known Data Association & SVD (Cyrill Stachniss, 2021)"
+    url: https://www.youtube.com/watch?v=dhzLQfDBx2Q
+    type: video
+    modules: [m4]
+    pointer: "Whole lecture"
+    required: true
+    verified_on: 2026-10-02
+  - id: stachniss_icp_2
+    title: "ICP & Point Cloud Registration — Part 2: Unknown Data Association (Cyrill Stachniss, 2021)"
+    url: https://www.youtube.com/watch?v=ktRqKxddjJk
+    type: video
+    modules: [m4]
+    pointer: "Whole lecture"
+    required: true
+    verified_on: 2026-10-02
+  - id: stachniss_icp_3
+    title: "ICP & Point Cloud Registration — Part 3: Non-linear Least Squares (Cyrill Stachniss, 2021)"
+    url: https://www.youtube.com/watch?v=CJE59i8oxIE
+    type: video
+    modules: [m4]
+    pointer: "Whole lecture (point-to-plane linearization, robust kernels)"
+    required: true
+    verified_on: 2026-10-02
+  - id: stachniss_p2plane_5min
+    title: "Point-to-Plane and Generalized ICP — 5 Minutes with Cyrill"
+    url: https://www.youtube.com/watch?v=2hC9IG6MFD0
+    type: video
+    modules: [m4]
+    pointer: "Whole video"
+    required: true
+    verified_on: 2026-10-02
+  - id: open3d_icp
+    title: "Open3D — ICP registration tutorial"
+    url: https://www.open3d.org/docs/release/tutorial/pipelines/icp_registration.html
+    type: docs
+    modules: [m4]
+    pointer: "Sections 'Point-to-point ICP' and 'Point-to-plane ICP' (API for your benchmark baseline)"
+    required: true
+    verified_on: 2026-10-02
+  - id: kiss_icp_paper
+    title: "Vizzo et al. — KISS-ICP: In Defense of Point-to-Point ICP (arXiv 2209.15397)"
+    url: https://arxiv.org/abs/2209.15397
+    type: paper
+    modules: [m4, m5]
+    pointer: "Section 'KISS-ICP – Keep It Small and Simple': Steps 1–4 and 'Adaptive Threshold for Data Association'"
+    required: true
+    verified_on: 2026-10-02
+  - id: kiss_icp_repo
+    title: "KISS-ICP — repository"
+    url: https://github.com/PRBonn/kiss-icp
+    type: repo
+    modules: [m4, m5]
+    pointer: "cpp/kiss_icp/core/ (Registration, VoxelHashMap, Preprocessing) — read, do not copy"
+    required: true
+    verified_on: 2026-10-02
+  - id: small_gicp
+    title: "small_gicp — repository"
+    url: https://github.com/koide3/small_gicp
+    type: repo
+    modules: [m4]
+    pointer: "README sections 'Python' usage and 'Benchmark' (benchmark target)"
+    required: true
+    verified_on: 2026-10-02
+  - id: nanoflann
+    title: "nanoflann — KD-tree library (used by the starter code)"
+    url: https://github.com/jlblancoc/nanoflann
+    type: repo
+    modules: [m4]
+    pointer: "README 'Usage'; examples/ folder"
+    required: false
+    verified_on: 2026-10-02
+  - id: gregg_perf
+    title: "Brendan Gregg — Linux perf Examples"
+    url: https://www.brendangregg.com/perf.html
+    type: docs
+    modules: [m4]
+    pointer: "Sections 3 'One-Liners', 7 'Examples' (CPU statistics, sampling), 8 'Visualizations' (flame graphs)"
+    required: true
+    verified_on: 2026-10-02
+
+  # ---------------- Module 5 ----------------
+  - id: gtsam_intro
+    title: "GTSAM — Factor Graphs and GTSAM: A Hands-on Introduction"
+    url: https://gtsam.org/tutorials/intro.html
+    type: docs
+    modules: [m5]
+    pointer: "Sections 1 'Factor Graphs', 2 'Modeling Robot Motion', 3 'Robot Localization', 4 'PoseSLAM'"
+    required: true
+    verified_on: 2026-10-02
+  - id: gtsam_docs
+    title: "GTSAM — documentation site"
+    url: https://borglab.github.io/gtsam/
+    type: docs
+    modules: [m5, m6]
+    pointer: "Navigation: ImuFactor, PreintegratedImuMeasurements; Nonlinear: noise models"
+    required: true
+    verified_on: 2026-10-02
+  - id: gtsam_imufactor
+    title: "GTSAM — ImuFactor documentation"
+    url: https://borglab.github.io/gtsam/imufactor/
+    type: docs
+    modules: [m5]
+    pointer: "Whole page"
+    required: true
+    verified_on: 2026-10-02
+  - id: gtsam_imu_example
+    title: "GTSAM — ImuFactorsExample.cpp"
+    url: https://github.com/borglab/gtsam/blob/develop/examples/ImuFactorsExample.cpp
+    type: repo
+    modules: [m5]
+    pointer: "Whole file: parameter setup, preintegration loop, factor insertion"
+    required: true
+    verified_on: 2026-10-02
+  - id: dellaert_kaess
+    title: "Dellaert & Kaess — Factor Graphs for Robot Perception (free PDF)"
+    url: https://www.cs.cmu.edu/~kaess/pub/Dellaert17fnt.pdf
+    type: book
+    modules: [m5]
+    pointer: "Ch. 1 'Introduction', Ch. 2 'Smoothing and Mapping', Ch. 6 'Optimization on Manifolds'"
+    required: true
+    verified_on: 2026-10-02
+  - id: stachniss_pose_graph
+    title: "Graph-based SLAM using Pose Graphs (Cyrill Stachniss)"
+    url: https://www.youtube.com/watch?v=uHbRKvD8TWg
+    type: video
+    modules: [m5]
+    pointer: "Whole lecture"
+    required: true
+    verified_on: 2026-10-02
+  - id: stachniss_factor_graph_5min
+    title: "Factor Graph — 5 Minutes with Cyrill"
+    url: https://www.youtube.com/watch?v=uuiaqGLFYa4
+    type: video
+    modules: [m5]
+    pointer: "Whole video"
+    required: false
+    verified_on: 2026-10-02
+  - id: forster_preintegration
+    title: "Forster et al. — On-Manifold Preintegration for Real-Time Visual-Inertial Odometry (arXiv 1512.02363)"
+    url: https://arxiv.org/abs/1512.02363
+    type: paper
+    modules: [m5]
+    pointer: "Section V 'IMU Model and Motion Integration', Section VI 'IMU Preintegration on Manifold'"
+    required: true
+    verified_on: 2026-10-02
+  - id: lio_sam
+    title: "LIO-SAM — repository"
+    url: https://github.com/TixiaoShan/LIO-SAM
+    type: repo
+    modules: [m5]
+    pointer: "src/imuPreintegration.cpp and src/mapOptmization.cpp — code to read, not copy"
+    required: true
+    verified_on: 2026-10-02
+  - id: fast_lio
+    title: "FAST-LIO — repository"
+    url: https://github.com/hku-mars/FAST_LIO
+    type: repo
+    modules: [m5]
+    pointer: "src/laserMapping.cpp (iterated EKF), src/IMU_Processing.hpp (deskew) — code to read, not copy"
+    required: true
+    verified_on: 2026-10-02
+
+  # ---------------- Module 6 ----------------
+  - id: scan_context_paper
+    title: "Kim & Kim — Scan Context: Egocentric Spatial Descriptor for Place Recognition (IROS 2018)"
+    url: https://gisbi-kim.github.io/publications/gkim-2018-iros.pdf
+    type: paper
+    modules: [m6]
+    pointer: "Section III-A 'Scan Context', III-B 'Similarity Score between Scan Contexts', III-C 'Two-phase Search Algorithm'"
+    required: true
+    verified_on: 2026-10-02
+  - id: scan_context_repo
+    title: "Scan Context — repository"
+    url: https://github.com/gisbi-kim/scancontext
+    type: repo
+    modules: [m6]
+    pointer: "README; cpp/module/Scancontext — read, not copy"
+    required: true
+    verified_on: 2026-10-02
+  - id: stachniss_robust_ls
+    title: "Robust Least Squares for Graph-Based SLAM (Cyrill Stachniss)"
+    url: https://www.youtube.com/watch?v=z60RbiY18I8
+    type: video
+    modules: [m6]
+    pointer: "Whole lecture (false loop closures, robust kernels, max-mixtures)"
+    required: true
+    verified_on: 2026-10-02
+  - id: gtsam_robust_noise
+    title: "GTSAM blog — Robust noise model"
+    url: https://gtsam.org/2019/09/20/robust-noise-model.html
+    type: docs
+    modules: [m6]
+    pointer: "Whole post"
+    required: true
+    verified_on: 2026-10-02
+  - id: evo_repo
+    title: "evo — trajectory evaluation (repository)"
+    url: https://github.com/MichaelGrupp/evo
+    type: repo
+    modules: [m6]
+    pointer: "README; notebooks/ (metrics API examples)"
+    required: true
+    verified_on: 2026-10-02
+  - id: evo_metrics_wiki
+    title: "evo wiki — Metrics"
+    url: https://github.com/MichaelGrupp/evo/wiki/Metrics
+    type: docs
+    modules: [m6]
+    pointer: "Sections 'evo_ape', 'evo_rpe'; see also wiki pages 'Alignment'"
+    required: true
+    verified_on: 2026-10-02
+  - id: kitti_odometry
+    title: "KITTI — Visual Odometry / SLAM evaluation 2012"
+    url: https://www.cvlibs.net/datasets/kitti/eval_odometry.php
+    type: docs
+    modules: [m6]
+    pointer: "Benchmark description at the top of the page: translational error in %, rotational error in deg/m, segment lengths"
+    required: true
+    verified_on: 2026-10-02
+
+  # ---------------- Module 7 ----------------
+  - id: argo_docs
+    title: "Argo Workflows — documentation"
+    url: https://argo-workflows.readthedocs.io/en/latest/
+    type: docs
+    modules: [m7]
+    pointer: "Walk-through section"
+    required: true
+    verified_on: 2026-10-02
+  - id: argo_loops
+    title: "Argo Workflows — Loops"
+    url: https://argo-workflows.readthedocs.io/en/latest/walk-through/loops/
+    type: docs
+    modules: [m7]
+    pointer: "withItems / withParam fan-out"
+    required: true
+    verified_on: 2026-10-02
+  - id: argo_parameters
+    title: "Argo Workflows — Parameters"
+    url: https://argo-workflows.readthedocs.io/en/latest/walk-through/parameters/
+    type: docs
+    modules: [m7]
+    pointer: "Whole page"
+    required: true
+    verified_on: 2026-10-02
+  - id: argo_artifacts
+    title: "Argo Workflows — Artifacts"
+    url: https://argo-workflows.readthedocs.io/en/latest/walk-through/artifacts/
+    type: docs
+    modules: [m7]
+    pointer: "Whole page (passing outputs between steps)"
+    required: true
+    verified_on: 2026-10-02
+  - id: argo_lint
+    title: "Argo Workflows — argo lint CLI"
+    url: https://argo-workflows.readthedocs.io/en/latest/cli/argo_lint/
+    type: docs
+    modules: [m7]
+    pointer: "Options, including --offline"
+    required: true
+    verified_on: 2026-10-02
+  - id: dvc_docs
+    title: "DVC — documentation (or the team's data versioning tool)"
+    url: https://dvc.org/doc
+    type: docs
+    modules: [m7]
+    pointer: "'Get Started' → Data and model versioning"
+    required: true
+    verified_on: 2026-10-02
+  - id: google_testing_blog
+    title: "Google Testing Blog"
+    url: https://testing.googleblog.com/
+    type: docs
+    modules: [m7]
+    pointer: "'Testing on the Toilet' posts (search: flaky tests, test sizes, change-detector tests)"
+    required: true
+    verified_on: 2026-10-02
+  - id: swe_book_testing
+    title: "Software Engineering at Google — Ch. 11 'Testing Overview' (free online)"
+    url: https://abseil.io/resources/swe-book/html/ch11.html
+    type: book
+    modules: [m7]
+    pointer: "Ch. 11 'Testing Overview'; also Ch. 12 'Unit Testing' and Ch. 14 'Larger Testing' from the same site"
+    required: true
+    verified_on: 2026-10-02
+  - id: swe_book
+    title: "Software Engineering at Google — full book (free online)"
+    url: https://abseil.io/resources/swe-book
+    type: book
+    modules: [m7]
+    pointer: "Table of contents"
+    required: false
+    verified_on: 2026-10-02
+  - id: github_actions_docs
+    title: "GitHub Actions — documentation"
+    url: https://docs.github.com/en/actions
+    type: docs
+    modules: [m7]
+    pointer: "Workflow syntax; using containers in jobs; caching dependencies"
+    required: true
+    verified_on: 2026-10-02
+
+  # ---------------- Module 8 ----------------
+  - id: spj_great_paper
+    title: "Simon Peyton Jones — How to Write a Great Research Paper (talk page with slides)"
+    url: https://simon.peytonjones.org/great-research-paper/
+    type: talk
+    modules: [m8]
+    pointer: "Slides (PDF) and the linked video"
+    required: true
+    verified_on: 2026-10-02
+  - id: spj_great_paper_video
+    title: "Simon Peyton Jones — How to Write a Great Research Paper (video, Microsoft Research)"
+    url: https://www.youtube.com/watch?v=VK51E3gHENc
+    type: video
+    modules: [m8]
+    pointer: "Whole talk; the seven suggestions"
+    required: true
+    verified_on: 2026-10-02
+
+  # ---------------- Data ----------------
+  - id: kitti_raw
+    title: "KITTI raw data"
+    url: https://www.cvlibs.net/datasets/kitti/raw_data.php
+    type: dataset
+    modules: [m0, m1, m2, m3, m4, m5, m6, m7, m8]
+    pointer: "Download list per drive; devkit readme (OXTS field definitions, sensor setup)"
+    license: "CC BY-NC-SA 3.0"
+    commercial_use: false
+    required: true
+    verified_on: 2026-10-02
+
+  - id: miluv_static_imu
+    title: "MILUV dataset (Shalaby et al.) — imu_calib: 16 h static IMU recordings"
+    url: https://doi.org/10.25452/figshare.plus.28386041.v1
+    type: dataset
+    modules: [m3]
+    pointer: "File imu_calib.zip, folder ifo001: the static bag plus the authors' Allan-variance results (fetched by data/download.py --static-imu)"
+    license: "CC BY 4.0"
+    commercial_use: true
+    required: true
+    verified_on: 2026-10-03
+
+  # ---------------- Applied project datasets ----------------
+  - id: neon_aop
+    title: "NEON Airborne Observation Platform (AOP)"
+    url: https://www.neonscience.org/data-collection/airborne-remote-sensing
+    type: dataset
+    modules: [applied_a]
+    pointer: "AOP data products: discrete LiDAR, hyperspectral reflectance, RGB camera"
+    license: "CC BY 4.0 (changed from CC0 on 2026-06-30; account required to download)"
+    commercial_use: true
+    required: true
+    verified_on: 2026-10-02
+  - id: neon_portal
+    title: "NEON data portal"
+    url: https://data.neonscience.org/
+    type: dataset
+    modules: [applied_a]
+    pointer: "Data products search"
+    license: "CC BY 4.0"
+    commercial_use: true
+    required: true
+    verified_on: 2026-10-02
+  - id: neon_usage_policies
+    title: "NEON — usage policies"
+    url: https://www.neonscience.org/usage-policies
+    type: docs
+    modules: [applied_a]
+    pointer: "Data license and citation requirements"
+    required: true
+    verified_on: 2026-10-02
+  - id: neon_tree_evaluation
+    title: "NeonTreeEvaluation benchmark (Weinstein et al.)"
+    url: https://github.com/weecology/NeonTreeEvaluation
+    type: dataset
+    modules: [applied_a]
+    pointer: "README: data download, evaluation code"
+    license: "CC0-1.0 (repository)"
+    commercial_use: true
+    required: true
+    verified_on: 2026-10-02
+  - id: grss_dfc2018
+    title: "IEEE GRSS Data Fusion Contest 2018 (Houston: multispectral LiDAR + hyperspectral)"
+    url: https://www.grss-ieee.org/community/technical-committees/2018-ieee-grss-data-fusion-contest/
+    type: dataset
+    modules: [applied_a]
+    pointer: "Contest page: data description and terms. The original DASE download portal is only on the Web Archive; current availability must be confirmed with GRSS."
+    license: "Contest terms: redistribution forbidden; publication needs approval; annotations ODbL"
+    commercial_use: false
+    required: false
+    verified_on: 2026-10-02
+  - id: muufl_gulfport
+    title: "MUUFL Gulfport hyperspectral + LiDAR dataset"
+    url: https://github.com/GatorSense/MUUFLGulfport
+    type: dataset
+    modules: [applied_a]
+    pointer: "README: data files and citation requirements"
+    license: "MIT (repository); cite the dataset papers listed in the README"
+    commercial_use: true
+    required: false
+    verified_on: 2026-10-02
+  - id: wild_places
+    title: "Wild-Places: large-scale LiDAR place recognition in forests"
+    url: https://csiro-robotics.github.io/Wild-Places/
+    type: dataset
+    modules: [applied_b]
+    pointer: "Download via the CSIRO Data Access Portal link on the page"
+    license: "CC BY-NC-SA 4.0"
+    commercial_use: false
+    required: true
+    verified_on: 2026-10-02
+  - id: wild_places_data
+    title: "Wild-Places — CSIRO Data Access Portal"
+    url: https://data.csiro.au/collection/csiro:56372
+    type: dataset
+    modules: [applied_b]
+    pointer: "Files tab"
+    license: "CC BY-NC-SA 4.0"
+    commercial_use: false
+    required: true
+    verified_on: 2026-10-02
+  - id: botanic_garden
+    title: "BotanicGarden dataset (LiDAR, cameras, IMU, wheel odometry, ground truth)"
+    url: https://github.com/robot-pesg/BotanicGarden
+    type: dataset
+    modules: [applied_b]
+    pointer: "README: download links per sequence (OneDrive / Baidu / SJTU)"
+    license: "No formal license; 'provided for academic purposes'"
+    commercial_use: false
+    required: false
+    verified_on: 2026-10-02
+  - id: for_instance
+    title: "FOR-instance: UAV laser scanning benchmark for individual tree segmentation"
+    url: https://zenodo.org/records/8287792
+    type: dataset
+    modules: [applied_b]
+    pointer: "Files section of the Zenodo record"
+    license: "CC BY 4.0"
+    commercial_use: true
+    required: false
+    verified_on: 2026-10-02
+  - id: boreas
+    title: "Boreas: multi-season autonomous driving dataset (LiDAR, radar, camera, GNSS/IMU)"
+    url: https://www.boreas.utias.utoronto.ca/
+    type: dataset
+    modules: [applied_c]
+    pointer: "Download page (generates AWS CLI commands); pyboreas devkit"
+    license: "CC BY 4.0 (per AWS Open Data registry)"
+    commercial_use: true
+    required: true
+    verified_on: 2026-10-02
+  - id: boreas_registry
+    title: "Boreas — AWS Open Data registry entry"
+    url: https://registry.opendata.aws/boreas/
+    type: dataset
+    modules: [applied_c]
+    pointer: "License and S3 bucket (s3://boreas)"
+    license: "CC BY 4.0"
+    commercial_use: true
+    required: true
+    verified_on: 2026-10-02
+  - id: mulran
+    title: "MulRan: multimodal range dataset (radar + LiDAR)"
+    url: https://sites.google.com/view/mulran-pr
+    type: dataset
+    modules: [applied_c]
+    pointer: "Download tab (request form); Citation tab (license)"
+    license: "CC BY-NC-SA 4.0"
+    commercial_use: false
+    required: false
+    verified_on: 2026-10-02
+  - id: oxford_radar_robotcar
+    title: "Oxford Radar RobotCar dataset"
+    url: https://oxford-robotics-institute.github.io/radar-robotcar-dataset/
+    type: dataset
+    modules: [applied_c]
+    pointer: "Registration, then Downloads page"
+    license: "CC BY-NC-SA 4.0 (commercial use by agreement only)"
+    commercial_use: false
+    required: false
+    verified_on: 2026-10-02
+
+# Links from the spec that were dropped or replaced:
+#   Coursera "GPS: An Introduction to Satellite Navigation" (Stanford): the course page returns 404 and the
+#     course is no longer listed on Coursera. Replaced by the free ESA GNSS book (esa_gnss_book) plus Navipedia.
+#   Trento hyperspectral + LiDAR dataset: no official public download found; dropped from Track A alternatives.
+#   NXP AN5087 "Allan Variance" (optional extra) returned 404; not needed, Kalibr wiki covers it.
