@@ -32,6 +32,12 @@ Answer the Readiness part of [`quiz/self_check.md`](quiz/self_check.md) before c
 2. **Benchmark.** Complete `gt_relative`, `initial_error_sweep` and `main` in [`starter/benchmark.py`](starter/benchmark.py). Compare your ICP with Open3D and small_gicp on at least 50 consecutive pairs from a full drive: translation/rotation error distributions, runtime, and success rate against initial error (the convergence basin).
 3. **Profile and optimize.** Profile `icp_register` with `perf` (build `RelWithDebInfo`), make a flame graph, pick **one** hotspot, change it, and measure before/after on the same pairs. The optimization must not change the accuracy beyond noise.
 
+### C++ focus: performance-aware C++
+- [Compiler Explorer](https://godbolt.org/) — tool — compare your inner loop at `-O0` and `-O2`
+- [C++ Core Guidelines](https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines) — docs — "Per: Performance"
+
+Task: the ICP inner loop must not allocate. Reuse buffers across iterations (`reserve`, member scratch space), pass large objects by reference, and show with your profile that allocation is not a hotspot.
+
 ### Deliverables
 - [ ] ICP merged through PR review
 - [ ] Benchmark report: error distributions per method, runtime table, convergence-basin plot

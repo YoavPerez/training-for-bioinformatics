@@ -1,5 +1,4 @@
 # The trainee's growing pipeline library. Each module adds sources here.
-find_package(Eigen3 3.4 REQUIRED NO_MODULE)
 find_package(GTSAM QUIET)
 
 add_library(slam_pipeline

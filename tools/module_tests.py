@@ -17,7 +17,7 @@ REPO = Path(__file__).resolve().parents[1]
 
 
 def module_dirs(selected: list[str]) -> list[Path]:
-    dirs = sorted(p for p in (REPO / "modules").glob("m[0-9]_*") if p.is_dir())
+    dirs = sorted(p for p in (REPO / "modules").glob("m[0-9]*_*") if p.is_dir())
     if selected:
         dirs = [d for d in dirs if d.name.split("_")[0] in selected]
     return dirs

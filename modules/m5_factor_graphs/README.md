@@ -33,6 +33,12 @@ Answer the Readiness part of [`quiz/self_check.md`](quiz/self_check.md) before w
 4. **End to end.** Run `run_pipeline` (provided app) on at least two full drives (`data/README.md` suggests 0027 and 0018).
 5. **Compare.** Complete [`starter/run_and_compare.py`](starter/run_and_compare.py): odometry only, + GNSS, + GNSS + IMU, and the module 2 ESKF, evaluated against the OXTS ground truth.
 
+### C++ focus: API design and ownership
+- [C++ Core Guidelines](https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines) — docs — "I: Interfaces" (I.27 Pimpl), "R: Resource management"
+- [cppreference: std::unique_ptr](https://en.cppreference.com/w/cpp/memory/unique_ptr) — docs
+
+Task: `graph_builder.hpp` hides every GTSAM type behind a `std::unique_ptr<Impl>`. In your PR, explain what that buys (compile times, dependencies, ABI) and why the destructor is defined in the `.cpp`. Your new code must have no owning raw pointers and const-correct accessors.
+
 ### Deliverables
 - [ ] Approved design doc (merged before the back-end code)
 - [ ] Odometry and graph builder merged through PR review

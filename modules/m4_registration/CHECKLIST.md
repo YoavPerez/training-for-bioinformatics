@@ -7,6 +7,7 @@
 - [ ] Convergence-basin plot in the PR
 - [ ] Profile (flame graph) before/after; one optimization with repeated measurements
 - [ ] `python tools/module_tests.py m4` passes
+- [ ] C++ focus: no allocations in the ICP inner loop, shown in the profile
 - [ ] Self-check 2 (Apply) done — score: ___ / 5
 - [ ] "Explain to your mentor" prompts prepared
 - [ ] Mid-program checkpoint scheduled with your mentor

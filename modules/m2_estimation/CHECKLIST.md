@@ -8,6 +8,7 @@
 - [ ] Outage plot (error + 3σ) and one-page note in the PR
 - [ ] Paper summary written and presented
 - [ ] `python tools/module_tests.py m2` passes
+- [ ] C++ focus: `Eskf` invariants documented and asserted; no unjustified explicit inverses
 - [ ] Self-check 2 (Apply) done — score: ___ / 5
 - [ ] "Explain to your mentor" prompts prepared
 - [ ] Glossary updated

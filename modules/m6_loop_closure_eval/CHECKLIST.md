@@ -8,6 +8,7 @@
 - [ ] Ablation on ≥ 2 drives with CIs; sweep assumption checked
 - [ ] Every result tied to commit, flags, drive and `prepare` seed
 - [ ] `python tools/module_tests.py m6` passes
+- [ ] C++ focus: failure paths classified (optional / exception / assert) in the PR
 - [ ] Self-check 2 (Apply) done — score: ___ / 5
 - [ ] "Explain to your mentor" prompts prepared
 - [ ] Glossary updated

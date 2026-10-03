@@ -30,6 +30,13 @@ Answer the Readiness part of [`quiz/self_check.md`](quiz/self_check.md) before c
 4. **Loops on real data.** Run `run_pipeline --loops` on a drive with revisits (`2011_09_30_drive_0027` = KITTI odometry 07; `2011_09_30_drive_0018` = 05). Plot detected loops on the trajectory.
 5. **Ablation.** Complete [`starter/ablation.py`](starter/ablation.py): GNSS, loop closure and deskew each on/off, across at least two drives. Report error distributions and confidence intervals. The `--deskew` option in `run_pipeline` contains a documented assumption about the LiDAR sweep; check whether it holds, using your data.
 
+### C++ focus: error handling
+- [cppreference: std::optional](https://en.cppreference.com/w/cpp/utility/optional) — docs
+- [LearnCpp](https://www.learncpp.com/) — book — Ch. 27 "Exceptions"
+- [C++ Core Guidelines](https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines) — docs — "E: Error handling"
+
+Task: for every failure path in your place-recognition and loop-verification code, decide between an expected "no result" (`std::optional`), an exception (broken precondition) and an `assert` (programming error). List the decisions in your PR.
+
 ### Deliverables
 - [ ] Scan Context, `verifyLoop`, `addLoop` and `evaluation.py` merged through PR review
 - [ ] False-loop experiment: trajectories and ATE for each kernel you tried

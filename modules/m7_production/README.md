@@ -33,6 +33,12 @@ Answer the Readiness part of [`quiz/self_check.md`](quiz/self_check.md) before s
 4. **Data versioning.** Put the prepared sequences you use under the team's data-versioning tool (DVC by default) and reference the version in your reports.
 5. **Production PR.** Read through the team's production codebase with your mentor and submit one small real fix or improvement through the normal review process.
 
+### C++ focus: static analysis and packaging
+- [clang-tidy](https://clang.llvm.org/extra/clang-tidy/) — docs — usage and the list of checks
+- [An Introduction to Modern CMake](https://cliutils.gitlab.io/modern-cmake/) — book — "Exporting and Installing"
+
+Task: run clang-tidy with the repository's `.clang-tidy` over the pipeline sources you wrote, and fix or justify every finding. Add `install()` rules for the apps so the runtime image can use `cmake --install` instead of copying binaries.
+
 ### Deliverables
 - [ ] Runtime image and Argo workflow merged; a successful workflow run over ≥ 3 sequences with its summary
 - [ ] CI regression gate enabled; a PR showing it fail on a degraded change

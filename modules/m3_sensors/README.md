@@ -33,6 +33,13 @@ Answer the Readiness part of [`quiz/self_check.md`](quiz/self_check.md) before c
 3. **Before/after.** `data/samples/skewed/scan.npz` holds a KITTI raw scan with strong synthetic distortion added (a 45°/s turn), so the effect is easy to see and to check against a reference. Deskew it with the `deskew_scan` tool (helpers in [`starter/skew_tools.py`](starter/skew_tools.py)) and plot before/after top-down views. Then repeat on a real turning segment of a full drive: KITTI raw scans are *not* motion-compensated (the odometry-benchmark copies are), the per-point times must be derived from the azimuth, and the motion comes from your IMU propagation. Find out how the CT-ICP paper derives the per-point times.
 4. **Time offset.** Complete [`starter/time_offset.py`](starter/time_offset.py): sweep an IMU–LiDAR clock offset from −20 ms to +20 ms and plot the deskew error against it.
 
+### C++ focus: generic code and sanitizers on your own code
+- [Back to Basics: Templates, part 1](https://www.youtube.com/watch?v=XN319NYEOcE) and [part 2](https://www.youtube.com/watch?v=2Y9XbltAfXs) — video
+- [cppreference: std::lower_bound](https://en.cppreference.com/w/cpp/algorithm/lower_bound) — docs
+- [AddressSanitizer](https://clang.llvm.org/docs/AddressSanitizer.html) — docs — "Usage"
+
+Task: make `poseAt` O(log n) with a standard algorithm. Build the module 3 tests once with `-DCMAKE_CXX_FLAGS="-fsanitize=address,undefined -fno-omit-frame-pointer"` in a separate build directory, run them, and fix anything reported (module 0b explains the `setarch -R` workaround if ASan hangs).
+
 ### Deliverables
 - [ ] `allan.py` and `deskew.cpp` merged through PR review
 - [ ] Noise-parameter report: Allan plots, a table of N and K per axis, and the datasheet comparison

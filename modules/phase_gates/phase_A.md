@@ -1,4 +1,4 @@
-# Phase gate A — Foundations (modules 0–1)
+# Phase gate A — Foundations (modules 0, 0b, 1)
 
 Closed-book, 45 minutes. Score yourself with `phase_A_answers.md`.
 
@@ -23,5 +23,9 @@ Closed-book, 45 minutes. Score yourself with `phase_A_answers.md`.
 **PA-10.** You move 1° of longitude east at latitude 60°. Roughly how many kilometres is that?
 
 **PA-11.** In git, how do you undo the last commit locally while keeping its changes in the working tree?
+
+**PA-13.** A function takes `const Eigen::Matrix3Xd& pts` and is called with `cloud.leftCols(100)`. What happens, and how do you avoid it?
+
+**PA-14.** A class owns an open file through `std::unique_ptr<FILE, Closer>`. Which special member functions should it declare, and what happens if someone tries to copy it?
 
 **PA-12.** Bridge: a multiple sequence alignment uses a reference coordinate system for positions. What plays that role in mapping, and what goes wrong if two people use different ones?

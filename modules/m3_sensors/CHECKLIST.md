@@ -8,6 +8,7 @@
 - [ ] Before/after deskew figure in the PR
 - [ ] Time-offset plot and write-up with a tolerable-offset number
 - [ ] `python tools/module_tests.py m3` passes
+- [ ] C++ focus: `poseAt` is O(log n); module tests run clean under ASan/UBSan
 - [ ] Self-check 2 (Apply) done — score: ___ / 6
 - [ ] "Explain to your mentor" prompts prepared
 - [ ] Glossary updated

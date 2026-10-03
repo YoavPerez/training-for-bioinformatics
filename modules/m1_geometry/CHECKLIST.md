@@ -7,6 +7,7 @@
 - [ ] World-frame scan plot attached to the PR
 - [ ] All transform variables follow `CONVENTIONS.md` naming
 - [ ] clang-format and ruff clean
+- [ ] C++ focus: `TEST_P` round-trip test added; no Eigen pass-by-value
 - [ ] Self-check 2 (Apply) done — score: ___ / 5
 - [ ] "Explain to your mentor" prompts prepared
 - [ ] Glossary updated

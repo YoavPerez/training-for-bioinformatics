@@ -11,4 +11,6 @@
 **PA-09.** WGS84 ellipsoid; ECEF, then local ENU (plus the geodetic lat/lon/h input). See: navipedia_ecef_enu — whole page
 **PA-10.** About 111 km × cos 60° ≈ 56 km. See: navipedia_geodetic_ecef — "From Ellipsoidal to Cartesian coordinates"
 **PA-11.** `git reset --soft HEAD~1` (or `--mixed`). See: missing_semester — lecture 6 "Version Control (Git)"
+**PA-13.** A temporary Matrix3Xd copy of the block is made for every call; take `Eigen::Ref<const Eigen::Matrix3Xd>` instead. See: eigen_function_params — "Ref"
+**PA-14.** None (rule of zero); copying does not compile because the unique_ptr member makes the class move-only. See: cppref_rule_of_three — rule of zero
 **PA-12.** The world/map frame and its origin; positions from different origins cannot be compared or fused. See: rep105 — "Relationship between Frames"

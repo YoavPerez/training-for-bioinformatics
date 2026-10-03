@@ -55,6 +55,192 @@ links:
     required: true
     verified_on: 2026-10-02
 
+  # ---------------- Module 0b: C++ foundations (and C++ focus in later modules) ----------------
+  - id: learncpp
+    title: "LearnCpp.com — free online C++ book"
+    url: https://www.learncpp.com/
+    type: book
+    modules: [m0b]
+    pointer: "Ch. 12 references/pointers, 14–15 classes, 16 std::vector, 22 move semantics and smart pointers, 26 templates and classes, 27 exceptions"
+    required: true
+    verified_on: 2026-10-03
+  - id: cppcon_raii
+    title: "Back to Basics: Smart Pointers and RAII — Inbal Levi (CppCon 2021)"
+    url: https://www.youtube.com/watch?v=07rJOzFRs6M
+    type: video
+    modules: [m0b]
+    pointer: "Whole talk"
+    required: true
+    verified_on: 2026-10-03
+  - id: cppcon_move_semantics
+    title: "Back to Basics: Move Semantics — Nicolai Josuttis (CppCon 2021)"
+    url: https://www.youtube.com/watch?v=Bt3zcJZIalk
+    type: video
+    modules: [m0b]
+    pointer: "Whole talk"
+    required: true
+    verified_on: 2026-10-03
+  - id: cppcon_value_semantics
+    title: "Back to Basics: Cpp Value Semantics — Klaus Iglberger (CppCon 2022)"
+    url: https://www.youtube.com/watch?v=G9MxNwUoSt0
+    type: video
+    modules: [m0b, m2]
+    pointer: "Whole talk"
+    required: true
+    verified_on: 2026-10-03
+  - id: cppcon_templates_1
+    title: "Back to Basics: Templates (part 1 of 2) — Bob Steagall (CppCon 2021)"
+    url: https://www.youtube.com/watch?v=XN319NYEOcE
+    type: video
+    modules: [m0b, m3]
+    pointer: "Whole talk"
+    required: true
+    verified_on: 2026-10-03
+  - id: cppcon_templates_2
+    title: "Back to Basics: Templates (part 2 of 2) — Bob Steagall (CppCon 2021)"
+    url: https://www.youtube.com/watch?v=2Y9XbltAfXs
+    type: video
+    modules: [m0b, m3]
+    pointer: "Whole talk"
+    required: true
+    verified_on: 2026-10-03
+  - id: cppcon_stl
+    title: "Back to Basics: Classic STL — Bob Steagall (CppCon 2021)"
+    url: https://www.youtube.com/watch?v=tXUXl_RzkAk
+    type: video
+    modules: [m0b]
+    pointer: "Whole talk"
+    required: true
+    verified_on: 2026-10-03
+  - id: cppcon_undefined_behavior
+    title: "Back To Basics: Undefined Behavior — Ansel Sermersheim & Barbara Geller (CppCon 2021)"
+    url: https://www.youtube.com/watch?v=NpL9YnxnOqM
+    type: video
+    modules: [m0b]
+    pointer: "Whole talk"
+    required: true
+    verified_on: 2026-10-03
+  - id: cppcon_debugging
+    title: "Back to Basics: Debugging in C++ — Mike Shah (CppCon 2022)"
+    url: https://www.youtube.com/watch?v=YzIBwqWC6EM
+    type: video
+    modules: [m0b]
+    pointer: "Whole talk (gdb workflow)"
+    required: true
+    verified_on: 2026-10-03
+  - id: cppref_rule_of_three
+    title: "cppreference — The rule of three/five/zero"
+    url: https://en.cppreference.com/w/cpp/language/rule_of_three
+    type: docs
+    modules: [m0b]
+    pointer: "Whole page"
+    required: true
+    verified_on: 2026-10-03
+  - id: cppref_unique_ptr
+    title: "cppreference — std::unique_ptr"
+    url: https://en.cppreference.com/w/cpp/memory/unique_ptr
+    type: docs
+    modules: [m0b, m5]
+    pointer: "Class description, custom deleters"
+    required: true
+    verified_on: 2026-10-03
+  - id: cppref_optional
+    title: "cppreference — std::optional"
+    url: https://en.cppreference.com/w/cpp/utility/optional
+    type: docs
+    modules: [m0b, m6]
+    pointer: "Description, Observers, Modifiers"
+    required: true
+    verified_on: 2026-10-03
+  - id: cppref_lower_bound
+    title: "cppreference — std::lower_bound"
+    url: https://en.cppreference.com/w/cpp/algorithm/lower_bound
+    type: docs
+    modules: [m0b, m3]
+    pointer: "Whole page"
+    required: true
+    verified_on: 2026-10-03
+  - id: eigen_function_params
+    title: "Eigen — Writing functions taking Eigen types as parameters"
+    url: https://eigen.tuxfamily.org/dox/TopicFunctionTakingEigenTypes.html
+    type: docs
+    modules: [m0b, m1]
+    pointer: "Whole page, especially 'Ref'"
+    required: true
+    verified_on: 2026-10-03
+  - id: eigen_aliasing
+    title: "Eigen — Aliasing"
+    url: https://eigen.tuxfamily.org/dox/group__TopicAliasing.html
+    type: docs
+    modules: [m0b]
+    pointer: "Whole page"
+    required: true
+    verified_on: 2026-10-03
+  - id: eigen_pitfalls
+    title: "Eigen — Common pitfalls"
+    url: https://eigen.tuxfamily.org/dox/TopicPitfalls.html
+    type: docs
+    modules: [m0b, m1]
+    pointer: "'Aliasing', 'C++11 and the auto keyword', 'Pass-by-value'"
+    required: true
+    verified_on: 2026-10-03
+  - id: asan_docs
+    title: "Clang — AddressSanitizer"
+    url: https://clang.llvm.org/docs/AddressSanitizer.html
+    type: docs
+    modules: [m0b, m3]
+    pointer: "Introduction, Usage (same flags with GCC)"
+    required: true
+    verified_on: 2026-10-03
+  - id: ubsan_docs
+    title: "Clang — UndefinedBehaviorSanitizer"
+    url: https://clang.llvm.org/docs/UndefinedBehaviorSanitizer.html
+    type: docs
+    modules: [m0b]
+    pointer: "Usage, Available checks"
+    required: true
+    verified_on: 2026-10-03
+  - id: modern_cmake
+    title: "An Introduction to Modern CMake (free online book)"
+    url: https://cliutils.gitlab.io/modern-cmake/
+    type: book
+    modules: [m0b, m7]
+    pointer: "'The Basics', 'Using Other Projects'; 'Exporting and Installing' (m7)"
+    required: true
+    verified_on: 2026-10-03
+  - id: googletest_primer
+    title: "GoogleTest — Primer"
+    url: https://google.github.io/googletest/primer.html
+    type: docs
+    modules: [m0b, m1]
+    pointer: "Assertions, test fixtures; see also 'Advanced' for value-parameterized tests"
+    required: true
+    verified_on: 2026-10-03
+  - id: godbolt
+    title: "Compiler Explorer"
+    url: https://godbolt.org/
+    type: docs
+    modules: [m0b, m4]
+    pointer: "Tool: compare generated code at -O0/-O2"
+    required: false
+    verified_on: 2026-10-03
+  - id: clang_tidy
+    title: "clang-tidy documentation"
+    url: https://clang.llvm.org/extra/clang-tidy/
+    type: docs
+    modules: [m7]
+    pointer: "Using clang-tidy; the list of checks"
+    required: true
+    verified_on: 2026-10-03
+  - id: gdb_manual
+    title: "GDB manual"
+    url: https://sourceware.org/gdb/current/onlinedocs/gdb.html/
+    type: docs
+    modules: [m0b]
+    pointer: "'Breakpoints', 'Examining the Stack'"
+    required: false
+    verified_on: 2026-10-03
+
   # ---------------- Module 1 ----------------
   - id: modern_robotics
     title: "Lynch & Park — Modern Robotics (free book + videos)"

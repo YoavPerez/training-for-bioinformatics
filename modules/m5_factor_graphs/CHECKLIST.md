@@ -7,6 +7,7 @@
 - [ ] Pipeline run on two full drives; `prepare` options and seed recorded
 - [ ] Comparison table (with CIs) and trajectory plots in the PR
 - [ ] `python tools/module_tests.py m5` passes
+- [ ] C++ focus: pimpl explained in the PR; no owning raw pointers
 - [ ] Self-check 2 (Apply) done — score: ___ / 5
 - [ ] "Explain to your mentor" prompts prepared
 - [ ] Glossary updated

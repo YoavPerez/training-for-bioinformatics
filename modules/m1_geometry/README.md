@@ -32,6 +32,12 @@ Answer the Readiness part of [`quiz/self_check.md`](quiz/self_check.md) before c
 4. **Scan in the world.** Complete [`starter/world_scan.py`](starter/world_scan.py): put one velodyne scan into the world frame using the OXTS pose and the IMU–velodyne calibration, and plot it top-down together with the GNSS track. Name every transform according to `CONVENTIONS.md`.
 5. Run both scripts on a full drive (e.g. `2011_09_30_drive_0027`, see `data/README.md`) as well as on the sample.
 
+### C++ focus: unit testing and passing Eigen types
+- [GoogleTest Primer](https://google.github.io/googletest/primer.html) — docs — then "Advanced GoogleTest Topics" → value-parameterized tests (linked from the primer)
+- [Eigen — Writing functions taking Eigen types as parameters](https://eigen.tuxfamily.org/dox/TopicFunctionTakingEigenTypes.html) and [Common pitfalls](https://eigen.tuxfamily.org/dox/TopicPitfalls.html) — docs — "Pass-by-value"
+
+Task: add a value-parameterized test (`TEST_P`) to `tests/test_transform.cpp` that runs `so3Log`/`so3Exp` round trips near π about at least five different axes. No Eigen object may be passed by value in code you write.
+
 ### Deliverables
 - [ ] Transform library and geodesy merged through PR review
 - [ ] ENU trajectory plot (sample + one full drive)

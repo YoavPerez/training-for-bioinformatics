@@ -23,6 +23,9 @@ FetchContent_MakeAvailable(googletest nanoflann)
 enable_testing()
 include(GoogleTest)
 
+# Found here so that every subdirectory (pipeline and module tests) sees the imported target.
+find_package(Eigen3 3.4 REQUIRED NO_MODULE)
+
 add_subdirectory(pipeline)
 
 # Each module's visible acceptance tests. Tests are labelled by module (e.g. `ctest -L m1`).

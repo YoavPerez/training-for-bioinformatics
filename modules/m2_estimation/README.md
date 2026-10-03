@@ -33,6 +33,12 @@ Answer the Readiness part of [`quiz/self_check.md`](quiz/self_check.md) before c
 5. **Outage experiment.** Complete [`starter/outage_experiment.py`](starter/outage_experiment.py). Drop GNSS for 30–60 s on a full drive, and plot the horizontal error and the 3σ bound over time, with and without the outage.
 6. **Paper summary.** Write your first one-page summary with [`templates/paper_summary.md`](../../templates/paper_summary.md). Use one of the module's papers or one your mentor suggests, and present it at paper club.
 
+### C++ focus: class design and numerical hygiene
+- [C++ Core Guidelines](https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines) — docs — "C: Classes and class hierarchies" (C.2 invariants), "Con: Constants and immutability"
+- [Back to Basics: Cpp Value Semantics — Klaus Iglberger](https://www.youtube.com/watch?v=G9MxNwUoSt0) — video
+
+Task: write the invariants of `Eskf` in its header (covariance symmetric positive semi-definite, quaternion unit norm) and check them with `assert` after every `predict` and `updatePosition`. Replace every explicit matrix inverse in your code with a decomposition-based solve, or justify the ones you keep.
+
 ### Deliverables
 - [ ] `optim.py`, `eskf_2d.py`, `eskf.cpp` merged through PR review
 - [ ] Executed notebook with the comparison and the poor-start experiment

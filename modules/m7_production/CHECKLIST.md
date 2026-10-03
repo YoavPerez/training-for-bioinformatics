@@ -9,6 +9,7 @@
 - [ ] Data version recorded
 - [ ] One merged PR to the production codebase
 - [ ] `python tools/module_tests.py m7` passes
+- [ ] C++ focus: clang-tidy findings fixed or justified; `install()` rules added
 - [ ] Self-check 2 (Apply) done — score: ___ / 5
 - [ ] "Explain to your mentor" prompts prepared
 - [ ] Glossary updated

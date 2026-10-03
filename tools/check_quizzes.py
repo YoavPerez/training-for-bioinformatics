@@ -3,7 +3,7 @@
     python tools/check_quizzes.py
 
 For every modules/m*/quiz/ and modules/phase_gates/:
-  * questions are tagged **<ID>.** (e.g. **M1-R03.**, **M1-A02.**, **PA-07.**)
+  * questions are tagged **<ID>.** (e.g. **M1-R03.**, **M0B-A02.**, **PA-07.**)
   * module quizzes have the sections "## Self-check 1 — Readiness", "## Self-check 2 — Apply"
     and "## Explain to your mentor"
   * every question id has exactly one answer in the answers file, and vice versa
@@ -18,7 +18,7 @@ from pathlib import Path
 import yaml
 
 REPO = Path(__file__).resolve().parents[1]
-ID = re.compile(r"\*\*((?:M\d-[RA]|P[A-D]-)\d{2})\.\*\*")
+ID = re.compile(r"\*\*((?:M\d[A-Z]?-[RA]|P[A-D]-)\d{2})\.\*\*")
 MAX_ANSWER_CHARS = 220
 SECTIONS = ["## Self-check 1 — Readiness", "## Self-check 2 — Apply", "## Explain to your mentor"]
 
@@ -76,7 +76,7 @@ def main() -> int:
     ids = link_ids()
     errs = []
     count = 0
-    for module in sorted((REPO / "modules").glob("m[0-9]_*")):
+    for module in sorted((REPO / "modules").glob("m[0-9]*_*")):
         q = module / "quiz" / "self_check.md"
         if not q.exists():
             errs.append(f"{module.name}: missing quiz/self_check.md")

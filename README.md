@@ -1,6 +1,6 @@
 # SLAM, LiDAR & Navigation Onboarding Program
 
-A self-serve onboarding program for engineers joining the SLAM / 3D LiDAR / GNSS-IMU fusion / mapping team. It takes roughly 8 weeks. Over nine modules (0–8) you build **one LiDAR-inertial-GNSS mapping pipeline** in `pipeline/`, and each module adds one layer to it. An optional applied project follows.
+A self-serve onboarding program for engineers joining the SLAM / 3D LiDAR / GNSS-IMU fusion / mapping team. It takes roughly 8–9 weeks. Over nine modules (0–8) you build **one LiDAR-inertial-GNSS mapping pipeline** in `pipeline/`, and each module adds one layer to it. An optional applied project follows.
 
 All teaching is done by external, free resources. This repository gives you the assignments, starter code, tests, self-check quizzes and review checklists. Your mentor answers questions and reviews your work.
 
@@ -11,6 +11,7 @@ The program has four **phases**. Each phase ends with a cumulative phase-gate se
 | Phase | Module | Folder | Tentative effort |
 |---|---|---|---|
 | **A. Foundations** | 0. Diagnostic and team conventions | [`modules/m0_conventions`](modules/m0_conventions/) | a few days |
+| | 0b. C++ foundations | [`modules/m0b_cpp_foundations`](modules/m0b_cpp_foundations/) | ~4–5 days (1–2 if strong in C++) |
 | | 1. 3D geometry, frames, geodesy | [`modules/m1_geometry`](modules/m1_geometry/) | ~1 week |
 | | *Phase gate A* | [`modules/phase_gates/phase_A.md`](modules/phase_gates/phase_A.md) | |
 | **B. Estimation & sensors** | 2. State estimation fundamentals | [`modules/m2_estimation`](modules/m2_estimation/) | ~1 week |
@@ -28,6 +29,8 @@ The program has four **phases**. Each phase ends with a cumulative phase-gate se
 Efforts are estimates, not deadlines. There is no fixed schedule, and modules can stretch or shrink for each trainee. Do the modules in order, because each one builds on the last.
 
 ## How every module is organised
+
+C++ runs through the whole program: module 0b builds the foundations, and modules 1–7 each have a **C++ focus** task (testing, class design, generic code, performance, API design, error handling, tooling) reviewed with the rest of the module.
 
 Every module has the same five segments, so you always know where you are:
 
@@ -51,7 +54,7 @@ Every module has the same five segments, so you always know where you are:
 1. Create your own repository from this template ("Use this template" on GitHub), clone it, and add your mentor as a reviewer.
 2. Follow **Getting started** below until the pipeline builds and the smoke tests pass.
 3. Open [`modules/m0_conventions/README.md`](modules/m0_conventions/README.md) and take the diagnostic quiz (90 minutes, closed book). Hand it to your mentor.
-4. Push once and look at CI: `lint` and `smoke` are green, and the nine `module mN` jobs are red. That is expected; each module's job turns green as you complete it.
+4. Push once and look at CI: `lint` and `smoke` are green, and the ten `module mN` jobs are red. That is expected; each module's job turns green as you complete it.
 
 ## Getting started
 
