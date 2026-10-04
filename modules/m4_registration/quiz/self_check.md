@@ -26,7 +26,7 @@ Answer every question in writing **before** opening the answers file. Then score
 
 **M4-R08.** How does a sampling profiler like `perf record` decide where time is spent?
 
-**M4-R09.** In this module's sequence-alignment analogy (from bioinformatics), what plays the role of the scoring function, and what plays the role of the alignment?
+**M4-R09.** ICP alternates correspondence search and transform estimation. Compare it with iterative read alignment/refinement you know from bioinformatics: what plays the role of the scoring function, and what plays the role of the alignment?
 
 ## Self-check 2 — Apply
 

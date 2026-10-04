@@ -51,7 +51,7 @@ jobs:
     steps:
       - uses: actions/checkout@v4
       - run: infra/ci/build.sh . build
-      - run: ctest --test-dir build -L smoke --output-on-failure
+      - run: ctest --test-dir build -L '^smoke$' --output-on-failure
       - run: pip install -e . && pytest -q pipeline/python/tests
 
   # One job per module. Modules you have not finished yet are red; that is expected.

@@ -6,6 +6,6 @@ GitHub Actions only reads workflows from `.github/workflows/`, so `ci.yml` lives
 |---|---|
 | `lint.sh` | ruff, clang-format, `resources/links.yaml` schema, self-check quiz consistency |
 | `build.sh` | CMake configure + build |
-| `test_module.sh mN` | one module's acceptance tests (pytest + `ctest -L mN`) on the CI sample |
+| `test_module.sh mN` | one module's acceptance tests (pytest + `ctest -L '^mN$'`) on the CI sample |
 
 In CI every module is its own job. Modules you have not finished yet are red; that is expected. A module's job turning green is one of its acceptance criteria.

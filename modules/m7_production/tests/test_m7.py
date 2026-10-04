@@ -2,6 +2,7 @@
 
 import json
 import os
+import re
 import shutil
 import subprocess
 import sys
@@ -91,9 +92,58 @@ def test_regression_ci_workflow(repo_root):
     assert "slampipe.gate" in commands and "slampipe.evaluation" in commands and "run_pipeline" in commands
 
 
+def _base_images(dockerfile_text):
+    """Base image of every FROM line, with `ARG NAME=default` values substituted for ${NAME} / $NAME.
+
+    Returns (image, stages) pairs; `stages` are the stage names (`AS name`) defined before that FROM.
+    """
+    args, stages, result = {}, set(), []
+    for line in dockerfile_text.splitlines():
+        parts = line.split()
+        if not parts or parts[0].startswith("#"):
+            continue
+        keyword = parts[0].upper()
+        if keyword == "ARG" and len(parts) > 1:
+            name, _, default = parts[1].partition("=")
+            args[name] = default.strip("\"'")
+        elif keyword == "FROM":
+            words = [w for w in parts[1:] if not w.startswith("--")]
+            image = re.sub(r"\$\{(\w+)\}|\$(\w+)", lambda m: args.get(m.group(1) or m.group(2), ""), words[0])
+            result.append((image, set(stages)))
+            if len(words) >= 3 and words[1].upper() == "AS":
+                stages.add(words[2])
+    return result
+
+
+def _is_pinned(image, stages=frozenset()):
+    if image in stages or image == "scratch" or "@sha256:" in image:
+        return True
+    last = image.rsplit("/", 1)[-1]  # ignore a registry port such as host:5000/
+    tag = last.partition(":")[2]
+    return bool(image) and bool(tag) and tag != "latest"
+
+
+@pytest.mark.parametrize(
+    "dockerfile, pinned",
+    [
+        ("FROM ubuntu", False),
+        ("FROM ubuntu:latest", False),
+        ("ARG B\nFROM ${B}", False),
+        ("FROM localhost:5000/img", False),
+        ("ARG B=ghcr.io/o/img:abc123\nFROM ${B}", True),
+        ("FROM ubuntu@sha256:" + "0" * 64, True),
+        ("FROM ubuntu:24.04 AS build\nFROM build", True),
+    ],
+)
+def test_pin_rule(dockerfile, pinned):
+    assert all(_is_pinned(image, stages) for image, stages in _base_images(dockerfile)) is pinned
+
+
 def test_runtime_dockerfile_is_pinned(repo_root):
     text = (repo_root / "infra/docker/pipeline.Dockerfile").read_text()
     assert "TODO" not in text
-    froms = [line.split()[1] for line in text.splitlines() if line.startswith("FROM ")]
-    assert froms and all(not f.endswith(":latest") for f in froms)
+    images = _base_images(text)
+    assert images, "no FROM line"
+    for image, stages in images:
+        assert _is_pinned(image, stages), f"base image {image!r} is not pinned (tag other than latest, or digest)"
     assert "USER" in text, "do not run as root"

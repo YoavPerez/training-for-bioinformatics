@@ -4,7 +4,8 @@
     python tools/check_links.py --online   # also fetches every URL and reports non-200 responses
 
 Cross-references checked: `See: <id>` lines in quiz answer files and `links.yaml#<id>` references
-in Markdown files must name an existing id; every http(s) URL in a module README must be in links.yaml.
+in Markdown files must name an existing id; every http(s) URL in a Markdown file (links, <autolinks> and bare
+URLs) must be in links.yaml, except the non-resource endpoints in URL_ALLOWLIST.
 """
 
 import argparse
@@ -19,6 +20,9 @@ import yaml
 REPO = Path(__file__).resolve().parents[1]
 TYPES = {"video", "course", "docs", "paper", "book", "repo", "dataset", "talk"}
 REQUIRED = {"id", "title", "url", "type", "modules", "pointer", "required", "verified_on"}
+SKIP_DIRS = {".cache", ".git", ".pytest_cache", ".ruff_cache", ".venv", "build", "node_modules"}
+URL_RE = re.compile(r"https?://[^\s<>()\[\]\"'`]+")
+URL_ALLOWLIST: set[str] = set()  # non-resource endpoints that may appear in Markdown (none today)
 
 
 def load() -> list[dict]:
@@ -51,17 +55,17 @@ def check_references(links: list[dict]) -> list[str]:
     urls = {link["url"] for link in links}
     errors = []
     for md in REPO.glob("**/*.md"):
-        if any(part in {".cache", "build", "node_modules"} for part in md.parts):
+        if any(part in SKIP_DIRS for part in md.relative_to(REPO).parts):
             continue
         text = md.read_text(encoding="utf-8")
         rel = md.relative_to(REPO)
         for ref in re.findall(r"See:\s*([a-z0-9_]+)", text) + re.findall(r"links\.yaml#([a-z0-9_]+)", text):
             if ref not in ids:
                 errors.append(f"{rel}: unknown resource id '{ref}'")
-        if md.name == "README.md" and md.parent.parent.name == "modules":
-            for url in re.findall(r"\]\((https?://[^)\s]+)\)", text):
-                if url not in urls:
-                    errors.append(f"{rel}: URL not recorded in links.yaml: {url}")
+        for url in URL_RE.findall(text):
+            url = url.rstrip(".,;:!?*_")
+            if url not in urls and url not in URL_ALLOWLIST:
+                errors.append(f"{rel}: URL not recorded in links.yaml: {url}")
     return errors
 
 

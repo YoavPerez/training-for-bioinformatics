@@ -28,7 +28,7 @@ find_package(Eigen3 3.4 REQUIRED NO_MODULE)
 
 add_subdirectory(pipeline)
 
-# Each module's visible acceptance tests. Tests are labelled by module (e.g. `ctest -L m1`).
+# Each module's visible acceptance tests. Tests are labelled by module (e.g. `ctest -L '^m1$'`; -L takes a regex).
 file(GLOB module_test_dirs ${CMAKE_CURRENT_SOURCE_DIR}/modules/*/tests)
 foreach(dir ${module_test_dirs})
   if(EXISTS ${dir}/CMakeLists.txt)

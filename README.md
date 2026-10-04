@@ -69,11 +69,13 @@ Every module has the same five segments, so you always know where you are:
 3. Fetch the CI sample data: `python data/download.py --sample`. For the full KITTI raw drives, see [`data/README.md`](data/README.md) and the license notice there.
 4. Build and test the pipeline:
    ```bash
-   cmake -S pipeline -B build && cmake --build build -j && ctest --test-dir build
-   pytest
+   infra/ci/build.sh . build            # cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Release && cmake --build build
+   ctest --test-dir build -L '^smoke$'
+   pytest pipeline/python/tests
    ```
-   Many tests **fail on purpose** on untouched starter code. Making them pass is the assignment.
-   Run one module's acceptance tests (pytest + `ctest -L mN`) with `python tools/module_tests.py m1`.
+   Configure from the repository root (not `pipeline/`): the root `CMakeLists.txt` sets up the dependencies and the module tests.
+   Module tests (plain `ctest --test-dir build` or `pytest`) **fail on purpose** on untouched starter code. Making them pass is the assignment.
+   Run one module's acceptance tests (pytest + `ctest -L '^mN$'`) with `python tools/module_tests.py m1`.
 5. Start with [`modules/m0_conventions/README.md`](modules/m0_conventions/README.md).
 
 ## Working agreements

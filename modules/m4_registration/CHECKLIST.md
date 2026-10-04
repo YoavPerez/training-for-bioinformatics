@@ -1,7 +1,7 @@
 # Module 4 — Checklist
 
 - [ ] Self-check 1 (Readiness) done — score: ___ / 9
-- [ ] `icp.cpp` complete (incl. Huber kernel); `ctest -L m4` passes locally
+- [ ] `icp.cpp` complete (incl. Huber kernel); `ctest --test-dir build -L '^m4$'` passes locally
 - [ ] `benchmark.py` complete; ≥ 50 pairs from a full drive
 - [ ] Error distributions and runtime table per method in the PR
 - [ ] Convergence-basin plot in the PR

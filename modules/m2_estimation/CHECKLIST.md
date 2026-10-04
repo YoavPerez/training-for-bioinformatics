@@ -3,7 +3,7 @@
 - [ ] Self-check 1 (Readiness) done — score: ___ / 9
 - [ ] `optim.py` complete; notebook executed with comparison and poor-start experiment
 - [ ] `eskf_2d.py` complete
-- [ ] `eskf.cpp` complete; `ctest -L m2` passes locally
+- [ ] `eskf.cpp` complete; `ctest --test-dir build -L '^m2$'` passes locally
 - [ ] Full drive prepared; `prepare` options and seed recorded
 - [ ] Outage plot (error + 3σ) and one-page note in the PR
 - [ ] Paper summary written and presented

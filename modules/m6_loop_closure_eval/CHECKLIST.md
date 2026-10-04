@@ -1,7 +1,7 @@
 # Module 6 — Checklist
 
 - [ ] Self-check 1 (Readiness) done — score: ___ / 9
-- [ ] Scan Context and `verifyLoop` complete; `ctest -L m6` passes locally
+- [ ] Scan Context and `verifyLoop` complete; `ctest --test-dir build -L '^m6$'` passes locally
 - [ ] `addLoop` with a kernel chosen by experiment; false-loop evidence in the PR
 - [ ] `evaluation.py` complete
 - [ ] Loops detected on a drive with revisits; loop plot in the PR

@@ -15,6 +15,18 @@ ODOMETRY_ATE_RMSE_MAX = 0.14
 GRAPH_ATE_RMSE_MAX = 0.19
 
 
+# Template placeholders look like <component> or <What exists today ...>. Code spans and common HTML tags
+# (<br>, <img ...>, <sub>, ...) and autolinks (<https://...>) are not placeholders.
+_HTML_OR_LINK = r"(?!(?:br|img|sub|sup|details|summary|a|p|b|i|em|strong|code|kbd|div|span)\b|https?:)"
+_PLACEHOLDER = re.compile(r"<" + _HTML_OR_LINK + r"[A-Za-z][^<>\n]*>")
+
+
+def _placeholders(text):
+    prose = re.sub(r"```.*?```", "", text, flags=re.DOTALL)
+    prose = re.sub(r"`[^`\n]*`", "", prose)
+    return _PLACEHOLDER.findall(prose)
+
+
 def test_design_doc_completed_and_approved(repo_root):
     path = repo_root / DESIGN_DOC
     assert path.exists(), f"write {DESIGN_DOC} from templates/design_doc.md before coding"
@@ -29,7 +41,7 @@ def test_design_doc_completed_and_approved(repo_root):
         "## Evaluation plan",
     ]:
         assert heading in text, f"missing section {heading}"
-    assert not re.search(r"<[A-Z][^>]*>", text), "template placeholders (<...>) are still present"
+    assert not _placeholders(text), f"template placeholders are still present: {_placeholders(text)}"
     assert re.search(r"\*\*Status:\*\*\s*approved", text, re.IGNORECASE), "status must be 'approved' by a reviewer"
 
 

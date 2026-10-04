@@ -43,7 +43,7 @@ Task: add a value-parameterized test (`TEST_P`) to `tests/test_transform.cpp` th
 - [ ] One rendered world-frame scan overlaid on the trajectory
 
 ### Acceptance criteria
-- Tests in `tests/` pass in CI (`python tools/module_tests.py m1`): C++ `ctest -L m1` and pytest.
+- Tests in `tests/` pass in CI (`python tools/module_tests.py m1`): C++ `ctest --test-dir build -L '^m1$'` and pytest.
 - Every transform variable in your scripts follows the `T_<to>_<from>` naming from `CONVENTIONS.md`.
 - Plots have units and equal axis scaling.
 

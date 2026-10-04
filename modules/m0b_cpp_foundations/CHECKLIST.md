@@ -1,7 +1,7 @@
 # Module 0b — Checklist
 
 - [ ] Self-check 1 (Readiness) done — score: ___ / 10
-- [ ] Ring buffer, timed buffer, scan file, statistics: `ctest -L m0b` passes
+- [ ] Ring buffer, timed buffer, scan file, statistics: `ctest --test-dir build -L '^m0b$'` passes
 - [ ] Bug hunt fixed; notes per bug (bug, tool, fix) in the PR
 - [ ] CMake exercise builds and its test passes; no directory-wide commands
 - [ ] One extra GoogleTest of your own
