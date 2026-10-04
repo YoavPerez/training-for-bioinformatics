@@ -13,6 +13,10 @@ DESIGN_DOC = "modules/m5_factor_graphs/design_doc.md"
 # default prepare options): odometry ATE RMSE 0.091 m, odometry + GNSS 0.128 m. Limits allow ~1.5x.
 ODOMETRY_ATE_RMSE_MAX = 0.14
 GRAPH_ATE_RMSE_MAX = 0.19
+# Unaligned ATE (absolute ENU frame, `evaluate(..., align=False)`) of the same reference runs: odometry + GNSS
+# 0.657 m, odometry + GNSS + IMU 0.492 m. Limits allow ~1.5x; they catch GNSS fused in the wrong frame or offset.
+GRAPH_UNALIGNED_ATE_RMSE_MAX = 1.0
+GRAPH_IMU_UNALIGNED_ATE_RMSE_MAX = 0.75
 
 
 # Template placeholders look like <component> or <What exists today ...>. Code spans and common HTML tags
@@ -64,6 +68,8 @@ def test_odometry_ate(pipeline_run, prepared_sample):
 def test_graph_with_gnss_ate(pipeline_run, prepared_sample):
     ate = evaluate(pipeline_run / "optimized.tum", prepared_sample / "gt.tum")["ate"]
     assert ate["rmse"] < GRAPH_ATE_RMSE_MAX, f"graph ATE RMSE {ate['rmse']:.3f} m"
+    absolute = evaluate(pipeline_run / "optimized.tum", prepared_sample / "gt.tum", align=False)["ate"]
+    assert absolute["rmse"] < GRAPH_UNALIGNED_ATE_RMSE_MAX, f"graph unaligned ATE RMSE {absolute['rmse']:.3f} m"
 
 
 def test_graph_with_imu_builds_and_optimizes(app, sample_drive, prepared_sample, tmp_path):
@@ -77,3 +83,5 @@ def test_graph_with_imu_builds_and_optimizes(app, sample_drive, prepared_sample,
     assert factors > 200, "IMU factors (plus bias factors) should have been added between all keyframes"
     ate = evaluate(tmp_path / "optimized.tum", prepared_sample / "gt.tum")["ate"]
     assert ate["rmse"] < GRAPH_ATE_RMSE_MAX
+    absolute = evaluate(tmp_path / "optimized.tum", prepared_sample / "gt.tum", align=False)["ate"]
+    assert absolute["rmse"] < GRAPH_IMU_UNALIGNED_ATE_RMSE_MAX, f"unaligned ATE RMSE {absolute['rmse']:.3f} m"

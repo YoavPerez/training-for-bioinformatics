@@ -1,8 +1,10 @@
 """Module 6: trajectory evaluation on top of evo.
 
-    python -m slampipe.evaluation <estimate.tum> <reference.tum> [--out metrics.json]
+    python -m slampipe.evaluation <estimate.tum> <reference.tum> [--out metrics.json] [--no-align]
 
 Prints and optionally writes ATE/RPE summaries with bootstrap confidence intervals.
+ATE is SE(3)-aligned by default; `--no-align` keeps the absolute frame (e.g. GNSS-fused ENU).
+The output records the mode as "ate": {"aligned": true|false, ...}.
 """
 
 import argparse
@@ -64,9 +66,10 @@ def summarize(errors: np.ndarray) -> dict[str, float]:
     }
 
 
-def evaluate(est_path: Path, ref_path: Path, rpe_delta_m: float = 10.0) -> dict[str, dict[str, float]]:
+def evaluate(est_path: Path, ref_path: Path, rpe_delta_m: float = 10.0, align: bool = True) -> dict[str, dict]:
+    """Provided. `align` is passed to ate_errors and recorded as result["ate"]["aligned"]."""
     est, ref = load_tum(est_path), load_tum(ref_path)
-    result = {"ate": summarize(ate_errors(est, ref))}
+    result = {"ate": {"aligned": align, **summarize(ate_errors(est, ref, align=align))}}
     if ref.path_length > 2.0 * rpe_delta_m:
         result["rpe"] = summarize(rpe_errors(est, ref, rpe_delta_m))
     return result
@@ -78,8 +81,9 @@ def main() -> None:
     parser.add_argument("reference", type=Path)
     parser.add_argument("--out", type=Path)
     parser.add_argument("--rpe-delta", type=float, default=10.0)
+    parser.add_argument("--no-align", action="store_true", help="ATE without SE(3) alignment (absolute frame)")
     args = parser.parse_args()
-    result = evaluate(args.estimate, args.reference, args.rpe_delta)
+    result = evaluate(args.estimate, args.reference, args.rpe_delta, align=not args.no_align)
     text = json.dumps(result, indent=2)
     print(text)
     if args.out:

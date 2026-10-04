@@ -36,7 +36,7 @@ Answer every question in writing **before** opening the answers file. Then score
 
 **M0B-A02.** In your `RingBuffer::pop`, how do you get the element out of the `std::optional` slot without copying it?
 
-**M0B-A03.** Which bug in the bug hunt was *not* found by a sanitizer, and what found it instead?
+**M0B-A03.** Which bugs in the bug hunt were *not* found by a sanitizer, and what found them instead?
 
 **M0B-A04.** GCC turned the dangling reference in `smoothed` into a null reference. Why is it allowed to do that?
 

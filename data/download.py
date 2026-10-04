@@ -163,7 +163,8 @@ def make_skewed_sample(drive_dir: Path, out: Path, frame: int = 40) -> None:
 
 MILUV_IMU_ZIP = "https://ndownloader.figshare.com/files/52251866"  # imu_calib.zip, CC BY 4.0
 MILUV_ROBOT = "ifo001"
-MILUV_TOPIC = "/mavros/imu/data_raw"  # flight-controller IMU, ~200 Hz, 16 h static
+# Flight-controller IMU, 16 h static. Nominal 200 Hz in the authors' config; derive the real rate from t.
+MILUV_TOPIC = "/mavros/imu/data_raw"
 
 
 def fetch_static_imu(dest: Path) -> Path:

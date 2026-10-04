@@ -16,8 +16,8 @@ Answers and pointers only. If you missed one, read the pointer, not just the ans
 
 ## Self-check 2 — Apply
 **M3-A01.** Depends on the unit; compare in the same units (rad/s/√Hz, not °/h). See: kalibr_imu_noise — "From the Datasheet of the IMU"
-**M3-A02.** Where the sweep starts and ends (the seam), and at long range. See: kiss_icp_paper — Step 1 "Motion Prediction and Scan Deskewing"
+**M3-A02.** It grows with time from the reference time and with range. With t_ref at the sweep start (the skewed sample): at the end of the sweep, next to the seam. See: kiss_icp_paper — Step 1 "Motion Prediction and Scan Deskewing"
 **M3-A03.** Depends on your sweep; roughly symmetric for constant motion. See: kiss_icp_paper — Step 1
 **M3-A04.** Larger, typically by one to two orders of magnitude. See: kalibr_imu_noise — "Kalibr IMU Noise Parameters in Practice"
-**M3-A06.** No: gyro z is almost flat from 0.1 s to 10 s (not slope −½), so an (N, K) fit is misleading there; read N only where the slope is −½ or add terms. See: kalibr_imu_noise — "From the Allan standard deviation (AD)"
 **M3-A05.** Hardware time sync (e.g. PPS from GNSS or PTP) rather than host receive time. See: esa_gnss_book — Ch. 3.1 "Time and Reference Frames"
+**M3-A06.** No: gyro z is almost flat from 0.1 s to 10 s (not slope −½), so an (N, K) fit is misleading there; read N only where the slope is −½ or add terms. See: kalibr_imu_noise — "From the Allan standard deviation (AD)"

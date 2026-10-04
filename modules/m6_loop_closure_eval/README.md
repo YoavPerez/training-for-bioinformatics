@@ -28,7 +28,7 @@ Answer the Readiness part of [`quiz/self_check.md`](quiz/self_check.md) before c
 2. **Loop factor.** Implement `GraphBuilder::addLoop` with a robust kernel. Choose the kernel by experiment: run `run_pipeline --false-loop i j` with at least two kernels and keep the evidence.
 3. **Evaluation.** Implement `ate_errors`, `rpe_errors` and `bootstrap_ci` in [`pipeline/python/slampipe/evaluation.py`](../../pipeline/python/slampipe/evaluation.py) on top of evo.
 4. **Loops on real data.** Run `run_pipeline --loops` on a drive with revisits (`2011_09_30_drive_0027` = KITTI odometry 07; `2011_09_30_drive_0018` = 05). Plot detected loops on the trajectory.
-5. **Ablation.** Complete [`starter/ablation.py`](starter/ablation.py): GNSS, loop closure and deskew each on/off, across at least two drives. Report error distributions and confidence intervals. The `--deskew` option in `run_pipeline` contains a documented assumption about the LiDAR sweep; check whether it holds, using your data.
+5. **Ablation.** Complete [`starter/ablation.py`](starter/ablation.py): GNSS, loop closure and deskew each on/off, across at least two drives. Report error distributions and confidence intervals. For the GNSS on/off rows, report ATE both aligned and unaligned (`evaluate(..., align=False)` / `--no-align`). The `--deskew` option in `run_pipeline` contains a documented assumption about the LiDAR sweep; check whether it holds, using your data.
 
 ### C++ focus: error handling
 - [cppreference: std::optional](https://en.cppreference.com/w/cpp/utility/optional) — docs

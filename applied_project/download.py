@@ -9,10 +9,15 @@ import os
 import shutil
 import subprocess
 import sys
+import urllib.error
 import urllib.request
 from pathlib import Path
 
 NEON_API = "https://data.neonscience.org/api/v0"
+NEON_TOKEN_HELP = (
+    "NEON requires a free API token: create an account, then export NEON_TOKEN=<your token> "
+    "(see https://www.neonscience.org/usage-policies)"
+)
 
 LICENSES = [
     ("NEON AOP", "A", "CC BY 4.0 (CC0 before 2026-06-30)", "yes"),
@@ -44,8 +49,14 @@ def _get_json(url: str) -> dict:
     headers = {"User-Agent": "slam-onboarding"}
     if os.environ.get("NEON_TOKEN") and url.startswith(NEON_API):
         headers["X-API-Token"] = os.environ["NEON_TOKEN"]
-    with urllib.request.urlopen(urllib.request.Request(url, headers=headers), timeout=60) as r:
-        return json.load(r)
+    try:
+        with urllib.request.urlopen(urllib.request.Request(url, headers=headers), timeout=60) as r:
+            return json.load(r)
+    except urllib.error.HTTPError as e:
+        if url.startswith(NEON_API) and e.code in (401, 403):
+            hint = "NEON_TOKEN was rejected. " if os.environ.get("NEON_TOKEN") else ""
+            sys.exit(f"HTTP {e.code} from {url}\n{hint}{NEON_TOKEN_HELP}")
+        sys.exit(f"HTTP {e.code} from {url}")
 
 
 def neon_list(product: str, site: str) -> None:
@@ -58,11 +69,19 @@ def neon_list(product: str, site: str) -> None:
     print(f"site {site} not available; sites: {', '.join(s['siteCode'] for s in data['siteCodes'])}")
 
 
-def neon_get(product: str, site: str, month: str, dest: Path, pattern: str) -> None:
+def neon_get(
+    product: str, site: str, month: str, dest: Path, pattern: str, dry_run: bool, max_gb: float, yes: bool
+) -> None:
     files = _get_json(f"{NEON_API}/data/{product}/{site}/{month}")["data"]["files"]
     files = [f for f in files if pattern in f["name"]]
     total = sum(int(f["size"]) for f in files) / 1e9
     print(f"{len(files)} files, {total:.1f} GB -> {dest}")
+    if dry_run:
+        for f in files:
+            print(f"  {f['name']} ({int(f['size']) / 1e6:.1f} MB)")
+        return
+    if total > max_gb and not yes:
+        sys.exit(f"{total:.1f} GB exceeds --max-gb {max_gb:g}: narrow it with --pattern (see --dry-run) or pass --yes")
     dest.mkdir(parents=True, exist_ok=True)
     for f in files:
         target = dest / f["name"]
@@ -105,6 +124,9 @@ def main() -> None:
     p.add_argument("--month", required=True, help="YYYY-MM")
     p.add_argument("--dest", type=Path, required=True)
     p.add_argument("--pattern", default="", help="only files whose name contains this")
+    p.add_argument("--dry-run", action="store_true", help="list the matching files and sizes, download nothing")
+    p.add_argument("--max-gb", type=float, default=5.0, help="refuse larger downloads unless --yes (default 5)")
+    p.add_argument("--yes", action="store_true", help="download even above --max-gb")
     p = sub.add_parser("boreas")
     p.add_argument("--sequence", required=True)
     p.add_argument("--sensors", nargs="+", default=["lidar", "applanix"])
@@ -122,7 +144,7 @@ def main() -> None:
     elif args.cmd == "neon-list":
         neon_list(args.product, args.site)
     elif args.cmd == "neon-get":
-        neon_get(args.product, args.site, args.month, args.dest, args.pattern)
+        neon_get(args.product, args.site, args.month, args.dest, args.pattern, args.dry_run, args.max_gb, args.yes)
     elif args.cmd == "boreas":
         boreas(args.sequence, args.sensors, args.dest)
     elif args.cmd == "for-instance":

@@ -7,6 +7,7 @@ For every modules/m*/quiz/ and modules/phase_gates/:
   * module quizzes have the sections "## Self-check 1 — Readiness", "## Self-check 2 — Apply"
     and "## Explain to your mentor"
   * every question id has exactly one answer in the answers file, and vice versa
+  * ids of each series (e.g. M3-R, M3-A, PA-) are numbered 01, 02, ... in order of appearance, in both files
   * every answer points to a resource ("See: <links.yaml id>") that exists
   * answers stay short (no teaching prose): at most MAX_ANSWER_CHARS before the pointer
 """
@@ -36,6 +37,18 @@ def answers(path: Path) -> dict[str, list[str]]:
     return out
 
 
+def check_order(path: Path, found: list[str]) -> list[str]:
+    """Ids of each series must appear as 01, 02, ... (strictly increasing and contiguous)."""
+    series: dict[str, list[int]] = {}
+    for i in found:
+        series.setdefault(i[:-2], []).append(int(i[-2:]))
+    return [
+        f"{path.relative_to(REPO)}: {prefix} ids out of order or not contiguous: {nums}"
+        for prefix, nums in series.items()
+        if nums != list(range(1, len(nums) + 1))
+    ]
+
+
 def check_pair(questions: Path, answer_file: Path, ids: set[str], module: bool) -> list[str]:
     errs = []
     rel = questions.relative_to(REPO)
@@ -53,6 +66,9 @@ def check_pair(questions: Path, answer_file: Path, ids: set[str], module: bool) 
     if module and (not any("-R" in i for i in q_ids) or not any("-A" in i for i in q_ids)):
         errs.append(f"{rel}: needs both readiness (R) and apply (A) questions")
     ans = answers(answer_file)
+    if not dup:
+        errs += check_order(questions, q_ids)
+    errs += check_order(answer_file, list(ans))  # dicts keep order of first appearance
     for i in sorted(set(q_ids) - ans.keys()):
         errs.append(f"{rel}: question {i} has no answer")
     for i in sorted(ans.keys() - set(q_ids)):

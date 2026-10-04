@@ -40,9 +40,9 @@ Answer every question in writing **before** opening the answers file. Then score
 
 **M3-A04.** The OXTS IMU on KITTI is a high-grade unit. Would you expect a consumer MEMS IMU's N to be larger or smaller, and by roughly how much?
 
-**M3-A06.** On the MILUV recording, is every gyro axis white-noise dominated around τ = 1 s? How can you tell from the plot, and what does that mean for a two-parameter (N, K) fit?
-
 **M3-A05.** Your sweep implies a maximum tolerable clock offset for your error budget. What synchronization mechanism would you ask the hardware team for, to stay below it?
+
+**M3-A06.** On the MILUV recording, is every gyro axis white-noise dominated around τ = 1 s? How can you tell from the plot, and what does that mean for a two-parameter (N, K) fit?
 
 ## Explain to your mentor
 - Show your Allan plot and explain each region of the curve.

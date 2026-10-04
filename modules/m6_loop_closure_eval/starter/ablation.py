@@ -58,7 +58,8 @@ def main() -> None:
     )
     args = parser.parse_args()  # noqa: F841
     # TODO(m6): for each drive and each combination in itertools.product([True, False], repeat=3), run the
-    # pipeline, evaluate optimized.tum against gt.tum, and print/save summarize_ablation per drive.
+    # pipeline, evaluate optimized.tum against gt.tum (aligned, and unaligned with align=False), and print/save
+    # summarize_ablation per drive for both.
 
 
 if __name__ == "__main__":

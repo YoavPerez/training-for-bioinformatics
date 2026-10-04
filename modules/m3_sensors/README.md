@@ -57,7 +57,7 @@ Tick [`CHECKLIST.md`](CHECKLIST.md), open a PR and request review.
 
 ## Where to look if stuck
 - Overlapping Allan deviation and how N and K appear on the log-log plot: Kalibr wiki, "From the Allan standard deviation (AD)".
-- Before trusting any fit on the MILUV recording: derive the sample rate from the timestamps (not from a config file), check the units of every reference number you compare with, and look at the slope of each axis's curve before fitting a model to it.
+- Before trusting any fit on the MILUV recording: derive the sample rate from the timestamps and check the intervals for gaps (not from a config file), check the units of every reference number you compare with, and look at the slope of each axis's curve before fitting a model to it.
 - Which pose to interpolate and in which direction to apply it: the transform chain in your `CONVENTIONS.md` and module 1's `interpolate`.
 - Per-point time in a spinning LiDAR: the "LiDAR Odometry — 5 Minutes" video; KISS-ICP paper, Step 1 "Motion Prediction and Scan Deskewing".
 - GNSS error magnitudes: ESA book Ch. 4.2 and Navipedia "GNSS Measurements Modelling".

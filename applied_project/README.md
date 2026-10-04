@@ -52,7 +52,9 @@ The Trento hyperspectral + LiDAR dataset from the original curriculum was droppe
 ```bash
 python applied_project/download.py licenses                          # print the table above
 python applied_project/download.py neon-list --product DP1.30003.001 --site SJER
-python applied_project/download.py neon-get --product DP1.30003.001 --site SJER --month 2021-03 --dest data/neon
+export NEON_TOKEN=<your token>   # free NEON account
+python applied_project/download.py neon-get --product DP1.30003.001 --site SJER --month 2021-03 --dest data/neon --dry-run   # list files and sizes
+python applied_project/download.py neon-get --product DP1.30003.001 --site SJER --month 2021-03 --dest data/neon --pattern <part of a file name>
 python applied_project/download.py boreas --sequence boreas-2020-11-26-13-58 --sensors lidar applanix --dest data/boreas
 python applied_project/download.py for-instance --dest data/for_instance
 python applied_project/download.py manual                            # Wild-Places, BotanicGarden, MulRan, Oxford, DFC2018

@@ -1,4 +1,4 @@
 {
-  "_note": "Reference run on the CI sample (2011_09_26_drive_0002, default prepare options, run_pipeline --imu). Update only in a reviewed PR that explains why.",
+  "_note": "Reference run on the CI sample (2011_09_26_drive_0002, default prepare options, run_pipeline --imu); SE(3)-aligned ATE (slampipe.evaluation default). Update only in a reviewed PR that explains why.",
   "ate": {"rmse": 0.122, "p95": 0.192}
 }

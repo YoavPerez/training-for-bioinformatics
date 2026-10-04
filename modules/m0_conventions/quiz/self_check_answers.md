@@ -14,7 +14,7 @@ Answers and pointers only. If you missed one, read the pointer, not just the ans
 
 ## Self-check 2 — Apply
 **M0-A01.** 77 scans; about 7.8 s. See: kitti_raw — devkit readme, velodyne_points/timestamps.txt
-**M0-A02.** A few milliseconds per frame (it varies); compare oxts/timestamps.txt with velodyne_points/timestamps.txt. See: kitti_raw — devkit readme, "timestamps"
-**M0-A03.** Vehicle frame (forward velocity); integrate speed × dt over time, no frame transform needed for distance. See: kitti_raw — devkit readme, OXTS field list
+**M0-A02.** ≈ 10–30 ms per frame (mean ≈ 17 ms on the sample; it varies); compare oxts/timestamps.txt with velodyne_points/timestamps.txt. See: kitti_raw — devkit readme, "timestamps"
+**M0-A03.** Neither: forward velocity, heading-aligned and parallel to the earth surface (not body, not world); integrate speed × dt for distance, no frame transform needed. See: kitti_raw — devkit readme, OXTS field list
 **M0-A04.** `T_velo_imu` (maps IMU-frame points into the velodyne frame), if your convention is `T_to_from`. See: kitti_raw — devkit readme, calibration section
 **M0-A05.** `infra/docker/requirements.txt` with exact `==` pins (plus pinned build args in the Dockerfile). See: missing_semester — lecture 8 "Metaprogramming" (dependency management)

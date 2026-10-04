@@ -1,7 +1,8 @@
 """Module 3: Allan deviation of a static IMU recording.
 
     python data/download.py --static-imu        # public 16 h recording (MILUV), once
-    python modules/m3_sensors/starter/allan_static.py data/static_imu/ifo001_mavros_imu.npz --rate 200 --plot allan.png
+    python modules/m3_sensors/starter/allan_static.py data/static_imu/ifo001_mavros_imu.npz \
+        --rate <Hz, derived from t> --plot allan.png
 
 Input: either the .npz written by `download.py --static-imu` (arrays t, acc, gyro), or a CSV with columns
 t,ax,ay,az,wx,wy,wz (one header line) from your own IMU. Pass --simulate for synthetic data with known

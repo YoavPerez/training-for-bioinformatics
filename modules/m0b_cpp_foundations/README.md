@@ -42,7 +42,7 @@ All exercise code lives in [`starter/`](starter/). Its library is built with the
 7. **Your own test.** Add one GoogleTest of your own to `tests/test_cpp_foundations.cpp` for an edge case the provided tests miss.
 
 ### Deliverables
-- [ ] All six exercises merged through PR review
+- [ ] All seven assignment items (six exercises and your own test) merged through PR review
 - [ ] Bug-hunt notes in the PR: bug, tool that found it, fix
 - [ ] One extra test of your own
 
