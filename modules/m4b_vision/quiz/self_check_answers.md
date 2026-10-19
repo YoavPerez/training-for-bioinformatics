@@ -13,6 +13,7 @@ Answers and pointers only. If you missed one, read the pointer, not just the ans
 **M4B-R08.** Binary (oriented FAST + rotated BRIEF); Hamming distance; matches whose best distance is not clearly smaller than the second best (ambiguous). See: opencv_matcher — "Brute-Force Matching with SIFT Descriptors and Ratio Test"
 **M4B-R09.** The sum of squared reprojection errors over all poses and points. Fix camera 1's pose and the scale (e.g. |t| = 1): the error does not change under them. See: stachniss_pcv_ba2 — "BA Without Control Points"
 **M4B-R10.** Triangulate a point with each candidate; keep the one that puts the points in front of both cameras (cheirality). See: vo_tutorial_part1 — "Extracting R and t from E"
+**M4B-R11.** z = f·b/d, so Δz ≈ z²·Δd/(f·b) with f·b ≈ 389 m·px: about 0.13 m at 10 m and 2 m at 40 m (quadratic in depth). See: stachniss_pcv_triangulation — "Height/Depth Precision"
 
 ## Self-check 2 — Apply
 **M4B-A01.** On the sample: about 19 000 of 121 000 points (~16 %). The camera sees only a ~80° wedge in front, and the scan covers 360°. See: kitti_ijrr — Section II "Sensor Setup"
@@ -21,3 +22,4 @@ Answers and pointers only. If you missed one, read the pointer, not just the ans
 **M4B-A04.** On the sample, step 8→9: repeated fence bars give consistent wrong matches, plus distant foliage with no parallax. RANSAC finds consistency, not truth. See: stachniss_pcv_ransac — "RANSAC Algorithm" (step 3: score by inliers)
 **M4B-A05.** On the sample ICP is better: ~0.06° vs ~0.12° rotation, and a metric translation (~4 cm error); monocular VO gives only a direction. See: vo_tutorial_part1 — "VO Versus V-SLAM"
 **M4B-A06.** Typical pair on the sample: RMS 0.39 → 0.30 px, rotation error 0.13° → 0.07°. Worst pair: almost no change; BA refines but cannot fix wrong matches. See: stachniss_pcv_ba — "Reprojection Error"
+**M4B-A07.** On the sample ~2 % median; absolute error ~0.1 m below 10 m, ~1 m at 20–40 m, ~4 m beyond 40 m: quadratic growth, as predicted. See: stachniss_pcv_triangulation — "Height/Depth Precision"

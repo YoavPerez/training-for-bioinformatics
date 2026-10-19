@@ -12,7 +12,7 @@ from slampipe import geodesy, kitti  # noqa: F401  (geodesy: your module 1 code)
 
 
 def pose_world_imu(drive: kitti.Drive, frame: int) -> np.ndarray:
-    """4x4 T_world_imu at an OXTS frame; world = ENU at the first fix. Use roll/pitch/yaw from OXTS."""
+    """4x4 T_world_imu at an OXTS frame; world = ENU at the first OXTS packet. Use roll/pitch/yaw from OXTS."""
     # TODO(m1): implement. Check the devkit readme for the angle definitions.
     del drive, frame
     raise NotImplementedError("pose_world_imu")

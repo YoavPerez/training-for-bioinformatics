@@ -30,6 +30,8 @@ Answer every question in writing **before** opening the answers file. Then score
 
 **M4B-R10.** Decomposing an essential matrix gives four (R, t) candidates. How is the right one chosen?
 
+**M4B-R11.** A stereo rig has f = 720 px and a baseline of 0.54 m. A disparity error of 0.5 px: roughly what depth error does it cause at 10 m and at 40 m?
+
 ## Self-check 2 — Apply
 
 **M4B-A01.** How many points of your frame-0 scan land in the image, out of how many? Why is the fraction small?
@@ -43,6 +45,8 @@ Answer every question in writing **before** opening the answers file. Then score
 **M4B-A05.** Compare your two-frame VO with your module 4 ICP on the same consecutive frames. Which gives the better rotation, which the better translation, and why?
 
 **M4B-A06.** How much did bundle adjustment change the reprojection RMS and the pose errors on a typical pair, and on your worst pair? Why the difference?
+
+**M4B-A07.** What median relative error did your stereo depth have against the LiDAR, and how did the absolute error change between 10 m and 40 m?
 
 ## Explain to your mentor
 - Walk through eq. 7 of the KITTI paper on your overlay: point out a depth edge that lines up with an object edge, and say what each matrix does.

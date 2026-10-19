@@ -12,7 +12,7 @@ from slampipe import geodesy, kitti  # noqa: F401  (geodesy: your module 1 code)
 
 
 def drive_enu(drive_dir: Path) -> np.ndarray:
-    """(N, 3) ENU positions of the OXTS fixes, origin at the first fix."""
+    """(N, 3) ENU positions of the OXTS fixes, origin at the first OXTS packet."""
     drive = kitti.Drive(Path(drive_dir))
     # TODO(m1): use your geodesy functions.
     del drive

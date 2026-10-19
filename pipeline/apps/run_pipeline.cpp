@@ -11,6 +11,7 @@
 // Writes <out_dir>/odometry.tum and <out_dir>/optimized.tum (body/IMU frame poses in local ENU).
 #include <cmath>
 #include <cstdio>
+#include <filesystem>
 #include <iostream>
 #include <set>
 
@@ -80,6 +81,7 @@ int main(int argc, char** argv) {
     return 2;
   }
   const std::string drive = argv[1], prep = argv[2], out = argv[3];
+  std::filesystem::create_directories(out);  // fail now, not after processing every frame
   bool use_gnss = true, use_imu = false, use_loops = false, use_deskew = false;
   int false_i = -1, false_j = -1;
   size_t max_frames = static_cast<size_t>(-1);

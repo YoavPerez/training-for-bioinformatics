@@ -647,8 +647,8 @@ links:
     title: "Stachniss — Bag of Visual Words for Finding Similar Images (slides)"
     url: https://www.ipb.uni-bonn.de/html/teaching/photo12-2021/2021-pho2-12-bag-of-visual-words.pptx.pdf
     type: docs
-    modules: [m4b, m6]
-    pointer: "Whole deck (visual place recognition; compare with Scan Context in module 6)"
+    modules: [m4b, m6, m8]
+    pointer: "Whole deck (visual place recognition; compare with Scan Context in module 6; m8 candidate question 9)"
     required: false
     verified_on: 2026-10-19
   - id: vo_tutorial_part1

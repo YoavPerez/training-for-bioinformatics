@@ -51,9 +51,10 @@ def sample_drive(data_dir) -> Path:
 
 @pytest.fixture(scope="session")
 def sample_images(sample_drive) -> Path:
-    """The sample drive, checked to contain camera 0 images (module 4b)."""
-    if not any((sample_drive / "image_00" / "data").glob("*.png")):
-        _missing("camera 0 images of the sample (re-run python data/download.py --sample)")
+    """The sample drive, checked to contain camera 0 and 1 images (module 4b)."""
+    for cam in ("image_00", "image_01"):
+        if not any((sample_drive / cam / "data").glob("*.png")):
+            _missing(f"{cam} images of the sample (re-run python data/download.py --sample)")
     return sample_drive
 
 

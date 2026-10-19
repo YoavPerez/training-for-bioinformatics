@@ -37,3 +37,8 @@ Time-box: 90 minutes. No searching. Write your answers in a separate file and ha
 21. Write a shell one-liner that counts the lines containing "ERROR" in all `*.log` files under the current directory.
 22. What is the difference between `git merge` and `git rebase`? When should you avoid rebasing?
 23. How would you find which commit introduced a bug that a test now catches?
+
+## E. Cameras and images
+24. A camera with a focal length of 700 pixels looks at a person 1.8 m tall standing 20 m away, facing the camera. About how many pixels tall is the person in the image?
+25. Why can one photograph not tell you how far away an object is, while two photographs taken from different positions can?
+26. An image is stored as a 2-D array `img[i, j]`. If a pixel's coordinates are written (u, v) with u to the right and v downwards, which of i and j is u, and where is the origin?

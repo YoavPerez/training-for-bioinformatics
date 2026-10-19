@@ -12,10 +12,10 @@ Cite: A. Geiger, P. Lenz, C. Stiller, R. Urtasun, "Vision meets Robotics: The KI
 ## Getting data
 
 ```bash
-python data/download.py --sample                         # CI subset: drive 2011_09_26_0002, LiDAR + OXTS + camera 0
+python data/download.py --sample                         # CI subset: drive 2011_09_26_0002, LiDAR + OXTS + grayscale stereo pair
 python data/download.py --drive 2011_09_30_drive_0027    # full drive into data/kitti/
 python data/download.py --drive 2011_09_30_drive_0027 --extract-oxts   # + unsynced 100 Hz OXTS
-python data/download.py --drive 2011_09_30_drive_0027 --camera   # + camera 0 images (module 4b, ~0.3 MB per frame)
+python data/download.py --drive 2011_09_30_drive_0027 --camera   # + grayscale stereo images (module 4b, ~0.55 MB per frame)
 ```
 
 `python data/download.py --static-imu` fetches one 16-hour static IMU recording from MILUV (Shalaby et al., figshare DOI 10.25452/figshare.plus.28386041.v1) into `data/static_imu/` as an `.npz`, together with the dataset authors' Allan-variance results. It needs ~11 GB of temporary disk space and the `rosbags` package (in the dev image).

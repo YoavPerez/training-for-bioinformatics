@@ -39,7 +39,10 @@ jobs:
   lint:
     needs: image
     runs-on: ubuntu-24.04
-    container: ghcr.io/${{ github.repository_owner }}/slam-onboarding-dev:${{ needs.image.outputs.tag }}
+    container:
+      image: ghcr.io/${{ github.repository_owner }}/slam-onboarding-dev:${{ needs.image.outputs.tag }}
+      # setarch -R (ASan workaround in module 0b) and gdb need personality()/ptrace, blocked by the default profile.
+      options: --cap-add=SYS_PTRACE --security-opt seccomp=unconfined
     steps:
       - uses: actions/checkout@v4
       - run: infra/ci/lint.sh
@@ -47,7 +50,10 @@ jobs:
   smoke:
     needs: image
     runs-on: ubuntu-24.04
-    container: ghcr.io/${{ github.repository_owner }}/slam-onboarding-dev:${{ needs.image.outputs.tag }}
+    container:
+      image: ghcr.io/${{ github.repository_owner }}/slam-onboarding-dev:${{ needs.image.outputs.tag }}
+      # setarch -R (ASan workaround in module 0b) and gdb need personality()/ptrace, blocked by the default profile.
+      options: --cap-add=SYS_PTRACE --security-opt seccomp=unconfined
     steps:
       - uses: actions/checkout@v4
       - run: infra/ci/build.sh . build
@@ -58,7 +64,10 @@ jobs:
   module:
     needs: image
     runs-on: ubuntu-24.04
-    container: ghcr.io/${{ github.repository_owner }}/slam-onboarding-dev:${{ needs.image.outputs.tag }}
+    container:
+      image: ghcr.io/${{ github.repository_owner }}/slam-onboarding-dev:${{ needs.image.outputs.tag }}
+      # setarch -R (ASan workaround in module 0b) and gdb need personality()/ptrace, blocked by the default profile.
+      options: --cap-add=SYS_PTRACE --security-opt seccomp=unconfined
     strategy:
       fail-fast: false
       matrix:

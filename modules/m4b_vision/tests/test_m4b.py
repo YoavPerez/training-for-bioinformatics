@@ -175,3 +175,24 @@ def test_two_frame_vo_on_sample(repo_root, sample_images, prepared_sample):
         ang.append(np.degrees(np.arccos(np.clip(cosang, -1.0, 1.0))))
     assert np.median(rot) < 0.3, f"median rotation error {np.median(rot):.3f} deg"
     assert np.median(ang) < 6.0, f"median translation direction error {np.median(ang):.2f} deg"
+
+
+def test_stereo_depth_matches_lidar_on_sample(repo_root, sample_images):
+    import cv2
+
+    stereo = _load(repo_root, "stereo_depth")
+    drive = kitti.Drive(sample_images)
+    cam0, cam1 = drive.camera(0), drive.camera(1)
+    rel = []
+    for k in (0, 20, 40, 60):
+        img0, img1 = (cv2.imread(str(drive.image_paths(c)[k]), cv2.IMREAD_GRAYSCALE) for c in (0, 1))
+        x0, x1 = stereo.stereo_matches(img0, img1)
+        assert len(x0) >= 300, f"only {len(x0)} stereo matches in frame {k}"
+        assert np.abs(x0[:, 1] - x1[:, 1]).max() <= 1.5 and (x0[:, 0] > x1[:, 0]).all(), "rectified-stereo check"
+        z = stereo.stereo_depth(x0, x1, cam0, cam1)
+        assert z.shape == (len(x0),)
+        z_lidar = stereo.lidar_depth_at(x0, drive.scan(k), cam0)
+        ok = np.isfinite(z_lidar)
+        assert ok.sum() >= 150, f"only {ok.sum()} stereo points with LiDAR depth in frame {k}"
+        rel.extend(np.abs(z[ok] - z_lidar[ok]) / z_lidar[ok])
+    assert np.median(rel) < 0.05, f"median relative depth error {np.median(rel):.1%} against the LiDAR"

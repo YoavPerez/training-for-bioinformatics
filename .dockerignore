@@ -1,0 +1,12 @@
+# Keep the Docker build context small: the images copy only infra/docker/, CMakeLists.txt, pyproject.toml
+# and pipeline/. Datasets and build outputs can be tens of GB.
+.git
+.cache
+build
+outputs
+data/kitti
+data/samples
+data/static_imu
+**/__pycache__
+.pytest_cache
+.ruff_cache

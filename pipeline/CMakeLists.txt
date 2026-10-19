@@ -31,4 +31,4 @@ add_subdirectory(apps)
 
 add_executable(pipeline_smoke_tests tests/test_smoke.cpp)
 target_link_libraries(pipeline_smoke_tests slam_pipeline GTest::gtest_main)
-gtest_discover_tests(pipeline_smoke_tests PROPERTIES LABELS smoke)
+gtest_discover_tests(pipeline_smoke_tests DISCOVERY_TIMEOUT 60 PROPERTIES LABELS smoke)

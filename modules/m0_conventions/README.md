@@ -52,4 +52,5 @@ Tick [`CHECKLIST.md`](CHECKLIST.md), open a PR and request review.
 - Quaternion conventions: Solà, Section 3 (the comparison table).
 - OXTS fields (`vf`, timestamps): the KITTI raw devkit readme, linked from the [KITTI raw page](https://www.cvlibs.net/datasets/kitti/raw_data.php).
 - Docker or shell trouble: Missing Semester lecture 1.
+- `docker build` stalls on downloads (apt "Connection failed", hanging `pip`): common on WSL or behind a VPN, where the network MTU is below Docker's 1500. Build with `docker build --network host …` (and run containers with `--network host`).
 - Stuck for ~2 hours? Write down what you tried and ask your mentor.

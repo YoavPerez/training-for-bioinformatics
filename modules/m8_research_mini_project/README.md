@@ -20,7 +20,7 @@ Answer the Readiness part of [`quiz/self_check.md`](quiz/self_check.md), then gr
 ## Segment 3 — Build
 
 ### Candidate questions
-Pick one (or propose your own and get it approved). Each one can be answered with the pipeline and data you already have.
+Pick one (or propose your own and get it approved). Each one can be answered with the pipeline and data you already have (question 9 also needs the drive's camera images).
 
 1. Does weighting GNSS factors by the receiver's reported fix quality (instead of a constant σ) reduce drift on drives with poor GNSS?
 2. How does the keyframe policy (every scan vs every N metres) trade accuracy against optimization time?
@@ -30,6 +30,7 @@ Pick one (or propose your own and get it approved). Each one can be answered wit
 6. Does the Scan Context distance threshold trade loop recall against false loops, and does the robust kernel make high recall safe?
 7. How sensitive is the ESKF to a mis-specified IMU noise density (×0.1 … ×10)? Is the NEES a reliable detector?
 8. Does a robust kernel on GNSS factors help when you inject multipath-like outliers in `prepare`?
+9. Does camera place recognition with a learned visual vocabulary (ORB descriptors from module 4b, a vocabulary built by k-means, bag-of-words retrieval) find the same loops as Scan Context on drive 0027, and where does each fail? Fetch the images with `data/download.py --camera`; see Stachniss [Bag of Visual Words](https://www.ipb.uni-bonn.de/html/teaching/photo12-2021/2021-pho2-12-bag-of-visual-words.pptx.pdf).
 
 ### Assignment
 1. **Scope.** Write a one-paragraph plan: question, hypothesis, metrics, data, and a scope cut (what you will not do). Time-box it with your mentor (typically 1–2 weeks).

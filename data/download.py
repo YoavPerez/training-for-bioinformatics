@@ -1,6 +1,6 @@
 """Dataset fetchers.
 
-    python data/download.py --sample                         # CI subset (~170 MB download)
+    python data/download.py --sample                         # CI subset (~190 MB download)
     python data/download.py --drive 2011_09_30_drive_0027    # full KITTI raw drive (sync)
     python data/download.py --drive 2011_09_30_drive_0027 --camera   # + camera 0 images (module 4b)
     python data/download.py --drive 2011_09_30_drive_0027 --extract-oxts   # + 100 Hz OXTS
@@ -13,7 +13,7 @@ NOT for commercial purposes. Cite Geiger et al., "Vision meets Robotics: The KIT
 MILUV (static IMU, module 3) is CC BY 4.0: Shalaby et al., "MILUV: A Multi-UAV Indoor Localization dataset
 with UWB and Vision", https://doi.org/10.25452/figshare.plus.28386041.v1
 
-The sample keeps the KITTI directory layout (velodyne, OXTS and camera 0; other cameras skipped) under
+The sample keeps the KITTI directory layout (velodyne, OXTS and grayscale cameras 0/1; colour skipped) under
 data/samples/kitti/, and adds data/samples/skewed/scan.npz for the module 3 deskew exercise.
 """
 
@@ -29,7 +29,7 @@ import numpy as np
 BASE_URL = "https://s3.eu-central-1.amazonaws.com/avg-kitti/raw_data"
 DATA_DIR = Path(__file__).resolve().parent
 SAMPLE_DRIVE = "2011_09_26_drive_0002"
-SAMPLE_SENSORS = ("oxts", "velodyne_points", "image_00")  # image_00: grayscale left camera, for module 4b
+SAMPLE_SENSORS = ("oxts", "velodyne_points", "image_00", "image_01")  # grayscale stereo pair, for module 4b
 LICENSE = "KITTI raw: CC BY-NC-SA 3.0 — non-commercial research and training use only."
 
 
@@ -99,7 +99,8 @@ def fetch_calib(date: str, dest: Path) -> None:
     fetch_members(f"{BASE_URL}/{date}_calib.zip", dest, lambda n: n.endswith(".txt"))
 
 
-def fetch_drive(drive: str, dest: Path, sensors=("oxts", "velodyne_points"), kind: str = "sync") -> Path:
+def fetch_drive(drive: str, dest: Path | str, sensors=("oxts", "velodyne_points"), kind: str = "sync") -> Path:
+    dest = Path(dest)
     date = drive[:10]
     url = f"{BASE_URL}/{drive}/{drive}_{kind}.zip"
     print(f"fetching {url} ({', '.join(sensors)})", file=sys.stderr)
@@ -225,7 +226,7 @@ def main() -> None:
     parser.add_argument("--sample", action="store_true", help="download the CI sample subset")
     parser.add_argument("--drive", help="full KITTI raw drive, e.g. 2011_09_30_drive_0027")
     parser.add_argument("--extract-oxts", action="store_true", help="also fetch 100 Hz OXTS (unsynced extract)")
-    parser.add_argument("--camera", action="store_true", help="also fetch camera 0 images (image_00) of the drive")
+    parser.add_argument("--camera", action="store_true", help="also fetch the grayscale stereo images (image_00/01)")
     parser.add_argument("--static-imu", action="store_true", help="16 h static IMU recording for module 3")
     parser.add_argument("--dest", type=Path, default=DATA_DIR / "kitti")
     args = parser.parse_args()
@@ -237,7 +238,7 @@ def main() -> None:
         make_skewed_sample(drive_dir, DATA_DIR / "samples" / "skewed")
         print(f"sample ready: {drive_dir}", file=sys.stderr)
     if args.drive:
-        sensors = ("oxts", "velodyne_points") + (("image_00",) if args.camera else ())
+        sensors = ("oxts", "velodyne_points") + (("image_00", "image_01") if args.camera else ())
         drive_dir = fetch_drive(args.drive, args.dest, sensors=sensors)
         if args.extract_oxts:
             fetch_drive(args.drive, args.dest, sensors=("oxts",), kind="extract")
