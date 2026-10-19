@@ -29,7 +29,7 @@ Answer the Readiness part of [`quiz/self_check.md`](quiz/self_check.md) before s
 ### Assignment
 1. **Runtime image.** Complete [`infra/docker/pipeline.Dockerfile`](../../infra/docker/pipeline.Dockerfile): pinned base (the dev image tag), Release build of the apps, `slampipe` installed, non-root user.
 2. **Argo workflow.** Complete [`infra/argo/pipeline-workflow.yaml`](../../infra/argo/pipeline-workflow.yaml): fan out over a `sequences` parameter, run and evaluate each sequence, then publish a summary. Measure one run to set resource requests. Submit it on the team cluster for at least 3 sequences.
-3. **Regression gate.** Implement `check` in [`pipeline/python/slampipe/gate.py`](../../pipeline/python/slampipe/gate.py). Complete [`starter/regression.yml`](starter/regression.yml) and enable it as `.github/workflows/regression.yml`. Show that a deliberately degraded change fails it. The baseline lives in [`baseline.json`](baseline.json).
+3. **Regression gate.** Implement `check` in [`pipeline/python/slampipe/gate.py`](../../pipeline/python/slampipe/gate.py). Complete [`starter/regression.yml`](starter/regression.yml) and enable it as `.github/workflows/regression.yml`. Show that a deliberately degraded change fails it. The shipped [`baseline.json`](baseline.json) is only an example from a reference pipeline: replace its numbers with those of **your own** pipeline on the CI sample, in a reviewed PR that says how you produced them.
 4. **Data versioning.** Put the prepared sequences you use under the team's data-versioning tool (DVC by default) and reference the version in your reports.
 5. **Production PR.** Read through the team's production codebase with your mentor and submit one small real fix or improvement through the normal review process.
 
@@ -60,5 +60,5 @@ Tick [`CHECKLIST.md`](CHECKLIST.md), open the PRs and request review.
 - Fan-out and passing parameters between steps: Argo "Loops" and "Parameters".
 - Linting without a cluster: `argo lint --offline`.
 - Containers and caching in CI: GitHub Actions docs, "Running jobs in a container" and "Caching dependencies".
-- Choosing a tolerance: run the pipeline several times, or with several `prepare` seeds, and look at the spread.
+- Choosing a tolerance: the pipeline is deterministic for a fixed input, so repeated runs give identical numbers. The spread comes from the inputs: run with several `prepare` seeds (and, if you like, small configuration changes) and look at the spread of the gated metrics.
 - Stuck for ~2 hours? Write down what you tried and ask your mentor.

@@ -90,6 +90,10 @@ def test_regression_ci_workflow(repo_root):
     doc = yaml.safe_load(text)
     commands = " ".join(step.get("run", "") for job in doc["jobs"].values() for step in job["steps"])
     assert "slampipe.gate" in commands and "slampipe.evaluation" in commands and "run_pipeline" in commands
+    containers = [job["container"] for job in doc["jobs"].values() if "container" in job]
+    assert containers and all(isinstance(c, dict) and "credentials" in c for c in containers), (
+        "pull the private dev image with credentials, as ci.yml does"
+    )
 
 
 def _base_images(dockerfile_text):

@@ -1,6 +1,6 @@
 # Module 7 STARTER: copy to .github/workflows/regression.yml once complete.
 # Runs the pipeline on the CI sample and fails the build when ATE regresses.
-# The dev image is the one ci.yml builds: ghcr.io/<owner>/slam-onboarding-dev:<hash of infra/docker/**>.
+# The dev image is the one ci.yml builds: ghcr.io/<owner, lowercase>/slam-onboarding-dev:<hash of infra/docker/**>.
 name: regression
 
 on:
@@ -10,16 +10,22 @@ jobs:
   image-tag:
     runs-on: ubuntu-24.04
     outputs:
-      tag: ${{ steps.tag.outputs.tag }}
+      image: ${{ steps.tag.outputs.image }}
     steps:
       - uses: actions/checkout@v4
-      - id: tag
-        run: echo "tag=${{ hashFiles('infra/docker/**') }}" >> "$GITHUB_OUTPUT"
+      - id: tag  # same image name as ci.yml (image names must be lowercase)
+        run: |
+          owner=$(echo "${{ github.repository_owner }}" | tr '[:upper:]' '[:lower:]')
+          echo "image=ghcr.io/${owner}/slam-onboarding-dev:${{ hashFiles('infra/docker/**') }}" >> "$GITHUB_OUTPUT"
 
   regression:
     needs: image-tag
     runs-on: ubuntu-24.04
-    container: ghcr.io/${{ github.repository_owner }}/slam-onboarding-dev:${{ needs.image-tag.outputs.tag }}
+    container:
+      image: ${{ needs.image-tag.outputs.image }}
+      credentials:  # ghcr packages are private by default
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
     steps:
       - uses: actions/checkout@v4
       # TODO(m7): restore the cached sample (or download it), build, prepare the sample drive,
