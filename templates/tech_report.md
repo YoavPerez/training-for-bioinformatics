@@ -13,6 +13,7 @@
 ## Setup
 - **Commit:** `<hash>`
 - **Config:** `<path>` (attach or link)
+- **Flags and prepare options (incl. seed):** <run_pipeline flags; prepare options and seed(s)>
 - **Dataset and version:** <name, sequences, version/checksum>
 - **Hardware / runtime environment:** 
 - **Metrics:** 

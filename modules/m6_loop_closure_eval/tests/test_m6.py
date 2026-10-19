@@ -79,12 +79,17 @@ def test_false_loop_on_sample_is_rejected_by_the_robust_kernel(app, sample_drive
     assert corrupted < 1.2 * clean + 0.02, f"clean {clean:.3f} m, with false loop {corrupted:.3f} m"
 
 
-def test_ablation_table(repo_root):
+def _load_ablation(repo_root):
     spec = importlib.util.spec_from_file_location(
         "ablation", repo_root / "modules/m6_loop_closure_eval/starter/ablation.py"
     )
     ablation = importlib.util.module_from_spec(spec)
     spec.loader.exec_module(ablation)
+    return ablation
+
+
+def test_ablation_table(repo_root):
+    ablation = _load_ablation(repo_root)
     ate = {"rmse": 1.0, "median": 0.9, "p95": 2.0, "mean_ci95": [0.8, 1.1]}
     results = {
         (g, lo, d): {"ate": dict(ate, rmse=1.0 + 0.1 * (not g))}
@@ -95,3 +100,11 @@ def test_ablation_table(repo_root):
     table = ablation.summarize_ablation(results)
     assert table.count("\n") >= 9, "header, separator and 8 rows"
     assert "+0.100" in table
+
+
+def test_seed_spread_table(repo_root):
+    ablation = _load_ablation(repo_root)
+    table = ablation.summarize_seeds({(True, True, True): [0.1, 0.4, 0.3], (True, False, False): [0.5, 0.7]})
+    assert table.count("\n") >= 3, "header, separator and 2 rows"
+    assert "0.267" in table and "0.153" in table, "mean and sample std (ddof=1) of 0.1, 0.4, 0.3"
+    assert "0.600" in table and "0.141" in table, "mean and sample std of 0.5, 0.7"

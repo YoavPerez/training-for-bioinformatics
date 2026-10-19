@@ -28,7 +28,7 @@ Answer the Readiness part of [`quiz/self_check.md`](quiz/self_check.md) before c
 2. **Loop factor.** Implement `GraphBuilder::addLoop` with a robust kernel. Choose the kernel by experiment: run `run_pipeline --false-loop i j` with at least two kernels and keep the evidence.
 3. **Evaluation.** Implement `ate_errors`, `rpe_errors` and `bootstrap_ci` in [`pipeline/python/slampipe/evaluation.py`](../../pipeline/python/slampipe/evaluation.py) on top of evo.
 4. **Loops on real data.** Run `run_pipeline --loops` on a drive with revisits (`2011_09_30_drive_0027` = KITTI odometry 07; `2011_09_30_drive_0018` = 05). Plot detected loops on the trajectory.
-5. **Ablation.** Complete [`starter/ablation.py`](starter/ablation.py): GNSS, loop closure and deskew each on/off, across at least two drives. Report error distributions and confidence intervals. For the GNSS on/off rows, report ATE both aligned and unaligned (`evaluate(..., align=False)` / `--no-align`). The `--deskew` option in `run_pipeline` contains a documented assumption about the LiDAR sweep; check whether it holds, using your data.
+5. **Ablation.** Complete [`starter/ablation.py`](starter/ablation.py): GNSS, loop closure and deskew each on/off, across at least two drives. Report error distributions and confidence intervals. For the GNSS on/off rows, report ATE both aligned and unaligned (`evaluate(..., align=False)` / `--no-align`). The simulated GNSS depends on `prepare --seed`: prepare each drive with at least 5 seeds, run the GNSS-on combinations once per seed, and report the spread across seeds (mean ± std and min–max of the per-run RMSE) next to the per-pose CI. A per-pose bootstrap does not include seed variance. The `--deskew` option in `run_pipeline` contains a documented assumption about the LiDAR sweep; check whether it holds, using your data.
 
 ### C++ focus: error handling
 - [cppreference: std::optional](https://en.cppreference.com/w/cpp/utility/optional) — docs
@@ -45,7 +45,7 @@ Task: for every failure path in your place-recognition and loop-verification cod
 ### Acceptance criteria
 - Tests in `tests/` pass in CI (`python tools/module_tests.py m6`).
 - Every number in the report is tied to a commit, a config/flags, a drive and the `prepare` seed.
-- Conclusions about a component are only drawn when the CIs support them.
+- Conclusions about a component are only drawn when the CIs support them; conclusions about GNSS also need the spread across ≥ 5 `prepare` seeds.
 
 ## Segment 4 — Self-check 2: Apply
 Answer the Apply part of [`quiz/self_check.md`](quiz/self_check.md) using your report, and prepare the "Explain to your mentor" prompts.

@@ -542,9 +542,9 @@ links:
     url: https://www.brendangregg.com/perf.html
     type: docs
     modules: [m4]
-    pointer: "Sections 3 'One-Liners', 7 'Examples' (CPU statistics, sampling), 8 'Visualizations' (flame graphs)"
+    pointer: "Sections 2 'One-Liners', 6 'Examples' (6.1 CPU Statistics, 6.2 Timed Profiling), 7 'Visualizations' (7.1 Flame Graphs)"
     required: true
-    verified_on: 2026-10-02
+    verified_on: 2026-10-19
 
   # ---------------- Module 5 ----------------
   - id: gtsam_intro

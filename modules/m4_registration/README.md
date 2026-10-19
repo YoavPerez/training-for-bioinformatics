@@ -17,7 +17,7 @@ Implement point-to-plane ICP, benchmark it honestly against established librarie
 - [KISS-ICP paper](https://arxiv.org/abs/2209.15397) — paper — "KISS-ICP – Keep It Small and Simple", Steps 1–4 and "Adaptive Threshold for Data Association"
 - [KISS-ICP repository](https://github.com/PRBonn/kiss-icp) — repo — `cpp/kiss_icp/core/` (read, do not copy)
 - [small_gicp](https://github.com/koide3/small_gicp) — repo — README "Python" usage and "Benchmark" (benchmark target)
-- [Brendan Gregg — Linux perf Examples](https://www.brendangregg.com/perf.html) — docs — sections 3 "One-Liners", 7 "Examples", 8 "Visualizations" (flame graphs)
+- [Brendan Gregg — Linux perf Examples](https://www.brendangregg.com/perf.html) — docs — sections 2 "One-Liners", 6 "Examples" (6.1 CPU Statistics, 6.2 Timed Profiling), 7 "Visualizations" (7.1 Flame Graphs)
 - [C++ Core Guidelines](https://isocpp.github.io/CppCoreGuidelines/CppCoreGuidelines) — docs — "Per: Performance" and "F.call: Parameter passing"
 
 Provided library: [nanoflann](https://github.com/jlblancoc/nanoflann) behind `pipeline/include/slam/registration/kdtree.hpp`.

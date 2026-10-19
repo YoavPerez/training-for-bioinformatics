@@ -40,6 +40,13 @@ python -m slampipe.prepare data/kitti/2011_09_30/2011_09_30_drive_0027_sync outp
 
 `gnss.csv` is **simulated**: the OXTS RTK solution is also the ground truth, so `prepare` subsamples it to 1 Hz and adds noise plus a drifting bias. Record the `prepare` options and seed in every experiment.
 
+By default `imu.csv` comes from the synced OXTS, one packet per scan (10 Hz). For 100 Hz IMU, fetch the unsynced OXTS with `--extract-oxts` and pass its drive directory:
+
+```bash
+python -m slampipe.prepare data/kitti/2011_09_30/2011_09_30_drive_0027_sync outputs/prep_0027 \
+    --imu-oxts data/kitti/2011_09_30/2011_09_30_drive_0027_extract
+```
+
 ## Module 3 skewed sample
 
 `data/samples/skewed/scan.npz` holds one KITTI raw scan (taken as the reference) with strong synthetic motion distortion added: a 45°/s yaw plus the recorded forward speed, with per-point times taken from azimuth. `download.py --sample` creates it. Note that KITTI *raw* scans are not motion-compensated; only the odometry-benchmark copies are.

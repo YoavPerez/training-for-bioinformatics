@@ -1,15 +1,23 @@
 """Provided: converts a KITTI raw drive into the files the C++ tools read.
 
-    python -m slampipe.prepare <drive_dir> <out_dir>
+    python -m slampipe.prepare <drive_dir> <out_dir> [--imu-oxts <extract_drive_dir>]
 
-Writes (times in seconds since the first OXTS packet):
-    imu.csv          t,ax,ay,az,wx,wy,wz        body (OXTS) frame
-    gnss.csv         t,x,y,z,sx,sy,sz           simulated GNSS in local ENU, origin at the first fix
-    gt.tum           OXTS INS poses T_enu_imu   (TUM format)
+Writes (times in seconds since the first OXTS packet of the sync drive):
+    imu.csv          t,ax,ay,az,wx,wy,wz        body (OXTS) frame; 10 Hz (synced OXTS, one packet per scan)
+                                                by default, 100 Hz with --imu-oxts
+    gnss.csv         t,x,y,z,sx,sy,sz           simulated GNSS in local ENU (see the origin note below)
+    gt.tum           OXTS INS poses T_enu_imu   (TUM format, quaternion with w >= 0)
     lidar_times.csv  one time per scan
     T_imu_lidar.txt  4x4 extrinsic
 
 Needs your module 1 geodesy functions.
+
+ENU origin: the first OXTS (ground-truth) position of the drive. The simulated fixes are noisy, so the
+first fix is not at the origin.
+
+--imu-oxts: the unsynced 100 Hz OXTS of the same drive (`data/download.py --extract-oxts`, directory
+<root>/<date>/<drive>_extract). Its times use the same t0 as the sync drive; samples before t0 are dropped,
+samples after the last sync packet are kept. gnss.csv and gt.tum always come from the sync drive.
 
 Why the GNSS is simulated: in KITTI raw, the OXTS RTK GNSS/INS solution is also the ground truth,
 so fusing it directly would be circular. gnss.csv is therefore the OXTS position, subsampled to
@@ -51,6 +59,7 @@ def prepare(
     gnss_sigma_v: float = 3.0,
     gnss_bias_rw: float = 0.05,
     seed: int = 0,
+    imu_oxts: Path | None = None,
 ) -> None:
     drive = kitti.Drive(Path(drive_dir))
     out = Path(out_dir)
@@ -62,9 +71,15 @@ def prepare(
     t = t_ox - t0
 
     enu = geodesy.wgs84_to_enu(ox.lat, ox.lon, ox.alt, ox.lat[0], ox.lon[0], ox.alt[0])
-    quats = Rotation.from_euler("xyz", np.stack([ox.roll, ox.pitch, ox.yaw], axis=1)).as_quat()
+    quats = Rotation.from_euler("xyz", np.stack([ox.roll, ox.pitch, ox.yaw], axis=1)).as_quat(canonical=True)
 
-    imu = np.column_stack([t, ox.ax, ox.ay, ox.az, ox.wx, ox.wy, ox.wz])
+    if imu_oxts is None:
+        imu = np.column_stack([t, ox.ax, ox.ay, ox.az, ox.wx, ox.wy, ox.wz])
+    else:
+        fast = kitti.Drive(Path(imu_oxts))
+        fo, ft = fast.oxts(), fast.oxts_times() - t0
+        keep = ft >= 0.0
+        imu = np.column_stack([ft, fo.ax, fo.ay, fo.az, fo.wx, fo.wy, fo.wz])[keep]
     np.savetxt(out / "imu.csv", imu, delimiter=",", header="t,ax,ay,az,wx,wy,wz", comments="", fmt="%.9f")
 
     gnss = simulate_gnss(t, enu, gnss_rate, gnss_sigma_h, gnss_sigma_v, gnss_bias_rw, seed)
@@ -86,9 +101,17 @@ def main() -> None:
     parser.add_argument("--gnss-sigma-v", type=float, default=3.0, help="vertical noise [m]")
     parser.add_argument("--gnss-bias-rw", type=float, default=0.05, help="bias random walk [m/sqrt(s)]")
     parser.add_argument("--seed", type=int, default=0)
+    parser.add_argument("--imu-oxts", type=Path, default=None, help="extract drive dir with 100 Hz OXTS for imu.csv")
     args = parser.parse_args()
     prepare(
-        args.drive_dir, args.out_dir, args.gnss_rate, args.gnss_sigma_h, args.gnss_sigma_v, args.gnss_bias_rw, args.seed
+        args.drive_dir,
+        args.out_dir,
+        args.gnss_rate,
+        args.gnss_sigma_h,
+        args.gnss_sigma_v,
+        args.gnss_bias_rw,
+        args.seed,
+        args.imu_oxts,
     )
 
 

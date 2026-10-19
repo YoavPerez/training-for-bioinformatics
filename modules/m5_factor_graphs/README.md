@@ -58,5 +58,6 @@ Tick [`CHECKLIST.md`](CHECKLIST.md), open the PRs (design doc, odometry, graph) 
 - Factor types and noise models in GTSAM: the GTSAM intro sections 2–4; `ImuFactorsExample.cpp` for velocity and bias variables.
 - Units of IMU covariances in GTSAM: the ImuFactor documentation (continuous-time densities, as in module 2).
 - Odometry that drifts or diverges after many frames: re-read your module 4 self-check answer M4-A04; compare scan-to-map with scan-to-scan on the same frames.
+- IMU factors that barely help: check the IMU rate in `imu.csv`. The synced OXTS is 10 Hz; see `--extract-oxts` and `prepare --imu-oxts` in [`data/README.md`](../../data/README.md).
 - Frames: odometry comes out in the LiDAR frame, the graph state is the IMU/body frame. Write the conversion down with `CONVENTIONS.md` names.
 - Stuck for ~2 hours? Write down what you tried and ask your mentor.

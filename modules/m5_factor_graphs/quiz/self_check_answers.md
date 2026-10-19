@@ -14,7 +14,7 @@ Answers and pointers only. If you missed one, read the pointer, not just the ans
 
 ## Self-check 2 — Apply
 **M5-A01.** Depends on your run; compare differences with the bootstrap CIs. See: evo_metrics_wiki — "evo_ape"
-**M5-A02.** Short drive: odometry drift is tiny while GNSS noise (1.5 m, biased) is large. See: navipedia_measurements — error budget
+**M5-A02.** Odometry starts at the INS pose, so its error is only small drift; 8 noisy fixes (σ_v 3 m) pull and tilt the graph. Varies with the seed. See: navipedia_measurements — error budget
 **M5-A03.** E.g. from the ICP residual / benchmark error distributions of module 4. See: gtsam_intro — Section 2 "Modeling Robot Motion"
 **M5-A04.** Report seconds and keyframes; batch LM grows with problem size. See: dellaert_kaess — Ch. 5 "Incremental Smoothing and Mapping"
 **M5-A05.** Depends on your run. See: lio_sam — `src/mapOptmization.cpp` (degeneracy handling)

@@ -6,6 +6,7 @@
 - [ ] `evaluation.py` complete
 - [ ] Loops detected on a drive with revisits; loop plot in the PR
 - [ ] Ablation on ≥ 2 drives with CIs; sweep assumption checked
+- [ ] GNSS rows repeated over ≥ 5 `prepare` seeds; spread across seeds reported next to the CIs
 - [ ] Every result tied to commit, flags, drive and `prepare` seed
 - [ ] `python tools/module_tests.py m6` passes
 - [ ] C++ focus: failure paths classified (optional / exception / assert) in the PR

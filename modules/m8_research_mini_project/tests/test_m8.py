@@ -39,6 +39,7 @@ def test_has_commit_and_dataset(report):
     hash_ = commit.group(1) if commit else ""
     assert re.search(r"[a-f]", hash_) or len(hash_) >= 10, "state the commit hash on the **Commit:** line of Setup"
     assert re.search(r"drive_\d{4}|sequence", setup, re.IGNORECASE), "state the dataset / drive in Setup"
+    assert re.search(r"seeds?\D{0,3}\d", setup, re.IGNORECASE), "state the `prepare` seed(s) in Setup"
 
 
 def test_no_placeholders(report):

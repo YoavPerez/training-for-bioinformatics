@@ -99,7 +99,8 @@ void writeTum(const std::string& path, const sensors::Trajectory& traj) {
   if (!f) throw std::runtime_error("cannot write " + path);
   f << std::fixed << std::setprecision(9);
   for (const auto& tp : traj) {
-    const Quat q(tp.T.linear());
+    Quat q(tp.T.linear());
+    if (q.w() < 0) q.coeffs() *= -1.0;  // canonical hemisphere: q and -q are the same rotation
     const Vec3& p = tp.T.translation();
     f << tp.t << ' ' << p.x() << ' ' << p.y() << ' ' << p.z() << ' ' << q.x() << ' ' << q.y() << ' '
       << q.z() << ' ' << q.w() << '\n';

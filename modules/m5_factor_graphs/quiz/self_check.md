@@ -30,7 +30,7 @@ Answer every question in writing **before** opening the answers file. Then score
 
 **M5-A01.** On your two full drives, how did odometry-only, +GNSS, +GNSS+IMU and the ESKF rank by ATE RMSE? Were the differences larger than the confidence intervals?
 
-**M5-A02.** On the short CI sample, adding GNSS can make the result slightly worse than odometry alone. Why?
+**M5-A02.** On the short CI sample, adding GNSS can make the result worse than odometry alone, especially without alignment. Why?
 
 **M5-A03.** Which noise values did you choose for the odometry factor, and how did you justify them?
 

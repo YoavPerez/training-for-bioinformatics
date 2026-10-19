@@ -60,6 +60,7 @@ Tick [`CHECKLIST.md`](CHECKLIST.md), open a PR and request review. Present your 
 - Error-state Jacobians F and noise matrix Q: Solà, Section 5.4 "System kinematics in discrete time".
 - Update, injection and reset: Solà, Sections 6.1–6.3.
 - Units of the noise parameters and how they scale with the sample rate: Kalibr wiki "Additive White Noise".
+- Real-data runs: check the IMU rate in `imu.csv`. The synced OXTS is 10 Hz; see `--extract-oxts` and `prepare --imu-oxts` in [`data/README.md`](../../data/README.md).
 - What NEES is and how to read it: Labbe notebook 08-Designing-Kalman-Filters.
 - Gauss-Newton derivation: Barfoot, "Nonlinear Non-Gaussian Estimation", batch estimation section.
 - Stuck for ~2 hours? Write down what you tried and ask your mentor.
