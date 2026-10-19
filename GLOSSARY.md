@@ -2,12 +2,12 @@
 
 ## Coming from bioinformatics
 
-Many tools in this program are ones you already use under another name. Each row points to where the SLAM version is taught; read it there. The phase gates end with one "Bridge" question each that builds on this table.
+Many tools in this program are ones you already use under another name. Each row points to where the SLAM version is taught; read it there. Each phase gate includes one "Bridge" question that builds on this table.
 
 | You know | SLAM / vision term | Module | Read (links.yaml id) |
 |---|---|---|---|
 | Reference genome build (GRCh37 vs GRCh38) and its coordinates | Frame and datum conventions: `T_<to>_<from>`, WGS84, a local ENU origin | m0, m1 | `navipedia_ecef_enu` |
-| Structural superposition (Kabsch), RMSD after superposition | Closed-form SVD step of point-to-point ICP; ATE after trajectory alignment | m4, m6 | `stachniss_icp_1`; `evo_metrics_wiki` (wiki page "Alignment") |
+| Structural superposition (Kabsch), RMSD after superposition | Closed-form SVD step of point-to-point ICP; ATE after trajectory alignment | m4, m6 | `stachniss_icp_1`; `evo_metrics_wiki` (Metrics page, section "Alignment") |
 | PCA of a local covariance matrix | Surface normal = eigenvector of the smallest eigenvalue of a point's neighbourhood | m4 | provided code `pipeline/src/registration/normals.cpp` |
 | k-nearest-neighbour search (e.g. single-cell kNN graphs) | KD-tree nearest-neighbour data association in ICP | m4 | `stachniss_icp_2`; `nanoflann` |
 | Weighted least squares, regression with known variances | Nonlinear least squares with noise-weighted residuals (Gauss-Newton) | m2, m5 | `barfoot_ser` ("Nonlinear Non-Gaussian Estimation") |

@@ -869,7 +869,7 @@ links:
     url: https://github.com/MichaelGrupp/evo/wiki/Metrics
     type: docs
     modules: [m6]
-    pointer: "Sections 'evo_ape', 'evo_rpe'; see also wiki pages 'Alignment'"
+    pointer: "Sections 'evo_ape', 'evo_rpe' and 'Alignment' of the Metrics page"
     required: true
     verified_on: 2026-10-02
   - id: kitti_odometry
@@ -1020,7 +1020,7 @@ links:
     url: https://www.cvlibs.net/datasets/kitti/raw_data.php
     type: dataset
     modules: [m0, m0b, m1, m2, m3, m4, m4b, m5, m6, m7, m8]
-    pointer: "Download list per drive; devkit readme (OXTS field definitions, sensor setup)"
+    pointer: "Download list per drive; devkit readme (OXTS field definitions, 'Coordinate Systems'; matlab/convertOxtsToPose.m)"
     license: "CC BY-NC-SA 3.0"
     commercial_use: false
     required: true

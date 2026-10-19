@@ -9,30 +9,40 @@ permissions:
   contents: read
   packages: write
 
-env:
-  IMAGE: ghcr.io/${{ github.repository_owner }}/slam-onboarding-dev
-
 jobs:
+  # The dev image is tagged with the hash of infra/docker. It is built only when that tag is missing, so trainee
+  # repositories created from the template reuse the image instead of rebuilding it (~30 min) and pushing.
   image:
     runs-on: ubuntu-24.04
     outputs:
-      tag: ${{ steps.tag.outputs.tag }}
+      image: ${{ steps.tag.outputs.image }}
     steps:
       - uses: actions/checkout@v4
       - id: tag
-        run: echo "tag=${{ hashFiles('infra/docker/**') }}" >> "$GITHUB_OUTPUT"
+        run: |
+          owner=$(echo "${{ github.repository_owner }}" | tr '[:upper:]' '[:lower:]')  # image names must be lowercase
+          echo "image=ghcr.io/${owner}/slam-onboarding-dev:${{ hashFiles('infra/docker/**') }}" >> "$GITHUB_OUTPUT"
       - uses: docker/login-action@v3
         with:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
-      - uses: docker/setup-buildx-action@v3
-      - uses: docker/build-push-action@v6
+      - id: exists
+        run: |
+          if docker manifest inspect "${{ steps.tag.outputs.image }}" > /dev/null 2>&1; then
+            echo "found=true" >> "$GITHUB_OUTPUT"
+          else
+            echo "found=false" >> "$GITHUB_OUTPUT"
+          fi
+      - if: steps.exists.outputs.found != 'true'
+        uses: docker/setup-buildx-action@v3
+      - if: steps.exists.outputs.found != 'true'
+        uses: docker/build-push-action@v6
         with:
           context: .
           file: infra/docker/Dockerfile
           push: true
-          tags: ${{ env.IMAGE }}:${{ steps.tag.outputs.tag }}
+          tags: ${{ steps.tag.outputs.image }}
           cache-from: type=gha
           cache-to: type=gha,mode=max
 
@@ -40,7 +50,10 @@ jobs:
     needs: image
     runs-on: ubuntu-24.04
     container:
-      image: ghcr.io/${{ github.repository_owner }}/slam-onboarding-dev:${{ needs.image.outputs.tag }}
+      image: ${{ needs.image.outputs.image }}
+      credentials:  # ghcr packages are private by default
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
       # setarch -R (ASan workaround in module 0b) and gdb need personality()/ptrace, blocked by the default profile.
       options: --cap-add=SYS_PTRACE --security-opt seccomp=unconfined
     steps:
@@ -51,7 +64,10 @@ jobs:
     needs: image
     runs-on: ubuntu-24.04
     container:
-      image: ghcr.io/${{ github.repository_owner }}/slam-onboarding-dev:${{ needs.image.outputs.tag }}
+      image: ${{ needs.image.outputs.image }}
+      credentials:  # ghcr packages are private by default
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
       # setarch -R (ASan workaround in module 0b) and gdb need personality()/ptrace, blocked by the default profile.
       options: --cap-add=SYS_PTRACE --security-opt seccomp=unconfined
     steps:
@@ -65,7 +81,10 @@ jobs:
     needs: image
     runs-on: ubuntu-24.04
     container:
-      image: ghcr.io/${{ github.repository_owner }}/slam-onboarding-dev:${{ needs.image.outputs.tag }}
+      image: ${{ needs.image.outputs.image }}
+      credentials:  # ghcr packages are private by default
+        username: ${{ github.actor }}
+        password: ${{ secrets.GITHUB_TOKEN }}
       # setarch -R (ASan workaround in module 0b) and gdb need personality()/ptrace, blocked by the default profile.
       options: --cap-add=SYS_PTRACE --security-opt seccomp=unconfined
     strategy:

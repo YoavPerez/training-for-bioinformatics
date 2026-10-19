@@ -11,8 +11,8 @@ Calibrate where you start, and agree on the conventions (frames, rotations, unit
 ### Learn from
 - [`GLOSSARY.md`](../../GLOSSARY.md) — the "Coming from bioinformatics" table: which SLAM tools you already know under another name. Come back to it in every module.
 - [MIT Missing Semester (2020)](https://missing.csail.mit.edu/2020/) — course — lectures 1 "Course Overview + The Shell", 6 "Version Control (Git)", 7 "Debugging and Profiling"
-- [3Blue1Brown — Essence of linear algebra](https://www.youtube.com/playlist?list=PLZHQObOWTQDPD3MizzM2xVFitgF8hE_ab) — video — chapters 3–6, 13, 14 (before the diagnostic quiz)
-- [KITTI raw data](https://www.cvlibs.net/datasets/kitti/raw_data.php) — dataset docs — the devkit readme's sensor setup (axes of the IMU, velodyne and cameras) and the OXTS field list (units)
+- [3Blue1Brown — Essence of linear algebra](https://www.youtube.com/playlist?list=PLZHQObOWTQDPD3MizzM2xVFitgF8hE_ab) — video — chapters 3–6, 13, 14 (after the diagnostic quiz, which calibrates what you already know)
+- [KITTI raw data](https://www.cvlibs.net/datasets/kitti/raw_data.php) — dataset docs — the devkit readme's "Coordinate Systems" section (axes of the IMU, velodyne and cameras) and the OXTS field list (units)
 - [ESA Navipedia — Transformations between ECEF and ENU coordinates](https://gssc.esa.int/navipedia/index.php/Transformations_between_ECEF_and_ENU_coordinates) — docs — what a local ENU frame is
 - [Introduction to SLAM (Cyrill Stachniss)](https://www.youtube.com/watch?v=0I30M6yTklo) — video — the difference between drifting odometry and a globally consistent map
 - [Solà — Quaternion kinematics for the ESKF](https://arxiv.org/abs/1711.02508) — paper — Section 3 "Quaternion conventions" only
@@ -48,7 +48,7 @@ Answer the Apply part of [`quiz/self_check.md`](quiz/self_check.md) against your
 Tick [`CHECKLIST.md`](CHECKLIST.md), open a PR and request review.
 
 ## Where to look if stuck
-- Frame names and axes: the KITTI devkit readme (sensor setup figure) and Navipedia's ENU page.
+- Frame names and axes: the KITTI devkit readme, "Coordinate Systems" (mounting heights: Geiger et al. 2013, Fig. 3 "Sensor Setup") and Navipedia's ENU page.
 - Quaternion conventions: Solà, Section 3 (the comparison table).
 - OXTS fields (`vf`, timestamps): the KITTI raw devkit readme, linked from the [KITTI raw page](https://www.cvlibs.net/datasets/kitti/raw_data.php).
 - Docker or shell trouble: Missing Semester lecture 1.

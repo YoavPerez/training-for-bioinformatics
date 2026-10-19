@@ -1,5 +1,5 @@
 # Module 0b: C++ foundations
-**Tentative effort:** ~4–5 days (1–2 days if your diagnostic-quiz C++ section was strong) · **Phase:** A — Foundations
+**Tentative effort:** ~1–1.5 weeks (1–2 days if your diagnostic-quiz C++ section was strong) · **Phase:** A — Foundations
 
 ## Goal
 Write modern C++ the way the team does: value semantics, RAII and clear ownership, templates and the standard library, Eigen without hidden copies or aliasing bugs, sanitizers and a debugger as daily tools, and target-based CMake. Every later module builds on this.
@@ -13,8 +13,8 @@ Write modern C++ the way the team does: value semantics, RAII and clear ownershi
 - [Back to Basics: Smart Pointers and RAII — Inbal Levi (CppCon 2021)](https://www.youtube.com/watch?v=07rJOzFRs6M) — video — whole talk
 - [Back to Basics: Move Semantics — Nicolai Josuttis (CppCon 2021)](https://www.youtube.com/watch?v=Bt3zcJZIalk) — video — whole talk
 - [Back to Basics: Cpp Value Semantics — Klaus Iglberger (CppCon 2022)](https://www.youtube.com/watch?v=G9MxNwUoSt0) — video — whole talk
-- [Back to Basics: Templates, part 1 — Bob Steagall (CppCon 2021)](https://www.youtube.com/watch?v=XN319NYEOcE) and [part 2](https://www.youtube.com/watch?v=2Y9XbltAfXs) — video
-- [Back to Basics: Classic STL — Bob Steagall (CppCon 2021)](https://www.youtube.com/watch?v=tXUXl_RzkAk) — video — containers, iterators, algorithms
+- [Back to Basics: Templates, part 1 — Bob Steagall (CppCon 2021)](https://www.youtube.com/watch?v=XN319NYEOcE) and [part 2](https://www.youtube.com/watch?v=2Y9XbltAfXs) — video — part 1 whole talk; part 2: skim if short on time
+- [Back to Basics: Classic STL — Bob Steagall (CppCon 2021)](https://www.youtube.com/watch?v=tXUXl_RzkAk) — video — containers, iterators, algorithms (skim if short on time; LearnCpp covers the essentials)
 - [Back To Basics: Undefined Behavior — Sermersheim & Geller (CppCon 2021)](https://www.youtube.com/watch?v=NpL9YnxnOqM) — video — whole talk
 - [Back to Basics: Debugging in C++ — Mike Shah (CppCon 2022)](https://www.youtube.com/watch?v=YzIBwqWC6EM) — video — gdb workflow
 - [cppreference: rule of three/five/zero](https://en.cppreference.com/w/cpp/language/rule_of_three), [std::unique_ptr](https://en.cppreference.com/w/cpp/memory/unique_ptr), [std::optional](https://en.cppreference.com/w/cpp/utility/optional), [std::lower_bound](https://en.cppreference.com/w/cpp/algorithm/lower_bound) — docs — reference while coding

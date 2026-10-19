@@ -80,3 +80,14 @@ def test_scan_in_world_is_around_the_vehicle(sample_drive, repo_root):
     ground = near[:, 2]
     # KITTI setup: the OXTS unit is mounted ~0.93 m above the road (the velodyne ~1.73 m).
     assert np.percentile(ground, 10) == pytest.approx(enu[40, 2] - 0.93, abs=0.4), "ground ~0.9 m below the IMU"
+
+
+def test_scan_pose_heading_follows_the_track(sample_drive, repo_root):
+    from slampipe import kitti
+
+    world_scan = load(repo_root, "world_scan")
+    enu = load(repo_root, "gnss_to_enu").drive_enu(sample_drive)
+    T = world_scan.pose_world_imu(kitti.Drive(sample_drive), 40)
+    forward = T[:2, 0] / np.linalg.norm(T[:2, 0])  # IMU x axis (forward) in the world, top-down
+    motion = enu[45, :2] - enu[35, :2]
+    assert forward @ motion / np.linalg.norm(motion) > 0.98, "the vehicle's x axis must point along the track"

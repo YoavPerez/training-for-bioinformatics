@@ -1,6 +1,6 @@
 # SLAM, LiDAR & Navigation Onboarding Program
 
-A self-serve onboarding program for researchers joining the SLAM / 3D LiDAR / GNSS-IMU fusion / mapping team. It is written for people coming from bioinformatics: strong in statistics, data analysis and scientific programming, new to robotics, geometry and computer vision. [`GLOSSARY.md`](GLOSSARY.md) starts with a map from bioinformatics terms you know to the SLAM terms you will meet. It takes roughly 9–10 weeks. Over modules 0–8 (plus 0b and 4b) you build **one LiDAR-inertial-GNSS mapping pipeline** in `pipeline/`, and each module adds one layer to it. An optional applied project follows.
+A self-serve onboarding program for researchers joining the SLAM / 3D LiDAR / GNSS-IMU fusion / mapping team. It is written for people coming from bioinformatics: strong in statistics, data analysis and scientific programming, new to robotics, geometry and computer vision. [`GLOSSARY.md`](GLOSSARY.md) starts with a map from bioinformatics terms you know to the SLAM terms you will meet. It takes roughly 10–11 weeks. Over modules 0–8 (plus 0b and 4b) you build **one LiDAR-inertial-GNSS mapping pipeline** in `pipeline/`, and each module adds one layer to it. An optional applied project follows.
 
 All teaching is done by external, free resources. This repository gives you the assignments, starter code, tests, self-check quizzes and review checklists. Your mentor answers questions and reviews your work.
 
@@ -11,7 +11,7 @@ The program has four **phases**. Each phase ends with a cumulative phase-gate se
 | Phase | Module | Folder | Tentative effort |
 |---|---|---|---|
 | **A. Foundations** | 0. Diagnostic and team conventions | [`modules/m0_conventions`](modules/m0_conventions/) | a few days |
-| | 0b. C++ foundations | [`modules/m0b_cpp_foundations`](modules/m0b_cpp_foundations/) | ~4–5 days (1–2 if strong in C++) |
+| | 0b. C++ foundations | [`modules/m0b_cpp_foundations`](modules/m0b_cpp_foundations/) | ~1–1.5 weeks (1–2 days if strong in C++) |
 | | 1. 3D geometry, frames, geodesy | [`modules/m1_geometry`](modules/m1_geometry/) | ~1 week |
 | | *Phase gate A* | [`modules/phase_gates/phase_A.md`](modules/phase_gates/phase_A.md) | |
 | **B. Estimation & sensors** | 2. State estimation fundamentals | [`modules/m2_estimation`](modules/m2_estimation/) | ~1 week |
@@ -55,7 +55,7 @@ Every module has the same five segments, so you always know where you are:
 
 ## Your first day
 
-1. Create your own repository from this template ("Use this template" on GitHub), clone it, and add your mentor as a reviewer.
+1. Create your own repository from this template ("Use this template" on GitHub), clone it, and add your mentor as a reviewer. If you protect `main`, make only `image`, `lint` and `smoke` required status checks: the module jobs stay red until you finish each module.
 2. Follow **Getting started** below until the pipeline builds and the smoke tests pass.
 3. Open [`modules/m0_conventions/README.md`](modules/m0_conventions/README.md) and take the diagnostic quiz (90 minutes, closed book). Hand it to your mentor.
 4. Push once and look at CI: `lint` and `smoke` are green, and the eleven `module mN` jobs are red. That is expected; each module's job turns green as you complete it.
@@ -63,11 +63,15 @@ Every module has the same five segments, so you always know where you are:
 ## Getting started
 
 1. Read [`CONVENTIONS.md`](CONVENTIONS.md). You will complete it with your mentor in module 0.
-2. Open the repo in the dev container (VS Code: *Reopen in Container*), or build the image yourself:
+2. Open the repo in the dev container (VS Code: *Reopen in Container*); it installs `slampipe` and fetches the sample for you. Or build and enter the image yourself:
    ```bash
-   docker build -t onboarding-dev -f infra/docker/Dockerfile .
+   docker build -t slam-onboarding-dev -f infra/docker/Dockerfile .
+   docker run --rm -it --cap-add=SYS_PTRACE --security-opt seccomp=unconfined \
+       -v "$PWD":/workspace -w /workspace slam-onboarding-dev bash
+   pip install -e .          # inside the container, once per new container
    ```
-3. Fetch the CI sample data: `python data/download.py --sample`. For the full KITTI raw drives, see [`data/README.md`](data/README.md) and the license notice there.
+   (The two options let gdb and the module 0b sanitizer tests work. If the build stalls on downloads, see module 0, "Where to look if stuck".) All later commands run inside the container.
+3. Fetch the CI sample data: `python data/download.py --sample` (the dev container already did this). For the full KITTI raw drives, see [`data/README.md`](data/README.md) and the license notice there.
 4. Build and test the pipeline:
    ```bash
    infra/ci/build.sh . build            # cmake -S . -B build -G Ninja -DCMAKE_BUILD_TYPE=Release && cmake --build build

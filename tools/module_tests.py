@@ -5,6 +5,7 @@
 --expect fail  asserts that every selected module's tests FAIL (untouched starter code).
 --expect pass  asserts that every selected module's tests PASS (solutions overlaid).
 A module's tests are its pytest files in modules/<module>/tests plus ctest tests labelled m<N>.
+The C++ build directory is rebuilt first (cmake --build) if it has been configured.
 """
 
 import argparse
@@ -49,6 +50,12 @@ def main() -> int:
     parser.add_argument("modules", nargs="*")
     args = parser.parse_args()
     os.environ["SLAM_BUILD_DIR"] = str(args.build_dir.resolve())
+
+    # Rebuild first, so the C++ tests never run stale binaries after you edit a source file (no-op when up to date).
+    if (args.build_dir / "CMakeCache.txt").is_file():
+        if subprocess.run(["cmake", "--build", str(args.build_dir)], cwd=REPO).returncode != 0:
+            print(f"ERROR: `cmake --build {args.build_dir}` failed: fix the compile errors above first")
+            return 1
 
     results = {m.name: run_module(m, args.build_dir.resolve()) for m in module_dirs(args.modules)}
     print("\n=== module test summary ===")

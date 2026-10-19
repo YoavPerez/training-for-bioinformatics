@@ -61,6 +61,6 @@ Tick [`CHECKLIST.md`](CHECKLIST.md), open a PR and request review.
 ## Where to look if stuck
 - What a Scan Context bin stores and how the column shift works: the paper, Sections III-A and III-B. Check the sign of your shift with a scan you rotated yourself.
 - Why one kernel rejects a wrong loop and another only dampens it: the robust least-squares lecture; compare the influence (ψ) functions in the GTSAM post.
-- ATE alignment, time association and RPE deltas: evo wiki "Metrics" and "Alignment".
+- ATE alignment, time association and RPE deltas: evo wiki "Metrics" page, sections "evo_ape", "evo_rpe" and "Alignment".
 - Confidence intervals by resampling: think of it as a bootstrap over poses; Labbe (module 2) and any statistics text you know from your degree.
 - Stuck for ~2 hours? Write down what you tried and ask your mentor.

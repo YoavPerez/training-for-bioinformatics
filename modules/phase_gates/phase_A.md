@@ -18,13 +18,13 @@ Closed-book, 45 minutes. Score yourself with `phase_A_answers.md`.
 
 **PA-08.** What is the size and structure of the Jacobian of `exp` at zero for SO(3)?
 
-**PA-09.** Name the ellipsoid and the three Cartesian frames involved in turning a GNSS fix into a local map coordinate.
+**PA-09.** Name the ellipsoid, the input coordinates and the two Cartesian frames involved in turning a GNSS fix into a local map coordinate.
 
 **PA-10.** You move 1° of longitude east at latitude 60°. Roughly how many kilometres is that?
 
 **PA-11.** In git, how do you undo the last commit locally while keeping its changes in the working tree?
 
-**PA-12.** Bridge: a multiple sequence alignment uses a reference coordinate system for positions. What plays that role in mapping, and what goes wrong if two people use different ones?
+**PA-12.** Bridge: two labs report variant positions, one on GRCh37 and one on GRCh38. What plays the role of the reference genome build in mapping, and what goes wrong if two people use different ones?
 
 **PA-13.** A function takes `const Eigen::Matrix3Xd& pts` and is called with `cloud.leftCols(100)`. What happens, and how do you avoid it?
 

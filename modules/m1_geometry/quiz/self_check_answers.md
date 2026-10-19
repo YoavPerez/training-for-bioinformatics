@@ -16,6 +16,6 @@ Answers and pointers only. If you missed one, read the pointer, not just the ans
 ## Self-check 2 — Apply
 **M1-A01.** Roughly west (heading ≈ 180° from east; ENU x decreasing). See: kitti_raw — devkit readme, OXTS yaw definition
 **M1-A02.** Well under a metre; plausible for a flat street, limited by the vertical accuracy of the GNSS/INS solution. See: navipedia_measurements — error budget (vertical vs horizontal)
-**M1-A03.** About 0.9–1.1 m: the OXTS unit is mounted ~0.93 m above the road (velodyne ~1.73 m). See: kitti_raw — devkit readme, sensor setup figure
+**M1-A03.** About 0.9–1.1 m: the OXTS unit is mounted ~0.93 m above the road (velodyne ~1.73 m). See: kitti_ijrr — Fig. 3 "Sensor Setup"
 **M1-A04.** Shifted by about twice the 1.2 m IMU–LiDAR offset (≈ 2.4 m) and slightly mis-rotated; the road no longer lies ~1 m below the IMU. See: modern_robotics — Ch. 3.3.1
 **M1-A05.** The near-π case (angle π − ε, small ε) or the exact-π case. See: micro_lie — Appendix B-A

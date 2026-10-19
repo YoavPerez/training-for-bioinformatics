@@ -3,7 +3,7 @@
 Answers and pointers only. If you missed one, read the pointer, not just the answer.
 
 ## Self-check 1 — Readiness
-**M0-R01.** Left (x forward, y left, z up). See: kitti_raw — devkit readme, sensor setup
+**M0-R01.** Left (x forward, y left, z up). See: kitti_raw — devkit readme, "Coordinate Systems"
 **M0-R02.** The odometry frame drifts but is continuous; the map frame can jump. See: stachniss_slam_intro — whole lecture
 **M0-R03.** `T_world_imu = T_world_lidar * T_lidar_imu`. See: modern_robotics — Ch. 3.3 (composition of homogeneous transforms)
 **M0-R04.** z axis, 90°. See: sola_eskf — Section 1 (quaternion definition) and Section 3

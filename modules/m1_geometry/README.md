@@ -59,4 +59,5 @@ Tick [`CHECKLIST.md`](CHECKLIST.md), open a PR (keep it small: library first, sc
 - SLERP and the sign of quaternions: [Solà — Quaternion kinematics for the ESKF](https://arxiv.org/abs/1711.02508), Sections 2.4 and 2.7.
 - ECEF and ENU: the two Navipedia pages above. Check your result against points whose ECEF coordinates you can derive by hand (equator, poles).
 - OXTS roll/pitch/yaw definitions and the calibration file format: the KITTI raw devkit readme ([KITTI raw page](https://www.cvlibs.net/datasets/kitti/raw_data.php)).
+- The order in which roll, pitch and yaw are composed into a rotation: the devkit's `matlab/convertOxtsToPose.m`.
 - Stuck for ~2 hours? Write down what you tried and ask your mentor.
