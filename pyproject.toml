@@ -7,7 +7,7 @@ name = "slampipe"
 version = "0.1.0"
 description = "Python side of the SLAM onboarding pipeline"
 requires-python = ">=3.11"
-dependencies = ["numpy", "scipy", "matplotlib", "evo", "pyyaml"]
+dependencies = ["numpy", "scipy", "matplotlib", "evo", "pyyaml", "opencv-python-headless"]
 
 [tool.setuptools.packages.find]
 where = ["pipeline/python"]

@@ -11,6 +11,8 @@ Answers and pointers only. If you missed one, read the pointer, not just the ans
 **M5-R06.** Filter: constant cost per step; smoother: re-linearizes past states, more accurate. See: dellaert_kaess — Ch. 2
 **M5-R07.** More, denser and older structure to match against, so less drift and fewer degenerate cases. See: kiss_icp_paper — Step 3
 **M5-R08.** Each factor touches few variables; sparse solvers make large problems tractable. See: dellaert_kaess — Ch. 3 "Exploiting Sparsity"
+**M5-R09.** Marginalizing a variable leaves one dense factor on all its neighbours (fill-in), so the remaining graph gets denser near the window edge. See: dellaert_kaess — Ch. 4 "The Concept of Fill-in", Ch. 5.3
+**M5-R10.** It re-linearizes and iterates over the states in the window; the EKF linearizes once. It gives up re-linearizing older states and closing loops outside the window. See: barfoot_ser — Section 4.3.4 "Sliding-Window Filters"
 
 ## Self-check 2 — Apply
 **M5-A01.** Depends on your run; compare differences with the bootstrap CIs. See: evo_metrics_wiki — "evo_ape"

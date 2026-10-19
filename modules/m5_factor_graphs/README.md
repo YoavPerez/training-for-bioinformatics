@@ -19,7 +19,9 @@ Build a back-end that fuses LiDAR odometry, IMU and GNSS in a factor graph, star
 - [KISS-ICP paper](https://arxiv.org/abs/2209.15397) — paper — Step 3 "Local Map and Correspondence Estimation"
 - Code to read, not copy: [LIO-SAM](https://github.com/TixiaoShan/LIO-SAM) (`src/imuPreintegration.cpp`, `src/mapOptmization.cpp`) and [FAST-LIO](https://github.com/hku-mars/FAST_LIO) (`src/laserMapping.cpp`)
 
-Optional: [Factor Graph — 5 Minutes with Cyrill](https://www.youtube.com/watch?v=uuiaqGLFYa4); [Barfoot](http://asrl.utias.utoronto.ca/~tdb/bib/barfoot_ser24.pdf) "Matrix Lie Groups" (PDF p. 299).
+- Fixed-lag smoothing and marginalization: [Dellaert & Kaess](https://www.cs.cmu.edu/~kaess/pub/Dellaert17fnt.pdf) — Ch. 4 "The Concept of Fill-in" and Ch. 5 "Kalman Filtering and Smoothing"; [Barfoot](http://asrl.utias.utoronto.ca/~tdb/bib/barfoot_ser24.pdf) — Section 4.3.4 "Sliding-Window Filters" (PDF p. 176)
+
+Optional: [GTSAM — FixedLagSmootherExample.cpp](https://github.com/borglab/gtsam/blob/4.3.0/examples/FixedLagSmootherExample.cpp) (the GTSAM version in the dev image); [Factor Graph — 5 Minutes with Cyrill](https://www.youtube.com/watch?v=uuiaqGLFYa4); [Barfoot](http://asrl.utias.utoronto.ca/~tdb/bib/barfoot_ser24.pdf) "Matrix Lie Groups" (PDF p. 299).
 
 ## Segment 2 — Self-check 1: Readiness
 Answer the Readiness part of [`quiz/self_check.md`](quiz/self_check.md) before writing the design doc, then grade yourself.

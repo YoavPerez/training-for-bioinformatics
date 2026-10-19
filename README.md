@@ -1,6 +1,6 @@
 # SLAM, LiDAR & Navigation Onboarding Program
 
-A self-serve onboarding program for engineers joining the SLAM / 3D LiDAR / GNSS-IMU fusion / mapping team. It takes roughly 8–9 weeks. Over nine modules (0–8) you build **one LiDAR-inertial-GNSS mapping pipeline** in `pipeline/`, and each module adds one layer to it. An optional applied project follows.
+A self-serve onboarding program for researchers joining the SLAM / 3D LiDAR / GNSS-IMU fusion / mapping team. It is written for people coming from bioinformatics: strong in statistics, data analysis and scientific programming, new to robotics, geometry and computer vision. [`GLOSSARY.md`](GLOSSARY.md) starts with a map from bioinformatics terms you know to the SLAM terms you will meet. It takes roughly 9–10 weeks. Over modules 0–8 (plus 0b and 4b) you build **one LiDAR-inertial-GNSS mapping pipeline** in `pipeline/`, and each module adds one layer to it. An optional applied project follows.
 
 All teaching is done by external, free resources. This repository gives you the assignments, starter code, tests, self-check quizzes and review checklists. Your mentor answers questions and reviews your work.
 
@@ -18,6 +18,7 @@ The program has four **phases**. Each phase ends with a cumulative phase-gate se
 | | 3. Sensors in depth | [`modules/m3_sensors`](modules/m3_sensors/) | ~1 week |
 | | *Phase gate B* | [`modules/phase_gates/phase_B.md`](modules/phase_gates/phase_B.md) | |
 | **C. Mapping core** | 4. Point clouds and registration (mid-program checkpoint) | [`modules/m4_registration`](modules/m4_registration/) | ~1 week |
+| | 4b. Camera geometry and visual odometry | [`modules/m4b_vision`](modules/m4b_vision/) | ~1 week |
 | | 5. Odometry to SLAM with factor graphs | [`modules/m5_factor_graphs`](modules/m5_factor_graphs/) | ~1 week |
 | | 6. Loop closure, maps, evaluation | [`modules/m6_loop_closure_eval`](modules/m6_loop_closure_eval/) | ~1 week |
 | | *Phase gate C* | [`modules/phase_gates/phase_C.md`](modules/phase_gates/phase_C.md) | |
@@ -33,7 +34,7 @@ This program does not use ROS, and none of it requires ROS knowledge. The pipeli
 
 ## How every module is organised
 
-C++ runs through the whole program: module 0b builds the foundations, and modules 1–7 each have a **C++ focus** task (testing, class design, generic code, performance, API design, error handling, tooling) reviewed with the rest of the module.
+C++ runs through the whole program: module 0b builds the foundations, and modules 1–7 and 4b each have a **C++ focus** task (testing, class design, generic code, performance, API design, error handling, tooling, a lean projection loop) reviewed with the rest of the module.
 
 Every module has the same five segments, so you always know where you are:
 
@@ -57,7 +58,7 @@ Every module has the same five segments, so you always know where you are:
 1. Create your own repository from this template ("Use this template" on GitHub), clone it, and add your mentor as a reviewer.
 2. Follow **Getting started** below until the pipeline builds and the smoke tests pass.
 3. Open [`modules/m0_conventions/README.md`](modules/m0_conventions/README.md) and take the diagnostic quiz (90 minutes, closed book). Hand it to your mentor.
-4. Push once and look at CI: `lint` and `smoke` are green, and the ten `module mN` jobs are red. That is expected; each module's job turns green as you complete it.
+4. Push once and look at CI: `lint` and `smoke` are green, and the eleven `module mN` jobs are red. That is expected; each module's job turns green as you complete it.
 
 ## Getting started
 

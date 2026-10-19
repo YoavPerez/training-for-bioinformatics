@@ -1,6 +1,6 @@
-# Phase gate C — Mapping core (modules 4–6)
+# Phase gate C — Mapping core (modules 4, 4b, 5, 6)
 
-Closed-book, 45 minutes. Score yourself with `phase_C_answers.md`.
+Closed-book, 50 minutes. Score yourself with `phase_C_answers.md`.
 
 **PC-01.** Derive the Jacobian row of a point-to-plane residual with respect to a left rotation perturbation w.
 
@@ -25,3 +25,7 @@ Closed-book, 45 minutes. Score yourself with `phase_C_answers.md`.
 **PC-11.** Your ablation shows loop closure reducing ATE from 2.1 m to 1.9 m with overlapping CIs. How do you report it?
 
 **PC-12.** Bridge: sequence-based place recognition (SeqSLAM-style) vs single-scan Scan Context: what does the alignment of descriptor sequences buy you, in the terms you would use for read alignment?
+
+**PC-13.** On your LiDAR overlay, points sit a few pixels off the edges they belong to. How do you tell an extrinsic *rotation* error from a *translation* error by looking at near and far objects?
+
+**PC-14.** Each two-view step of monocular VO has its own unknown scale. What keeps the scale consistent from step to step in a camera-only system, and what would a LiDAR or an IMU provide instead?

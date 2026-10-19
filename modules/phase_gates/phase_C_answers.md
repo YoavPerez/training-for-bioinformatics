@@ -12,3 +12,5 @@
 **PC-10.** RPE at a fixed distance: it measures local drift independent of sequence length. See: evo_metrics_wiki — "evo_rpe"
 **PC-11.** As "no significant difference on these sequences", with the CIs; do not claim an improvement. See: evo_metrics_wiki — "evo_ape" statistics
 **PC-12.** Like aligning reads rather than single k-mers: context across many positions disambiguates repetitive (look-alike) places. See: scan_context_paper — Section II "Related Work"
+**PC-13.** A rotation error shifts near and far points by the same number of pixels; a translation error shifts near points much more (∝ 1/depth). See: kitti_ijrr — Section IV-C, eq. 7
+**PC-14.** Points triangulated in earlier frames, re-observed in the new one (3-D-to-2-D), tie the scales together. A LiDAR gives metric depth, an IMU metric acceleration. See: vo_tutorial_part1 — "Motion Estimation"

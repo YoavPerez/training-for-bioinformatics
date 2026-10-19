@@ -322,9 +322,9 @@ links:
     url: http://asrl.utias.utoronto.ca/~tdb/bib/barfoot_ser24.pdf
     type: book
     modules: [m2, m5]
-    pointer: "Ch. 'Linear-Gaussian Estimation' (PDF p. 63), 'Nonlinear Non-Gaussian Estimation' (PDF p. 125, Gauss-Newton and EKF sections), 'Matrix Lie Groups' (PDF p. 299)"
+    pointer: "Ch. 'Linear-Gaussian Estimation' (PDF p. 63), 'Nonlinear Non-Gaussian Estimation' (PDF p. 125, Gauss-Newton and EKF sections), 'Matrix Lie Groups' (PDF p. 299); Section 4.3.4 'Sliding-Window Filters' (PDF p. 176, m5)"
     required: true
-    verified_on: 2026-10-02
+    verified_on: 2026-10-19
   - id: barfoot_site
     title: "Tim Barfoot — author page (book links and errata)"
     url: http://asrl.utias.utoronto.ca/~tdb/
@@ -546,6 +546,192 @@ links:
     required: true
     verified_on: 2026-10-19
 
+  # ---------------- Module 4b ----------------
+  - id: stachniss_pcv_course
+    title: "Stachniss — Photogrammetry I & II course page (2021/22), slides of every lecture"
+    url: https://www.ipb.uni-bonn.de/photo12-2021/
+    type: course
+    modules: [m4b]
+    pointer: "Lecture list with slide PDFs; the decks below are taken from it"
+    required: false
+    verified_on: 2026-10-19
+  - id: stachniss_pcv_camera
+    title: "Stachniss — Camera Parameters: Extrinsics and Intrinsics (slides)"
+    url: https://www.ipb.uni-bonn.de/html/teaching/photo12-2021/2021-pho1-20-camera-params.pptx.pdf
+    type: docs
+    modules: [m4b]
+    pointer: "Whole deck: pinhole model, calibration matrix K, extrinsics, projection matrix P = K[R|t]"
+    required: true
+    verified_on: 2026-10-19
+  - id: stachniss_pcv_descriptors
+    title: "Stachniss — Visual Features: Descriptors (SIFT, BRIEF, and ORB) (slides)"
+    url: https://www.ipb.uni-bonn.de/html/teaching/photo12-2021/2021-pho1-11-features-descriptors.pptx.pdf
+    type: docs
+    modules: [m4b]
+    pointer: "Parts on BRIEF and ORB (binary descriptors, Hamming distance)"
+    required: true
+    verified_on: 2026-10-19
+  - id: stachniss_pcv_keypoints
+    title: "Stachniss — Visual Features: Keypoints (Harris, Shi-Tomasi, Förstner, DoG) (slides)"
+    url: https://www.ipb.uni-bonn.de/html/teaching/photo12-2021/2021-pho1-10-features-keypoints.pptx.pdf
+    type: docs
+    modules: [m4b]
+    pointer: "Whole deck (what makes a good keypoint)"
+    required: false
+    verified_on: 2026-10-19
+  - id: stachniss_pcv_fundamental
+    title: "Stachniss — Relative Orientation, Fundamental and Essential Matrix (slides)"
+    url: https://www.ipb.uni-bonn.de/html/teaching/photo12-2021/2021-pho2-02-fundamentalmatrix.pptx.pdf
+    type: docs
+    modules: [m4b]
+    pointer: "Whole deck: coplanarity constraint, F for uncalibrated and E for calibrated cameras, degrees of freedom"
+    required: true
+    verified_on: 2026-10-19
+  - id: stachniss_pcv_epipolar
+    title: "Stachniss — Epipolar Geometry (slides)"
+    url: https://www.ipb.uni-bonn.de/html/teaching/photo12-2021/2021-pho2-03-epipolar-geometry.pptx.pdf
+    type: docs
+    modules: [m4b]
+    pointer: "Whole deck: epipoles, epipolar lines and planes"
+    required: true
+    verified_on: 2026-10-19
+  - id: stachniss_pcv_fe_direct
+    title: "Stachniss — Direct Solutions for Computing Fundamental and Essential Matrix (slides)"
+    url: https://www.ipb.uni-bonn.de/html/teaching/photo12-2021/2021-pho2-04-fe-direct.pptx.pdf
+    type: docs
+    modules: [m4b]
+    pointer: "Slides '8-Point Algorithm', 'Well-Conditioned Problem', 'Conditioning/Normalization'; rank-2 enforcement"
+    required: true
+    verified_on: 2026-10-19
+  - id: stachniss_pcv_ransac
+    title: "Stachniss — RANSAC: Random Sample Consensus (slides)"
+    url: https://www.ipb.uni-bonn.de/html/teaching/photo12-2021/2021-pho2-06-ransac.pptx.pdf
+    type: docs
+    modules: [m4b]
+    pointer: "Whole deck: number of iterations vs outlier ratio and sample size"
+    required: true
+    verified_on: 2026-10-19
+  - id: stachniss_pcv_triangulation
+    title: "Stachniss — Triangulation and Absolute Orientation (slides)"
+    url: https://www.ipb.uni-bonn.de/html/teaching/photo12-2021/2021-pho2-07-triangulation.pptx.pdf
+    type: docs
+    modules: [m4b]
+    pointer: "Triangulation part (absolute orientation is the module 4 SVD alignment again)"
+    required: true
+    verified_on: 2026-10-19
+  - id: stachniss_pcv_ba
+    title: "Stachniss — Bundle Adjustment, Part I: Introduction & Application (slides)"
+    url: https://www.ipb.uni-bonn.de/html/teaching/photo12-2021/2021-pho2-09-BA-part1.pptx.pdf
+    type: docs
+    modules: [m4b]
+    pointer: "Whole deck: unknowns, reprojection error, gauge freedom"
+    required: true
+    verified_on: 2026-10-19
+  - id: stachniss_pcv_ba2
+    title: "Stachniss — Bundle Adjustment, Part II: Numerics of BA (slides)"
+    url: https://www.ipb.uni-bonn.de/html/teaching/photo12-2021/2021-pho2-10-BA-part2.pptx.pdf
+    type: docs
+    modules: [m4b]
+    pointer: "Slides 'BA Without Control Points' and 'Datum Without Control Points' (gauge freedom, rank deficiency 7)"
+    required: true
+    verified_on: 2026-10-19
+  - id: stachniss_pcv_p3p
+    title: "Stachniss — Projective 3-Point (P3P) Algorithm / Spatial Resection (slides)"
+    url: https://www.ipb.uni-bonn.de/html/teaching/photo12-2021/2021-pho1-23-p3p.pptx.pdf
+    type: docs
+    modules: [m4b]
+    pointer: "Whole deck (3-D-to-2-D pose, used by keyframe-based VO)"
+    required: false
+    verified_on: 2026-10-19
+  - id: stachniss_pcv_bovw
+    title: "Stachniss — Bag of Visual Words for Finding Similar Images (slides)"
+    url: https://www.ipb.uni-bonn.de/html/teaching/photo12-2021/2021-pho2-12-bag-of-visual-words.pptx.pdf
+    type: docs
+    modules: [m4b, m6]
+    pointer: "Whole deck (visual place recognition; compare with Scan Context in module 6)"
+    required: false
+    verified_on: 2026-10-19
+  - id: vo_tutorial_part1
+    title: "Scaramuzza & Fraundorfer — Visual Odometry, Part I: The First 30 Years and Fundamentals (IEEE RAM 2011)"
+    url: https://rpg.ifi.uzh.ch/docs/VO_Part_I_Scaramuzza.pdf
+    type: paper
+    modules: [m4b]
+    pointer: "Sections 'Formulation of the VO Problem', 'Camera Modeling and Calibration' ('Perspective Camera Model'), 'Motion Estimation' (incl. 'Extracting R and t from E', 'Triangulation and Keyframe Selection'), 'VO Versus V-SLAM'"
+    required: true
+    verified_on: 2026-10-19
+  - id: kitti_ijrr
+    title: "Geiger et al. — Vision meets Robotics: The KITTI Dataset (IJRR 2013)"
+    url: https://www.cvlibs.net/publications/Geiger2013IJRR.pdf
+    type: paper
+    modules: [m4b]
+    pointer: "Section II 'Sensor Setup' (axes of each sensor); Section IV-B 'Camera Calibration' (eq. 3-5) and IV-C 'Velodyne and IMU Calibration' (eq. 6-7: a velodyne point into a rectified image)"
+    required: true
+    verified_on: 2026-10-19
+  - id: opencv_orb
+    title: "OpenCV tutorial — ORB (Oriented FAST and Rotated BRIEF) (tutorial source)"
+    url: https://github.com/opencv/opencv/blob/4.x/doc/py_tutorials/py_feature2d/py_orb/py_orb.markdown
+    type: docs
+    modules: [m4b]
+    pointer: "Sections 'Theory' and 'ORB in OpenCV'"
+    required: true
+    verified_on: 2026-10-19
+  - id: opencv_matcher
+    title: "OpenCV tutorial — Feature Matching (tutorial source)"
+    url: https://github.com/opencv/opencv/blob/4.x/doc/py_tutorials/py_feature2d/py_matcher/py_matcher.markdown
+    type: docs
+    modules: [m4b]
+    pointer: "'Brute-Force Matching with ORB Descriptors' and 'Brute-Force Matching with SIFT Descriptors and Ratio Test'"
+    required: true
+    verified_on: 2026-10-19
+  - id: opencv_epipolar
+    title: "OpenCV tutorial — Epipolar Geometry (tutorial source)"
+    url: https://github.com/opencv/opencv/blob/4.x/doc/py_tutorials/py_calib3d/py_epipolar_geometry/py_epipolar_geometry.markdown
+    type: docs
+    modules: [m4b]
+    pointer: "Sections 'Basic Concepts' and 'Code'"
+    required: true
+    verified_on: 2026-10-19
+  - id: orb_slam_paper
+    title: "Mur-Artal et al. — ORB-SLAM: a Versatile and Accurate Monocular SLAM System (arXiv 1502.00956)"
+    url: https://arxiv.org/abs/1502.00956
+    type: paper
+    modules: [m4b]
+    pointer: "Sections III 'System Overview', IV 'Automatic Map Initialization', VII 'Loop Closing'"
+    required: false
+    verified_on: 2026-10-19
+  - id: superpoint_paper
+    title: "DeTone et al. — SuperPoint: Self-Supervised Interest Point Detection and Description (arXiv 1712.07629)"
+    url: https://arxiv.org/abs/1712.07629
+    type: paper
+    modules: [m4b]
+    pointer: "Abstract and Introduction (learned keypoints and descriptors)"
+    required: false
+    verified_on: 2026-10-19
+  - id: lightglue_paper
+    title: "Lindenberger et al. — LightGlue: Local Feature Matching at Light Speed (arXiv 2306.13643)"
+    url: https://arxiv.org/abs/2306.13643
+    type: paper
+    modules: [m4b]
+    pointer: "Abstract and Introduction (learned matching)"
+    required: false
+    verified_on: 2026-10-19
+  - id: droid_slam_paper
+    title: "Teed & Deng — DROID-SLAM: Deep Visual SLAM for Monocular, Stereo, and RGB-D Cameras (arXiv 2108.10869)"
+    url: https://arxiv.org/abs/2108.10869
+    type: paper
+    modules: [m4b]
+    pointer: "Abstract and Introduction (learned dense visual SLAM)"
+    required: false
+    verified_on: 2026-10-19
+  - id: opencv_python_pypi
+    title: "opencv-python-headless (PyPI)"
+    url: https://pypi.org/project/opencv-python-headless/
+    type: docs
+    modules: [m4b]
+    pointer: "The package in the dev image (no GUI); import cv2"
+    required: false
+    verified_on: 2026-10-19
+
   # ---------------- Module 5 ----------------
   - id: gtsam_intro
     title: "GTSAM — Factor Graphs and GTSAM: A Hands-on Introduction"
@@ -584,9 +770,9 @@ links:
     url: https://www.cs.cmu.edu/~kaess/pub/Dellaert17fnt.pdf
     type: book
     modules: [m5]
-    pointer: "Ch. 1 'Introduction', Ch. 2 'Smoothing and Mapping', Ch. 6 'Optimization on Manifolds'"
+    pointer: "Ch. 1 'Introduction', Ch. 2 'Smoothing and Mapping', Ch. 4 'The Concept of Fill-in', Ch. 5 'Kalman Filtering and Smoothing', Ch. 6 'Optimization on Manifolds'"
     required: true
-    verified_on: 2026-10-02
+    verified_on: 2026-10-19
   - id: stachniss_pose_graph
     title: "Graph-based SLAM using Pose Graphs (Cyrill Stachniss)"
     url: https://www.youtube.com/watch?v=uHbRKvD8TWg
@@ -627,6 +813,15 @@ links:
     pointer: "src/laserMapping.cpp (iterated EKF), src/IMU_Processing.hpp (deskew) — code to read, not copy"
     required: true
     verified_on: 2026-10-02
+
+  - id: gtsam_fixed_lag_example
+    title: "GTSAM — FixedLagSmootherExample.cpp (tag 4.3.0, the version in the dev image)"
+    url: https://github.com/borglab/gtsam/blob/4.3.0/examples/FixedLagSmootherExample.cpp
+    type: repo
+    modules: [m5]
+    pointer: "Whole file: BatchFixedLagSmoother vs IncrementalFixedLagSmoother, the lag and key timestamps"
+    required: false
+    verified_on: 2026-10-19
 
   # ---------------- Module 6 ----------------
   - id: scan_context_paper
@@ -685,6 +880,39 @@ links:
     pointer: "Benchmark description at the top of the page: translational error in %, rotational error in deg/m, segment lengths"
     required: true
     verified_on: 2026-10-02
+
+  - id: octomap_paper
+    title: "Hornung et al. — OctoMap: An Efficient Probabilistic 3D Mapping Framework Based on Octrees (Autonomous Robots 2013)"
+    url: https://www.arminhornung.de/Research/pub/hornung13auro.pdf
+    type: paper
+    modules: [m6]
+    pointer: "Section 'OctoMap Mapping Framework' (occupancy, log-odds update, clamping)"
+    required: true
+    verified_on: 2026-10-19
+  - id: voxblox_paper
+    title: "Oleynikova et al. — Voxblox: Incremental 3D Euclidean Signed Distance Fields (arXiv 1611.03631)"
+    url: https://arxiv.org/abs/1611.03631
+    type: paper
+    modules: [m6]
+    pointer: "Sections I 'Introduction' and IV 'TSDF Construction' (IV-A 'Weighting', IV-B 'Merging')"
+    required: true
+    verified_on: 2026-10-19
+  - id: pointnetvlad_paper
+    title: "Uy & Lee — PointNetVLAD: Deep Point Cloud Based Retrieval for Large-Scale Place Recognition (arXiv 1804.03492)"
+    url: https://arxiv.org/abs/1804.03492
+    type: paper
+    modules: [m6]
+    pointer: "Abstract and Introduction (learned LiDAR place recognition)"
+    required: false
+    verified_on: 2026-10-19
+  - id: overlaptransformer_paper
+    title: "Ma et al. — OverlapTransformer: Rotation-Invariant Transformer Network for LiDAR-Based Place Recognition (arXiv 2203.03397)"
+    url: https://arxiv.org/abs/2203.03397
+    type: paper
+    modules: [m6]
+    pointer: "Abstract and Introduction (learned place recognition on range images)"
+    required: false
+    verified_on: 2026-10-19
 
   # ---------------- Module 7 ----------------
   - id: argo_docs
@@ -791,7 +1019,7 @@ links:
     title: "KITTI raw data"
     url: https://www.cvlibs.net/datasets/kitti/raw_data.php
     type: dataset
-    modules: [m0, m0b, m1, m2, m3, m4, m5, m6, m7, m8]
+    modules: [m0, m0b, m1, m2, m3, m4, m4b, m5, m6, m7, m8]
     pointer: "Download list per drive; devkit readme (OXTS field definitions, sensor setup)"
     license: "CC BY-NC-SA 3.0"
     commercial_use: false

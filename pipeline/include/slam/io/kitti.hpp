@@ -6,6 +6,7 @@
 #include "slam/estimation/eskf.hpp"
 #include "slam/sensors/deskew.hpp"
 #include "slam/types.hpp"
+#include "slam/vision/camera.hpp"
 
 namespace slam::io {
 
@@ -38,5 +39,15 @@ std::map<std::string, std::vector<double>> readCalib(const std::string& path);
 
 // T_to_from from a calib file containing R (row-major 3x3) and T (3 values).
 Pose calibToPose(const std::map<std::string, std::vector<double>>& calib);
+
+struct CameraCalib {
+  vision::PinholeCamera cam;
+  Pose T_cam_velo;  // velodyne -> rectified camera frame
+};
+// Rectified camera `index` (0-3) of a KITTI raw date directory (the folder with
+// calib_cam_to_cam.txt and calib_velo_to_cam.txt): intrinsics from P_rect_0<index>, image size from
+// S_rect_0<index>, and T_cam_velo = [K^-1 * P_rect(:, 3)] * R_rect_00 * T_cam0_velo (KITTI IJRR,
+// Sections IV-B and IV-C, eq. 3-7).
+CameraCalib readKittiCamera(const std::string& date_dir, int index = 0);
 
 }  // namespace slam::io

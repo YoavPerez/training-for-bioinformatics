@@ -9,6 +9,7 @@ Calibrate where you start, and agree on the conventions (frames, rotations, unit
 ## Segment 1 — Learn
 
 ### Learn from
+- [`GLOSSARY.md`](../../GLOSSARY.md) — the "Coming from bioinformatics" table: which SLAM tools you already know under another name. Come back to it in every module.
 - [MIT Missing Semester (2020)](https://missing.csail.mit.edu/2020/) — course — lectures 1 "Course Overview + The Shell", 6 "Version Control (Git)", 7 "Debugging and Profiling"
 - [3Blue1Brown — Essence of linear algebra](https://www.youtube.com/playlist?list=PLZHQObOWTQDPD3MizzM2xVFitgF8hE_ab) — video — chapters 3–6, 13, 14 (before the diagnostic quiz)
 - [KITTI raw data](https://www.cvlibs.net/datasets/kitti/raw_data.php) — dataset docs — the devkit readme's sensor setup (axes of the IMU, velodyne and cameras) and the OXTS field list (units)

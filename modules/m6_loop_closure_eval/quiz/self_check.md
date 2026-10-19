@@ -27,6 +27,11 @@ Answer every question in writing **before** opening the answers file. Then score
 **M6-R08.** You have 3 runs per configuration. Why is a single mean ATE not enough to claim configuration A beats B?
 
 **M6-R09.** SeqSLAM-style place recognition matches *sequences* of descriptors. Which bioinformatics method does that resemble, and what is gained over single-scan matching?
+**M6-R10.** A point map and an occupancy map (OctoMap) of the same street: what does the occupancy map store that the point map does not, and what does that give you for a car that has since driven away?
+
+**M6-R11.** What does a TSDF voxel store, and how is a new measurement merged into it?
+
+**M6-R12.** Scan Context is hand-crafted. What does a learned descriptor such as PointNetVLAD need before you can use it, that Scan Context does not?
 
 ## Self-check 2 — Apply
 

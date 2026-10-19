@@ -50,6 +50,14 @@ def sample_drive(data_dir) -> Path:
 
 
 @pytest.fixture(scope="session")
+def sample_images(sample_drive) -> Path:
+    """The sample drive, checked to contain camera 0 images (module 4b)."""
+    if not any((sample_drive / "image_00" / "data").glob("*.png")):
+        _missing("camera 0 images of the sample (re-run python data/download.py --sample)")
+    return sample_drive
+
+
+@pytest.fixture(scope="session")
 def skewed_sample(data_dir) -> Path:
     path = data_dir / "samples" / "skewed"
     if not (path / "scan.npz").is_file():

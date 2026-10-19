@@ -17,6 +17,9 @@ Close loops reliably, survive wrong loop closures, and evaluate the pipeline wit
 - [evo](https://github.com/MichaelGrupp/evo) — repo — README and notebooks (metrics API)
 - [evo wiki — Metrics](https://github.com/MichaelGrupp/evo/wiki/Metrics) — docs — "evo_ape", "evo_rpe"
 - [KITTI odometry benchmark](https://www.cvlibs.net/datasets/kitti/eval_odometry.php) — docs — how translational (%) and rotational (deg/m) drift are defined
+- Maps: [Hornung et al. — OctoMap](https://www.arminhornung.de/Research/pub/hornung13auro.pdf) — paper — Section "OctoMap Mapping Framework" (occupancy, log-odds, clamping); [Oleynikova et al. — Voxblox](https://arxiv.org/abs/1611.03631) — paper — Sections I "Introduction" and IV "TSDF Construction"
+
+Optional, learned place recognition: [PointNetVLAD](https://arxiv.org/abs/1804.03492) and [OverlapTransformer](https://arxiv.org/abs/2203.03397) — abstract and introduction of each; for cameras, Stachniss [Bag of Visual Words](https://www.ipb.uni-bonn.de/html/teaching/photo12-2021/2021-pho2-12-bag-of-visual-words.pptx.pdf) (slides).
 
 ## Segment 2 — Self-check 1: Readiness
 Answer the Readiness part of [`quiz/self_check.md`](quiz/self_check.md) before coding, then grade yourself.
@@ -29,6 +32,7 @@ Answer the Readiness part of [`quiz/self_check.md`](quiz/self_check.md) before c
 3. **Evaluation.** Implement `ate_errors`, `rpe_errors` and `bootstrap_ci` in [`pipeline/python/slampipe/evaluation.py`](../../pipeline/python/slampipe/evaluation.py) on top of evo.
 4. **Loops on real data.** Run `run_pipeline --loops` on a drive with revisits (`2011_09_30_drive_0027` = KITTI odometry 07; `2011_09_30_drive_0018` = 05). Plot detected loops on the trajectory.
 5. **Ablation.** Complete [`starter/ablation.py`](starter/ablation.py): GNSS, loop closure and deskew each on/off, across at least two drives. Report error distributions and confidence intervals. For the GNSS on/off rows, report ATE both aligned and unaligned (`evaluate(..., align=False)` / `--no-align`). The simulated GNSS depends on `prepare --seed`: prepare each drive with at least 5 seeds, run the GNSS-on combinations once per seed, and report the spread across seeds (mean ± std and min–max of the per-run RMSE) next to the per-pose CI. A per-pose bootstrap does not include seed variance. The `--deskew` option in `run_pipeline` contains a documented assumption about the LiDAR sweep; check whether it holds, using your data.
+6. **Map.** On drive 0027, accumulate the scans into one point map in the world frame (voxel-downsampled, e.g. Open3D `voxel_down_sample`), once with the odometry poses and once with the optimized poses. Show the same area near a loop closure from above in both, and say what changed.
 
 ### C++ focus: error handling
 - [cppreference: std::optional](https://en.cppreference.com/w/cpp/utility/optional) — docs
@@ -41,6 +45,7 @@ Task: for every failure path in your place-recognition and loop-verification cod
 - [ ] Scan Context, `verifyLoop`, `addLoop` and `evaluation.py` merged through PR review
 - [ ] False-loop experiment: trajectories and ATE for each kernel you tried
 - [ ] Evaluation report: ATE/RPE distributions with CIs per sequence, the ablation table, and honest failure cases
+- [ ] Map figure: odometry vs optimized poses near a loop closure
 
 ### Acceptance criteria
 - Tests in `tests/` pass in CI (`python tools/module_tests.py m6`).

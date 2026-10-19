@@ -1,7 +1,8 @@
 """Dataset fetchers.
 
-    python data/download.py --sample                         # CI subset (~150 MB download)
+    python data/download.py --sample                         # CI subset (~170 MB download)
     python data/download.py --drive 2011_09_30_drive_0027    # full KITTI raw drive (sync)
+    python data/download.py --drive 2011_09_30_drive_0027 --camera   # + camera 0 images (module 4b)
     python data/download.py --drive 2011_09_30_drive_0027 --extract-oxts   # + 100 Hz OXTS
     python data/download.py --static-imu                     # module 3: 16 h static IMU (MILUV, ~1.7 GB download)
 
@@ -12,7 +13,7 @@ NOT for commercial purposes. Cite Geiger et al., "Vision meets Robotics: The KIT
 MILUV (static IMU, module 3) is CC BY 4.0: Shalaby et al., "MILUV: A Multi-UAV Indoor Localization dataset
 with UWB and Vision", https://doi.org/10.25452/figshare.plus.28386041.v1
 
-The sample keeps the KITTI directory layout (velodyne + OXTS only, images skipped) under
+The sample keeps the KITTI directory layout (velodyne, OXTS and camera 0; other cameras skipped) under
 data/samples/kitti/, and adds data/samples/skewed/scan.npz for the module 3 deskew exercise.
 """
 
@@ -28,6 +29,7 @@ import numpy as np
 BASE_URL = "https://s3.eu-central-1.amazonaws.com/avg-kitti/raw_data"
 DATA_DIR = Path(__file__).resolve().parent
 SAMPLE_DRIVE = "2011_09_26_drive_0002"
+SAMPLE_SENSORS = ("oxts", "velodyne_points", "image_00")  # image_00: grayscale left camera, for module 4b
 LICENSE = "KITTI raw: CC BY-NC-SA 3.0 — non-commercial research and training use only."
 
 
@@ -223,6 +225,7 @@ def main() -> None:
     parser.add_argument("--sample", action="store_true", help="download the CI sample subset")
     parser.add_argument("--drive", help="full KITTI raw drive, e.g. 2011_09_30_drive_0027")
     parser.add_argument("--extract-oxts", action="store_true", help="also fetch 100 Hz OXTS (unsynced extract)")
+    parser.add_argument("--camera", action="store_true", help="also fetch camera 0 images (image_00) of the drive")
     parser.add_argument("--static-imu", action="store_true", help="16 h static IMU recording for module 3")
     parser.add_argument("--dest", type=Path, default=DATA_DIR / "kitti")
     args = parser.parse_args()
@@ -230,11 +233,12 @@ def main() -> None:
 
     if args.sample:
         dest = DATA_DIR / "samples" / "kitti"
-        drive_dir = fetch_drive(SAMPLE_DRIVE, dest)
+        drive_dir = fetch_drive(SAMPLE_DRIVE, dest, sensors=SAMPLE_SENSORS)
         make_skewed_sample(drive_dir, DATA_DIR / "samples" / "skewed")
         print(f"sample ready: {drive_dir}", file=sys.stderr)
     if args.drive:
-        drive_dir = fetch_drive(args.drive, args.dest)
+        sensors = ("oxts", "velodyne_points") + (("image_00",) if args.camera else ())
+        drive_dir = fetch_drive(args.drive, args.dest, sensors=sensors)
         if args.extract_oxts:
             fetch_drive(args.drive, args.dest, sensors=("oxts",), kind="extract")
         print(f"drive ready: {drive_dir}", file=sys.stderr)

@@ -1,6 +1,6 @@
 # Module 5 — Checklist
 
-- [ ] Self-check 1 (Readiness) done — score: ___ / 8
+- [ ] Self-check 1 (Readiness) done — score: ___ / 10
 - [ ] `design_doc.md` written, reviewed and set to **Status: approved** before back-end code
 - [ ] `lidar_odometry.cpp` complete; `ctest --test-dir build -L '^m5$'` passes locally
 - [ ] `graph_builder.cpp` (odometry, GNSS, IMU, optimize) complete

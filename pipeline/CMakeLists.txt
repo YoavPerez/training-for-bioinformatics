@@ -10,6 +10,7 @@ add_library(slam_pipeline
   src/io/kitti.cpp
   src/loop/scan_context.cpp
   src/odometry/lidar_odometry.cpp
+  src/vision/camera.cpp
 )
 target_include_directories(slam_pipeline PUBLIC ${CMAKE_CURRENT_SOURCE_DIR}/include)
 target_link_libraries(slam_pipeline PUBLIC Eigen3::Eigen nanoflann::nanoflann)

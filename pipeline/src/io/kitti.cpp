@@ -132,4 +132,30 @@ Pose calibToPose(const std::map<std::string, std::vector<double>>& calib) {
   return T;
 }
 
+CameraCalib readKittiCamera(const std::string& date_dir, int index) {
+  if (index < 0 || index > 3) throw std::invalid_argument("KITTI camera index must be 0-3");
+  const auto cam = readCalib(date_dir + "/calib_cam_to_cam.txt");
+  const std::string id = "_0" + std::to_string(index);
+  const auto& P = cam.at("P_rect" + id);
+  const auto& S = cam.at("S_rect" + id);
+  const auto& R = cam.at("R_rect_00");
+
+  CameraCalib out;
+  out.cam.fx = P[0];
+  out.cam.fy = P[5];
+  out.cam.cx = P[2];
+  out.cam.cy = P[6];
+  out.cam.width = static_cast<int>(S[0]);
+  out.cam.height = static_cast<int>(S[1]);
+
+  Pose T_rect_cam0 = Pose::Identity();
+  T_rect_cam0.linear() << R[0], R[1], R[2], R[3], R[4], R[5], R[6], R[7], R[8];
+  Pose T_cam_rect =
+      Pose::Identity();  // P_rect_0i = K [I | t]: t is the offset of camera i from camera 0
+  T_cam_rect.translation() = out.cam.K().inverse() * Vec3(P[3], P[7], P[11]);
+  out.T_cam_velo =
+      T_cam_rect * T_rect_cam0 * calibToPose(readCalib(date_dir + "/calib_velo_to_cam.txt"));
+  return out;
+}
+
 }  // namespace slam::io

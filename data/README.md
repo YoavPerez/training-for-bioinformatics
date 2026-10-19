@@ -12,9 +12,10 @@ Cite: A. Geiger, P. Lenz, C. Stiller, R. Urtasun, "Vision meets Robotics: The KI
 ## Getting data
 
 ```bash
-python data/download.py --sample                         # CI subset: drive 2011_09_26_0002, LiDAR + OXTS only
+python data/download.py --sample                         # CI subset: drive 2011_09_26_0002, LiDAR + OXTS + camera 0
 python data/download.py --drive 2011_09_30_drive_0027    # full drive into data/kitti/
 python data/download.py --drive 2011_09_30_drive_0027 --extract-oxts   # + unsynced 100 Hz OXTS
+python data/download.py --drive 2011_09_30_drive_0027 --camera   # + camera 0 images (module 4b, ~0.3 MB per frame)
 ```
 
 `python data/download.py --static-imu` fetches one 16-hour static IMU recording from MILUV (Shalaby et al., figshare DOI 10.25452/figshare.plus.28386041.v1) into `data/static_imu/` as an `.npz`, together with the dataset authors' Allan-variance results. It needs ~11 GB of temporary disk space and the `rosbags` package (in the dev image).
@@ -26,7 +27,7 @@ Full drives go to `data/kitti/`, which is gitignored. Never commit data.
 | Use | Drive | Notes |
 |---|---|---|
 | CI sample, quick checks | `2011_09_26_drive_0002` | 77 frames, short |
-| Modules 2–5 main development | `2011_09_30_drive_0027` | ~1100 frames, contains a loop (KITTI odometry sequence 07) |
+| Modules 2–6 main development (incl. 4b with `--camera`) | `2011_09_30_drive_0027` | ~1100 frames, contains a loop (KITTI odometry sequence 07) |
 | Second sequence for comparisons | `2011_09_30_drive_0018` | ~2760 frames, several loops (odometry sequence 05) |
 | Large-scale test | `2011_10_03_drive_0027` | ~4500 frames, many loops (odometry sequence 00) |
 
