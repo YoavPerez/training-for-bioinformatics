@@ -1,5 +1,5 @@
 # Module 6: Loop closure, maps, evaluation
-**Tentative effort:** ~1 week · **Phase:** C — Mapping core
+**Tentative effort:** ~1–1.5 weeks (plus several hours of unattended compute for the ablation) · **Phase:** C — Mapping core
 
 ## Goal
 Close loops reliably, survive wrong loop closures, and evaluate the pipeline with statistical rigour: distributions, confidence intervals and ablations instead of single numbers.
@@ -28,11 +28,11 @@ Answer the Readiness part of [`quiz/self_check.md`](quiz/self_check.md) before c
 
 ### Assignment
 1. **Place recognition.** Implement `makeScanContext`, `scanContextDistance` and `verifyLoop` (re-using your module 4 ICP) in [`pipeline/src/loop/scan_context.cpp`](../../pipeline/src/loop/scan_context.cpp). `LoopDetector` is provided.
-2. **Loop factor.** Implement `GraphBuilder::addLoop` with a robust kernel. Choose the kernel by experiment: run `run_pipeline --false-loop i j` with at least two kernels and keep the evidence.
-3. **Evaluation.** Implement `ate_errors`, `rpe_errors` and `bootstrap_ci` in [`pipeline/python/slampipe/evaluation.py`](../../pipeline/python/slampipe/evaluation.py) on top of evo.
-4. **Loops on real data.** Run `run_pipeline --loops` on a drive with revisits (`2011_09_30_drive_0027` = KITTI odometry 07; `2011_09_30_drive_0018` = 05). Plot detected loops on the trajectory.
-5. **Ablation.** Complete [`starter/ablation.py`](starter/ablation.py): GNSS, loop closure and deskew each on/off, across at least two drives. Report error distributions and confidence intervals. For the GNSS on/off rows, report ATE both aligned and unaligned (`evaluate(..., align=False)` / `--no-align`). The simulated GNSS depends on `prepare --seed`: prepare each drive with at least 5 seeds, run the GNSS-on combinations once per seed, and report the spread across seeds (mean ± std and min–max of the per-run RMSE) next to the per-pose CI. A per-pose bootstrap does not include seed variance. The `--deskew` option in `run_pipeline` contains a documented assumption about the LiDAR sweep; check whether it holds, using your data.
-6. **Map.** On drive 0027, accumulate the scans into one point map in the world frame (voxel-downsampled, e.g. Open3D `voxel_down_sample`), once with the odometry poses and once with the optimized poses. Show the same area near a loop closure from above in both, and say what changed.
+2. **Loop factor.** Implement `GraphBuilder::addLoop` with a robust kernel. Choose the kernel **and its width** by experiment: run `run_pipeline --false-loop i j` with at least two kernels and at least two values of `--loop-kernel-width` (in σ; see `graph_builder.hpp`) and keep the evidence. A false loop must be rejected, and a true loop with several metres of drift must still close (`tests/test_false_loop.cpp`). Set `kLoopKernelWidth` in `graph_builder.hpp` to the width you chose.
+3. **Evaluation.** Implement `rpe_errors` in [`pipeline/python/slampipe/evaluation.py`](../../pipeline/python/slampipe/evaluation.py) on top of evo (`ate_errors` and `bootstrap_ci` are from module 5).
+4. **Loops on real data.** Run `run_pipeline --loops` on a drive with revisits (`2011_09_30_drive_0027` = KITTI odometry 07; `2011_09_30_drive_0018` = 05), with and without GNSS (`--no-gnss`). `<out>/loops.csv` lists every Scan Context candidate and whether verification accepted it. Plot the accepted and rejected loops on the trajectory, and compare the ATE with and without `--loops`.
+5. **Ablation.** Complete [`starter/ablation.py`](starter/ablation.py): GNSS, loop closure and deskew each on/off, across at least two drives. Report error distributions and confidence intervals. For the GNSS on/off rows, report ATE both aligned and unaligned (`evaluate(..., align=False)` / `--no-align`). The simulated GNSS depends on `prepare --seed`: prepare each drive with at least 5 seeds, run the GNSS-on combinations once per seed, and report the spread across seeds (mean ± std and min–max of the per-run RMSE) next to the per-pose CI. A per-pose bootstrap does not include seed variance. The `--deskew` option in `run_pipeline` contains a documented assumption about the LiDAR sweep; check whether it holds, using your data. Budget: about 24 runs per drive; on one core a `--loops` run of 0018 alone can take over half an hour. The runs are independent: use `ablation.py --jobs N`, and re-running with the same `--out` skips the runs that already finished.
+6. **Map.** On drive 0027, use one `run_pipeline --no-gnss --loops` run (every scan a keyframe). For each scan k, transform `velodyne_points/data/<k>.bin` into the world (local ENU) frame with row k of `odometry.tum`, then with row k of `optimized.tum`. The TUM poses are body/IMU poses, not LiDAR poses: see the header comment of `run_pipeline.cpp`, `<prep>/T_imu_lidar.txt` and the frame names in `CONVENTIONS.md`. Downsample each scan to 0.2 m voxels before accumulating (e.g. Open3D `voxel_down_sample`), then the map again at 0.2 m. Crop a 60 m × 60 m box around one accepted loop (query and match frames from `loops.csv`), 0.5–3 m above the road. Plot both maps from above at the same extent, coloured by pass (first pass vs revisit). Done = two PNGs plus one number per map that shows the change, e.g. the median distance from revisit points to the nearest first-pass point, or the number of occupied 0.2 m cells in the box.
 
 ### C++ focus: error handling
 - [cppreference: std::optional](https://en.cppreference.com/w/cpp/utility/optional) — docs
@@ -42,10 +42,10 @@ Answer the Readiness part of [`quiz/self_check.md`](quiz/self_check.md) before c
 Task: for every failure path in your place-recognition and loop-verification code, decide between an expected "no result" (`std::optional`), an exception (broken precondition) and an `assert` (programming error). List the decisions in your PR.
 
 ### Deliverables
-- [ ] Scan Context, `verifyLoop`, `addLoop` and `evaluation.py` merged through PR review
-- [ ] False-loop experiment: trajectories and ATE for each kernel you tried
+- [ ] Scan Context, `verifyLoop`, `addLoop`, `kLoopKernelWidth` and `rpe_errors` merged through PR review
+- [ ] False-loop experiment: trajectories and ATE for each kernel and width you tried
 - [ ] Evaluation report: ATE/RPE distributions with CIs per sequence, the ablation table, and honest failure cases
-- [ ] Map figure: odometry vs optimized poses near a loop closure
+- [ ] Map figure: odometry vs optimized poses near a loop closure, with the number you used to compare them
 
 ### Acceptance criteria
 - Tests in `tests/` pass in CI (`python tools/module_tests.py m6`).
@@ -60,7 +60,9 @@ Tick [`CHECKLIST.md`](CHECKLIST.md), open a PR and request review.
 
 ## Where to look if stuck
 - What a Scan Context bin stores and how the column shift works: the paper, Sections III-A and III-B. Check the sign of your shift with a scan you rotated yourself.
-- Why one kernel rejects a wrong loop and another only dampens it: the robust least-squares lecture; compare the influence (ψ) functions in the GTSAM post.
+- Why one kernel rejects a wrong loop and another only dampens it: the robust least-squares lecture; compare the influence (ψ) functions in the GTSAM post. What the width is measured against: the comment on `addLoop` in `graph_builder.hpp`.
+- Frame and timestamps of the TUM poses, and the `loops.csv` columns: header comment of `run_pipeline.cpp`.
 - ATE alignment, time association and RPE deltas: evo wiki "Metrics" page, sections "evo_ape", "evo_rpe" and "Alignment".
 - Confidence intervals by resampling: think of it as a bootstrap over poses; Labbe (module 2) and any statistics text you know from your degree.
+- Compute budget: one `run_pipeline --loops` run takes about 3–15 minutes on drive 0027 and several times that on drive 0018, depending on the machine; the full ablation on two drives with 5 seeds is many hours of serial compute. Start it early and unattended (or on Argo, module 7); use `--max-frames` for dry runs.
 - Stuck for ~2 hours? Write down what you tried and ask your mentor.

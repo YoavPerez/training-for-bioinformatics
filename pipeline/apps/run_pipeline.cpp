@@ -8,11 +8,22 @@
 //   --deskew               deskew each scan (module 3) with the previous odometry step as motion
 //   --false-loop <i> <j>   inject a wrong loop (identity transform) between frames i and j
 //   --max-frames <n>       process at most n frames
-// Writes <out_dir>/odometry.tum and <out_dir>/optimized.tum (body/IMU frame poses in local ENU).
+//   --odom-sigma <rot> <trans>   odometry factor sigmas [rad] [m] (default 0.002 0.05)
+//   --keyframe-dist <m>    new keyframe after <m> metres of odometry travel (default 0: every scan)
+//   --loop-kernel-width <w>  robust-kernel width on loop factors, in sigma (default
+//                          backend::kLoopKernelWidth)
+// Writes <out_dir>/odometry.tum (every scan), <out_dir>/optimized.tum (keyframes) and
+// <out_dir>/loops.csv. Poses are body/IMU frame poses T_world_imu in local ENU; the timestamps
+// are those of lidar_times.csv, whose row k belongs to velodyne_points/data/<k>.bin.
+// loops.csv has one row per Scan Context candidate (frame indices):
+// query,match,sc_distance,sector_shift,accepted (accepted = 1 if verifyLoop accepted it).
+#include <algorithm>
 #include <cmath>
 #include <cstdio>
 #include <filesystem>
+#include <fstream>
 #include <iostream>
+#include <map>
 #include <set>
 
 #include "slam/backend/graph_builder.hpp"
@@ -76,8 +87,12 @@ std::string scanPath(const std::string& drive, size_t k) {
 }  // namespace
 
 int main(int argc, char** argv) {
+  const char* usage =
+      "usage: run_pipeline <drive_dir> <prep_dir> <out_dir> [--no-gnss] [--imu] [--loops] "
+      "[--deskew] [--false-loop i j] [--max-frames n] [--odom-sigma rot trans] "
+      "[--keyframe-dist m] [--loop-kernel-width w]\n";
   if (argc < 4) {
-    std::cerr << "usage: run_pipeline <drive_dir> <prep_dir> <out_dir> [options]\n";
+    std::cerr << usage;
     return 2;
   }
   const std::string drive = argv[1], prep = argv[2], out = argv[3];
@@ -85,6 +100,8 @@ int main(int argc, char** argv) {
   bool use_gnss = true, use_imu = false, use_loops = false, use_deskew = false;
   int false_i = -1, false_j = -1;
   size_t max_frames = static_cast<size_t>(-1);
+  double odom_rot = 0.002, odom_trans = 0.05, keyframe_dist = 0.0;
+  double kernel_width = backend::kLoopKernelWidth;
   for (int a = 4; a < argc; ++a) {
     const std::string arg = argv[a];
     if (arg == "--no-gnss")
@@ -100,8 +117,15 @@ int main(int argc, char** argv) {
       false_j = std::stoi(argv[++a]);
     } else if (arg == "--max-frames" && a + 1 < argc)
       max_frames = std::stoul(argv[++a]);
+    else if (arg == "--odom-sigma" && a + 2 < argc) {
+      odom_rot = std::stod(argv[++a]);
+      odom_trans = std::stod(argv[++a]);
+    } else if (arg == "--keyframe-dist" && a + 1 < argc)
+      keyframe_dist = std::stod(argv[++a]);
+    else if (arg == "--loop-kernel-width" && a + 1 < argc)
+      kernel_width = std::stod(argv[++a]);
     else {
-      std::cerr << "unknown option " << arg << '\n';
+      std::cerr << "unknown option " << arg << '\n' << usage;
       return 2;
     }
   }
@@ -114,9 +138,10 @@ int main(int argc, char** argv) {
   const auto imu = io::readImuCsv(prep + "/imu.csv");
   const size_t n = std::min(times.size(), max_frames);
 
-  // 1. LiDAR odometry.
+  // 1. LiDAR odometry on every scan; keyframes are frame indices.
   odometry::LidarOdometry odom;
-  std::vector<PointCloud> keyframe_scans;
+  std::vector<size_t> keyframes;
+  std::vector<PointCloud> keyframe_scans;  // only with --loops
   sensors::Trajectory odom_traj;
   const Pose T_world_body0 = gt.front().T;  // initial attitude and position from the INS
   for (size_t k = 0; k < n; ++k) {
@@ -128,31 +153,40 @@ int main(int argc, char** argv) {
     const Pose T_l0_lk = odom.registerScan(scan);
     const Pose T_b0_bk = T_imu_lidar * T_l0_lk * T_lidar_imu;
     odom_traj.push_back({times[k], T_world_body0 * T_b0_bk});
-    if (use_loops) keyframe_scans.push_back(registration::voxelDownsample(scan, 0.5));
+    const bool is_keyframe =
+        keyframes.empty() ||
+        (odom_traj[k].T.translation() - odom_traj[keyframes.back()].T.translation()).norm() >=
+            keyframe_dist;
+    if (is_keyframe) {
+      keyframes.push_back(k);
+      if (use_loops) keyframe_scans.push_back(registration::voxelDownsample(scan, 0.5));
+    }
     std::cerr << "\rodometry " << k + 1 << '/' << n << std::flush;
   }
   std::cerr << '\n';
   io::writeTum(out + "/odometry.tum", odom_traj);
 
-  // 2. Factor graph.
+  // 2. Factor graph over the keyframes (variable id = frame index).
   backend::GraphBuilder graph;
-  for (size_t k = 0; k < n; ++k) {
+  for (size_t i = 0; i < keyframes.size(); ++i) {
+    const size_t k = keyframes[i];
     Vec3 v = Vec3::Zero();
-    if (k > 0)
-      v = (odom_traj[k].T.translation() - odom_traj[k - 1].T.translation()) /
-          (times[k] - times[k - 1]);
+    if (i > 0) {
+      const size_t p = keyframes[i - 1];
+      v = (odom_traj[k].T.translation() - odom_traj[p].T.translation()) / (times[k] - times[p]);
+    }
     graph.setInitial(static_cast<int>(k), odom_traj[k].T, v);
   }
   graph.addPrior(0, T_world_body0, sigmas6(0.01, 0.1));
-  for (size_t k = 1; k < n; ++k) {
-    const Pose T_prev_cur =
-        geometry::compose(geometry::inverse(odom_traj[k - 1].T), odom_traj[k].T);
-    graph.addOdometry(static_cast<int>(k - 1), static_cast<int>(k), T_prev_cur,
-                      sigmas6(0.002, 0.05));
+  for (size_t i = 1; i < keyframes.size(); ++i) {
+    const size_t p = keyframes[i - 1], k = keyframes[i];
+    const Pose T_prev_cur = geometry::compose(geometry::inverse(odom_traj[p].T), odom_traj[k].T);
+    graph.addOdometry(static_cast<int>(p), static_cast<int>(k), T_prev_cur,
+                      sigmas6(odom_rot, odom_trans));
   }
   if (use_gnss) {
     size_t g = 0;
-    for (size_t k = 0; k < n; ++k) {
+    for (const size_t k : keyframes) {
       while (g + 1 < gnss.size() && gnss[g + 1].t <= times[k]) ++g;
       for (size_t c = g; c < std::min(g + 2, gnss.size()); ++c)
         if (std::abs(gnss[c].t - times[k]) < 0.05) {
@@ -163,36 +197,56 @@ int main(int argc, char** argv) {
   }
   if (use_imu) {
     const estimation::ImuNoise noise{0.05, 0.005, 0.001, 0.0001};
-    for (size_t k = 1; k < n; ++k) {
-      const auto seg = imuBetween(imu, times[k - 1], times[k]);
-      if (seg.size() >= 2) graph.addImu(static_cast<int>(k - 1), static_cast<int>(k), seg, noise);
+    for (size_t i = 1; i < keyframes.size(); ++i) {
+      const size_t p = keyframes[i - 1], k = keyframes[i];
+      const auto seg = imuBetween(imu, times[p], times[k]);
+      if (seg.size() >= 2) graph.addImu(static_cast<int>(p), static_cast<int>(k), seg, noise);
     }
   }
-  int loops = 0;
+  int loops = 0, candidates = 0;
+  std::ofstream loops_csv(out + "/loops.csv");
+  loops_csv << "query,match,sc_distance,sector_shift,accepted\n";
   if (use_loops) {
     loop::LoopDetector detector;
-    for (size_t k = 0; k < n; ++k) {
-      const auto cand = detector.queryAndAdd(static_cast<int>(k), keyframe_scans[k]);
+    const int num_sectors = loop::ScanContextConfig{}.num_sectors;
+    std::map<int, size_t> scan_of;  // frame index -> index in keyframe_scans
+    for (size_t i = 0; i < keyframes.size(); ++i) {
+      const int k = static_cast<int>(keyframes[i]);
+      scan_of[k] = i;
+      const auto cand = detector.queryAndAdd(k, keyframe_scans[i]);
       if (!cand) continue;
+      ++candidates;
       Pose T_init = Pose::Identity();
       T_init.linear() =
-          Eigen::AngleAxisd(cand->match.sector_shift * 2.0 * M_PI / 60.0, Vec3::UnitZ())
+          Eigen::AngleAxisd(cand->match.sector_shift * 2.0 * M_PI / num_sectors, Vec3::UnitZ())
               .toRotationMatrix();
-      const auto T_m_k =
-          loop::verifyLoop(keyframe_scans[k], keyframe_scans[cand->match_id], T_init, 0.3);
+      const auto T_m_k = loop::verifyLoop(keyframe_scans[i],
+                                          keyframe_scans[scan_of.at(cand->match_id)], T_init, 0.3);
+      loops_csv << k << ',' << cand->match_id << ',' << cand->match.distance << ','
+                << cand->match.sector_shift << ',' << (T_m_k ? 1 : 0) << '\n';
       if (!T_m_k) continue;
-      graph.addLoop(cand->match_id, static_cast<int>(k), T_imu_lidar * (*T_m_k) * T_lidar_imu,
-                    sigmas6(0.01, 0.1), 1.0);
+      graph.addLoop(cand->match_id, k, T_imu_lidar * (*T_m_k) * T_lidar_imu, sigmas6(0.01, 0.1),
+                    kernel_width);
       ++loops;
     }
   }
-  if (false_i >= 0 && false_j >= 0)
-    graph.addLoop(false_i, false_j, Pose::Identity(), sigmas6(0.01, 0.1), 1.0);
+  if (false_i >= 0 && false_j >= 0) {
+    const auto is_kf = [&](int f) {
+      return std::find(keyframes.begin(), keyframes.end(), static_cast<size_t>(f)) !=
+             keyframes.end();
+    };
+    if (!is_kf(false_i) || !is_kf(false_j)) {
+      std::cerr << "--false-loop frames must be keyframes\n";
+      return 2;
+    }
+    graph.addLoop(false_i, false_j, Pose::Identity(), sigmas6(0.01, 0.1), kernel_width);
+  }
 
   const auto optimized = graph.optimize();
   sensors::Trajectory opt_traj;
   for (const auto& [k, T] : optimized) opt_traj.push_back({times[static_cast<size_t>(k)], T});
   io::writeTum(out + "/optimized.tum", opt_traj);
-  std::cerr << "frames " << n << ", factors " << graph.numFactors() << ", loops " << loops << '\n';
+  std::cerr << "frames " << n << ", keyframes " << keyframes.size() << ", factors "
+            << graph.numFactors() << ", loops " << loops << " of " << candidates << " candidates\n";
   return 0;
 }

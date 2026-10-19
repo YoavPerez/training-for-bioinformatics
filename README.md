@@ -1,6 +1,6 @@
 # SLAM, LiDAR & Navigation Onboarding Program
 
-A self-serve onboarding program for researchers joining the SLAM / 3D LiDAR / GNSS-IMU fusion / mapping team. It is written for people coming from bioinformatics: strong in statistics, data analysis and scientific programming, new to robotics, geometry and computer vision. [`GLOSSARY.md`](GLOSSARY.md) starts with a map from bioinformatics terms you know to the SLAM terms you will meet. It takes roughly 10–11 weeks. Over modules 0–8 (plus 0b and 4b) you build **one LiDAR-inertial-GNSS mapping pipeline** in `pipeline/`, and each module adds one layer to it. An optional applied project follows.
+A self-serve onboarding program for researchers joining the SLAM / 3D LiDAR / GNSS-IMU fusion / mapping team. It is written for people coming from bioinformatics: strong in statistics, data analysis and scientific programming, new to robotics, geometry and computer vision. [`GLOSSARY.md`](GLOSSARY.md) starts with a map from bioinformatics terms you know to the SLAM terms you will meet. It takes roughly 11–13 weeks, including the research mini-project. Over modules 0–8 (plus 0b and 4b) you build **one LiDAR-inertial-GNSS mapping pipeline** in `pipeline/`, and each module adds one layer to it. An optional applied project follows.
 
 All teaching is done by external, free resources. This repository gives you the assignments, starter code, tests, self-check quizzes and review checklists. Your mentor answers questions and reviews your work.
 
@@ -20,9 +20,9 @@ The program has four **phases**. Each phase ends with a cumulative phase-gate se
 | **C. Mapping core** | 4. Point clouds and registration (mid-program checkpoint) | [`modules/m4_registration`](modules/m4_registration/) | ~1 week |
 | | 4b. Camera geometry and visual odometry | [`modules/m4b_vision`](modules/m4b_vision/) | ~1 week |
 | | 5. Odometry to SLAM with factor graphs | [`modules/m5_factor_graphs`](modules/m5_factor_graphs/) | ~1 week |
-| | 6. Loop closure, maps, evaluation | [`modules/m6_loop_closure_eval`](modules/m6_loop_closure_eval/) | ~1 week |
+| | 6. Loop closure, maps, evaluation | [`modules/m6_loop_closure_eval`](modules/m6_loop_closure_eval/) | ~1–1.5 weeks (plus unattended compute) |
 | | *Phase gate C* | [`modules/phase_gates/phase_C.md`](modules/phase_gates/phase_C.md) | |
-| **D. Production & research** | 7. Productionizing the pipeline | [`modules/m7_production`](modules/m7_production/) | ~1 week |
+| **D. Production & research** | 7. Productionizing the pipeline | [`modules/m7_production`](modules/m7_production/) | ~1–1.5 weeks; the production PR may run in parallel into module 8 (it is an exit criterion) |
 | | 8. Research skills mini-project | [`modules/m8_research_mini_project`](modules/m8_research_mini_project/) | remainder |
 | | *Phase gate D* | [`modules/phase_gates/phase_D.md`](modules/phase_gates/phase_D.md) | |
 | After training | Applied fusion project (tracks A/B/C) | [`applied_project/`](applied_project/) | open |

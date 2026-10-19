@@ -7,4 +7,4 @@
 - [ ] Report self-assessed with `templates/rubric.md`
 - [ ] Presented to the team
 - [ ] Self-check 2 (Apply) done — score: ___ / 5
-- [ ] Exit criteria: all deliverables merged, pipeline runs on Argo, mentor sign-off
+- [ ] Exit criteria for the training met (the list under Acceptance criteria in the module README)

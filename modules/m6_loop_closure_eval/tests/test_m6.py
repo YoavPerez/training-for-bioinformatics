@@ -1,4 +1,6 @@
-"""Module 6 acceptance tests (Python side): evaluation on fixture trajectories, false loop on the sample."""
+"""Module 6 acceptance tests (Python side): RPE on fixture trajectories, false loop on the sample, ablation tables.
+
+ATE and bootstrap tests are in module 5 (tests/test_m5.py)."""
 
 import importlib.util
 import subprocess
@@ -22,46 +24,10 @@ def reference():
     return np.column_stack([s, 20 * np.sin(s / 30.0), np.zeros_like(s)])
 
 
-def test_ate_is_zero_after_alignment_for_rigid_offset(reference):
-    est = reference + np.array([5.0, -3.0, 1.0])
-    errs = evaluation.ate_errors(_traj(est), _traj(reference), align=True)
-    assert errs.shape == (len(reference),)
-    assert np.max(errs) < 1e-6
-
-
-def test_ate_without_alignment_sees_the_offset(reference):
-    errs = evaluation.ate_errors(_traj(reference + np.array([3.0, 4.0, 0.0])), _traj(reference), align=False)
-    np.testing.assert_allclose(errs, 5.0, atol=1e-9)
-
-
-def test_ate_matches_known_noise(reference):
-    rng = np.random.default_rng(0)
-    errs = evaluation.ate_errors(_traj(reference + rng.normal(0, 0.1, reference.shape)), _traj(reference))
-    assert np.sqrt(np.mean(errs**2)) == pytest.approx(0.1 * np.sqrt(3), rel=0.15)
-
-
-def test_ate_does_not_modify_inputs(reference):
-    est, ref = _traj(reference + 1.0), _traj(reference)
-    before = est.positions_xyz.copy()
-    evaluation.ate_errors(est, ref)
-    np.testing.assert_array_equal(est.positions_xyz, before)
-
-
 def test_rpe_of_constant_offset_is_zero(reference):
     errs = evaluation.rpe_errors(_traj(reference + 2.0), _traj(reference), delta_m=10.0)
     assert len(errs) > 10
     assert np.max(errs) < 1e-6
-
-
-def test_bootstrap_ci_contains_mean_and_shrinks():
-    rng = np.random.default_rng(1)
-    small, large = rng.normal(1.0, 0.5, 30), rng.normal(1.0, 0.5, 3000)
-    lo_s, hi_s = evaluation.bootstrap_ci(small)
-    lo_l, hi_l = evaluation.bootstrap_ci(large)
-    assert lo_s < small.mean() < hi_s
-    assert lo_l < large.mean() < hi_l
-    assert (hi_l - lo_l) < 0.3 * (hi_s - lo_s)
-    assert evaluation.bootstrap_ci(small, seed=3) == evaluation.bootstrap_ci(small, seed=3)
 
 
 def test_false_loop_on_sample_is_rejected_by_the_robust_kernel(app, sample_drive, prepared_sample, tmp_path):

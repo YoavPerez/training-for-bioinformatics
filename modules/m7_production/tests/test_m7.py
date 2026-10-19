@@ -13,7 +13,9 @@ import yaml
 from slampipe import gate
 
 FIXTURES = "modules/m7_production/tests/fixtures"
-BASELINE = "modules/m7_production/baseline.json"
+# Fixed baseline, so the gate-logic tests do not depend on your own baseline.json.
+BASELINE = "modules/m7_production/tests/fixtures/baseline.json"
+OWN_BASELINE = "modules/m7_production/baseline.json"
 WORKFLOW = "infra/argo/pipeline-workflow.yaml"
 
 
@@ -32,6 +34,18 @@ def test_gate_fails_on_degraded_metrics(repo_root):
 
 def test_gate_fails_when_metric_missing(repo_root):
     assert gate.check({"ate": {"rmse": 0.1}}, _json(repo_root, BASELINE), 0.15) != []
+
+
+def test_baseline_is_well_formed(repo_root):
+    doc = _json(repo_root, OWN_BASELINE)
+    ate = doc.get("ate", {})
+    for key in ("rmse", "p95"):
+        value = ate.get(key)
+        assert isinstance(value, (int, float)) and value > 0, f"baseline.json: ate.{key} must be a positive number"
+    note = doc.get("_note", "")
+    assert "--" in note and "seed" in note.lower(), (
+        "baseline.json: _note must state the run_pipeline flags and the prepare seed"
+    )
 
 
 def test_gate_cli_exit_codes(repo_root):

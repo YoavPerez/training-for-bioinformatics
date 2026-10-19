@@ -4,6 +4,8 @@
 - [ ] `design_doc.md` written, reviewed and set to **Status: approved** before back-end code
 - [ ] `lidar_odometry.cpp` complete; `ctest --test-dir build -L '^m5$'` passes locally
 - [ ] `graph_builder.cpp` (odometry, GNSS, IMU, optimize) complete
+- [ ] `ate_errors` and `bootstrap_ci` in `evaluation.py` complete
+- [ ] Odometry sigmas, keyframe policy and any change to `run_pipeline.cpp` match the design doc and are listed in the PR
 - [ ] Pipeline run on two full drives; `prepare` options and seed recorded
 - [ ] Comparison table (with CIs) and trajectory plots in the PR
 - [ ] `python tools/module_tests.py m5` passes

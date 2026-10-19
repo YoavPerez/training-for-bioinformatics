@@ -26,9 +26,9 @@ Answer the Readiness part of [`quiz/self_check.md`](quiz/self_check.md) before c
 ## Segment 3 — Build
 
 ### Assignment
-1. **Allan variance.** Implement `allan_deviation` and `fit_noise_parameters` in [`pipeline/python/slampipe/allan.py`](../../pipeline/python/slampipe/allan.py). Complete [`starter/allan_static.py`](starter/allan_static.py) and run it on a **static** IMU recording of at least 2 hours: the public 16-hour [MILUV](https://doi.org/10.25452/figshare.plus.28386041.v1) recording (`python data/download.py --static-imu`, ~1.7 GB download, ~11 GB temporary disk), or one from the team's hardware if your mentor provides it. Compare your parameters with the datasheet and, for MILUV, with the authors' own results (downloaded next to the data); only open those after you have your numbers.
+1. **Allan variance.** Implement `allan_deviation` and `fit_noise_parameters` in [`pipeline/python/slampipe/allan.py`](../../pipeline/python/slampipe/allan.py). Complete [`starter/allan_static.py`](starter/allan_static.py) and run it on a **static** IMU recording of at least 2 hours: the public 16-hour [MILUV](https://doi.org/10.25452/figshare.plus.28386041.v1) recording (`python data/download.py --static-imu`, ~1.7 GB download, ~11 GB temporary disk), or one from the team's hardware if your mentor provides it. Compare your parameters with a reference: your IMU's datasheet (team hardware), or for MILUV the authors' own results (`mavros_imu.yaml`, `mavros_output.log`, `mavros_allan_variance.csv`, downloaded next to the data); only open those after you have your numbers.
 2. **Deskew.** Implement `poseAt`, `propagateImu` and `deskew` in [`pipeline/src/sensors/deskew.cpp`](../../pipeline/src/sensors/deskew.cpp).
-3. **Before/after.** `data/samples/skewed/scan.npz` holds a KITTI raw scan with strong synthetic distortion added (a 45°/s turn), so the effect is easy to see and to check against a reference. Deskew it with the `deskew_scan` tool (helpers in [`starter/skew_tools.py`](starter/skew_tools.py)) and plot before/after top-down views. Then repeat on a real turning segment of a full drive: KITTI raw scans are *not* motion-compensated (the odometry-benchmark copies are), the per-point times must be derived from the azimuth, and the motion comes from your IMU propagation. Find out how the CT-ICP paper derives the per-point times.
+3. **Before/after.** `data/samples/skewed/scan.npz` holds a KITTI raw scan with strong synthetic distortion added (a 45°/s turn), so the effect is easy to see and to check against a reference. Deskew it with the `deskew_scan` tool (helpers in [`starter/skew_tools.py`](starter/skew_tools.py)) and plot before/after top-down views. *Stretch:* repeat on a real turning segment of a full drive: KITTI raw scans are *not* motion-compensated (the odometry-benchmark copies are), the per-point times must be derived from the azimuth, and the motion comes from your IMU propagation. Find out how the CT-ICP paper derives the per-point times.
 4. **Time offset.** Complete [`starter/time_offset.py`](starter/time_offset.py): sweep an IMU–LiDAR clock offset from −20 ms to +20 ms and plot the deskew error against it.
 
 ### C++ focus: generic code and sanitizers on your own code
@@ -40,7 +40,7 @@ Task: make `poseAt` O(log n) with a standard algorithm. Build the module 3 tests
 
 ### Deliverables
 - [ ] `allan.py` and `deskew.cpp` merged through PR review
-- [ ] Noise-parameter report: Allan plots, a table of N and K per axis, and the datasheet comparison
+- [ ] Noise-parameter report: Allan plots, a table of N and K per axis, and the comparison with the datasheet (team IMU) or the MILUV authors' results
 - [ ] Before/after deskew figure
 - [ ] Short write-up of the time-offset experiment (error vs offset, and what offset you can tolerate for a given error budget)
 
@@ -60,5 +60,6 @@ Tick [`CHECKLIST.md`](CHECKLIST.md), open a PR and request review.
 - Before trusting any fit on the MILUV recording: derive the sample rate from the timestamps and check the intervals for gaps (not from a config file), check the units of every reference number you compare with, and look at the slope of each axis's curve before fitting a model to it.
 - Which pose to interpolate and in which direction to apply it: the transform chain in your `CONVENTIONS.md` and module 1's `interpolate`.
 - Per-point time in a spinning LiDAR: the "LiDAR Odometry — 5 Minutes" video; KISS-ICP paper, Step 1 "Motion Prediction and Scan Deskewing".
+- Real-drive deskew (stretch): `deskew_scan` takes points with per-point times and a TUM trajectory (format in its usage line and in `skew_tools.write_inputs`); write your IMU-propagated poses for the sweep in that format. Per-point times: CT-ICP Section V.
 - GNSS error magnitudes: ESA book Ch. 4.2 and Navipedia "GNSS Measurements Modelling".
 - Stuck for ~2 hours? Write down what you tried and ask your mentor.

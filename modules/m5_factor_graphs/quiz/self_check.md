@@ -25,6 +25,7 @@ Answer every question in writing **before** opening the answers file. Then score
 **M5-R07.** Scan-to-scan vs scan-to-map odometry: what does the local map buy you?
 
 **M5-R08.** Why does the information matrix of a SLAM problem stay sparse, and why does that matter?
+
 **M5-R09.** A fixed-lag smoother marginalizes out the poses that fall out of its window. What does that do to the sparsity of the remaining problem, and why?
 
 **M5-R10.** Why does a sliding-window smoother usually beat an EKF on the same data, and what does it give up compared with full batch smoothing?

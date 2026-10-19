@@ -14,11 +14,11 @@ Closed-book, 45 minutes. Score yourself with `phase_B_answers.md`.
 
 **PB-06.** What does Gauss-Newton approximate in Newton's method, and when is that approximation good?
 
-**PB-07.** On an Allan deviation plot, a curve keeps falling with slope −½ until τ = 1000 s. What does that tell you about the recording?
+**PB-07.** On an Allan deviation plot, a curve keeps falling with slope −½ until τ = 1000 s, the end of the plot. What does that tell you about the recording?
 
 **PB-08.** List the error sources that make GNSS worse in a forest than in an open field.
 
-**PB-09.** A 64-beam LiDAR on a car turning at 45°/s: why is the deskew error worst at the seam of the sweep?
+**PB-09.** A 64-beam LiDAR on a car turning at 45°/s: why is the motion distortion of an uncorrected sweep most visible at the seam?
 
 **PB-10.** A 10 ms clock offset between IMU and LiDAR at 20 m/s and 30°/s. Estimate the position error at 30 m range.
 

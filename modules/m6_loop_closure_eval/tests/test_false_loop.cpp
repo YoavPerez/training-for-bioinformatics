@@ -1,4 +1,6 @@
-// Module 6 acceptance tests: a wrong loop closure must not corrupt the trajectory.
+// Module 6 acceptance tests: a wrong loop closure must not corrupt the trajectory, and a true loop
+// must still close when drift has made its initial residual large. All loops use kLoopKernelWidth
+// (graph_builder.hpp), the width run_pipeline uses by default.
 #include <gtest/gtest.h>
 
 #include <cmath>
@@ -41,7 +43,8 @@ double rmse(const std::map<int, Pose>& est, const std::vector<Pose>& truth) {
 }
 
 // Noisy odometry around the square plus the true loop (last -> first); optionally a false loop.
-std::map<int, Pose> solve(bool add_false_loop) {
+// heading_sigma 0.003 rad leaves a loop gap of ~1.3 m before optimization, 0.009 rad ~3.7 m.
+std::map<int, Pose> solve(bool add_false_loop, double heading_sigma = 0.003) {
   const auto truth = square();
   const int n = static_cast<int>(truth.size());
   std::mt19937 rng(11);
@@ -53,7 +56,7 @@ std::map<int, Pose> solve(bool add_false_loop) {
   for (int k = 1; k < n; ++k) {
     Pose rel = geometry::compose(geometry::inverse(truth[k - 1]), truth[k]);
     Pose noise = Pose::Identity();
-    noise.linear() = Eigen::AngleAxisd(0.003 * nz(rng), Vec3::UnitZ()).toRotationMatrix();
+    noise.linear() = Eigen::AngleAxisd(heading_sigma * nz(rng), Vec3::UnitZ()).toRotationMatrix();
     noise.translation() = Vec3(nz(rng), nz(rng), 0.0) * 0.02;
     rel = rel * noise;
     dr = dr * rel;
@@ -61,9 +64,9 @@ std::map<int, Pose> solve(bool add_false_loop) {
     g.addOdometry(k - 1, k, rel, sig(0.003, 0.02));
   }
   g.addLoop(n - 1, 0, geometry::compose(geometry::inverse(truth[n - 1]), truth[0]), sig(0.01, 0.05),
-            1.0);
-  if (add_false_loop)
-    g.addLoop(20, 100, Pose::Identity(), sig(0.01, 0.05), 1.0);  // ~40 m apart in reality
+            kLoopKernelWidth);
+  if (add_false_loop)  // ~40 m apart in reality
+    g.addLoop(20, 100, Pose::Identity(), sig(0.01, 0.05), kLoopKernelWidth);
   return g.optimize();
 }
 }  // namespace
@@ -74,6 +77,19 @@ TEST(M6FalseLoop, FalseLoopDoesNotCorruptTrajectory) {
   const auto truth = square();
   const double clean = rmse(solve(false), truth);
   const double with_false = rmse(solve(true), truth);
+  EXPECT_LT(with_false, clean + 0.1)
+      << "clean " << clean << " m, with false loop " << with_false << " m";
+}
+
+// Same square with three times the heading noise; a plain Gaussian loop factor gives ~0.6 m.
+TEST(M6FalseLoop, TrueLoopClosesUnderLargeDrift) {
+  EXPECT_LT(rmse(solve(false, 0.009), square()), 1.0);
+}
+
+TEST(M6FalseLoop, FalseLoopRejectedUnderLargeDrift) {
+  const auto truth = square();
+  const double clean = rmse(solve(false, 0.009), truth);
+  const double with_false = rmse(solve(true, 0.009), truth);
   EXPECT_LT(with_false, clean + 0.1)
       << "clean " << clean << " m, with false loop " << with_false << " m";
 }

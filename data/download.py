@@ -18,8 +18,10 @@ data/samples/kitti/, and adds data/samples/skewed/scan.npz for the module 3 desk
 """
 
 import argparse
+import http.client
 import io
 import sys
+import time
 import urllib.request
 import zipfile
 from pathlib import Path
@@ -33,6 +35,27 @@ SAMPLE_SENSORS = ("oxts", "velodyne_points", "image_00", "image_01")  # grayscal
 LICENSE = "KITTI raw: CC BY-NC-SA 3.0 — non-commercial research and training use only."
 
 
+RETRIES = 5  # per HTTP request; long downloads over flaky networks see occasional resets
+
+
+def _get(req: urllib.request.Request, expected: int | None = None) -> tuple[bytes, http.client.HTTPMessage]:
+    """GET with retries and exponential backoff; checks the body length when `expected` is given."""
+    for attempt in range(1, RETRIES + 1):
+        try:
+            with urllib.request.urlopen(req, timeout=60) as r:
+                body = r.read()
+                if expected is not None and len(body) != expected:
+                    raise http.client.IncompleteRead(body, expected - len(body))
+                return body, r.headers
+        except (OSError, http.client.HTTPException) as e:  # URLError, resets and timeouts are OSErrors
+            if attempt == RETRIES:
+                raise
+            wait = 2**attempt
+            print(f"  network error ({e}); retry {attempt}/{RETRIES - 1} in {wait} s", file=sys.stderr)
+            time.sleep(wait)
+    raise AssertionError("unreachable")
+
+
 class HttpRangeFile(io.RawIOBase):
     """Seekable read-only file over HTTP range requests, so zip members can be fetched selectively."""
 
@@ -42,8 +65,8 @@ class HttpRangeFile(io.RawIOBase):
         self.pos = 0
         self.cache: dict[int, bytes] = {}
         # Size from a 1-byte range GET (pre-signed URLs often reject HEAD requests).
-        with urllib.request.urlopen(urllib.request.Request(url, headers={"Range": "bytes=0-0"})) as r:
-            self.size = int(r.headers["Content-Range"].split("/")[-1])
+        _, headers = _get(urllib.request.Request(url, headers={"Range": "bytes=0-0"}))
+        self.size = int(headers["Content-Range"].split("/")[-1])
 
     def readable(self) -> bool:
         return True
@@ -63,8 +86,7 @@ class HttpRangeFile(io.RawIOBase):
             start = i * self.block
             end = min(start + self.block, self.size) - 1
             req = urllib.request.Request(self.url, headers={"Range": f"bytes={start}-{end}"})
-            with urllib.request.urlopen(req) as r:
-                self.cache[i] = r.read()
+            self.cache[i], _ = _get(req, expected=end - start + 1)
             if len(self.cache) > 64:
                 self.cache.pop(next(iter(self.cache)))
         return self.cache[i]
@@ -89,7 +111,9 @@ def fetch_members(url: str, dest: Path, keep) -> int:
             if target.exists():
                 continue
             target.parent.mkdir(parents=True, exist_ok=True)
-            target.write_bytes(z.read(name))
+            partial = target.with_name(target.name + ".part")
+            partial.write_bytes(z.read(name))
+            partial.replace(target)  # atomic: an interrupted download never leaves a truncated file behind
             if k % 25 == 0 or k == len(names):
                 print(f"  {k}/{len(names)} files", file=sys.stderr)
         return len(names)
@@ -251,4 +275,10 @@ def main() -> None:
 
 
 if __name__ == "__main__":
-    main()
+    try:
+        main()
+    except (OSError, http.client.HTTPException) as e:
+        sys.exit(
+            f"download failed after {RETRIES} attempts: {e}\n"
+            "Re-run the same command: files that finished downloading are kept and skipped."
+        )

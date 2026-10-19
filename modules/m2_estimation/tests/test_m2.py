@@ -94,13 +94,27 @@ def _run_2d(module, seed):
 
 def test_eskf_2d_beats_raw_gnss(repo_root):
     rmse, raw_rmse, _ = _run_2d(load(repo_root, "eskf_2d"), seed=3)
-    assert rmse < 0.85 * raw_rmse
+    assert rmse < 0.6 * raw_rmse
 
 
 def test_eskf_2d_is_consistent(repo_root):
     module = load(repo_root, "eskf_2d")
     anees = np.mean([_run_2d(module, seed)[2] for seed in range(10, 20)])
     assert 1.0 < anees < 4.0, f"average NEES {anees:.2f}, expected about 2"
+
+
+def test_eskf_2d_covariance_growth_is_rate_independent(repo_root):
+    module = load(repo_root, "eskf_2d")
+    diagonals = []
+    for rate in (100.0, 400.0):
+        f = module.Eskf2D(
+            p=np.zeros(2), v=np.array([8.0, 0.0]), theta=0.0, P=np.zeros((5, 5)), acc_noise=0.02, gyro_noise=0.002
+        )
+        for _ in range(int(rate)):  # the same 1 s of motion at two IMU rates
+            f.predict(np.array([0.0, 1.6]), 0.2, 1.0 / rate)
+        diagonals.append(np.diag(f.P).copy())
+    assert np.all(diagonals[0] > 0.0)
+    np.testing.assert_allclose(diagonals[1] / diagonals[0], 1.0, atol=0.05, err_msg="P diagonal, 400 Hz / 100 Hz")
 
 
 # ---------------------------------------------------------------- 3-D ESKF on the sample drive

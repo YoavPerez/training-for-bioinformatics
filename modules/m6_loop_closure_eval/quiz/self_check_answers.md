@@ -11,7 +11,7 @@ Answers and pointers only. If you missed one, read the pointer, not just the ans
 **M6-R06.** To remove the arbitrary choice of reference frame; do not align when the absolute frame is meaningful (e.g. GNSS-fused ENU). See: evo_metrics_wiki — "Alignment"
 **M6-R07.** Average relative translation error in % over segments of 100–800 m. See: kitti_odometry — benchmark description
 **M6-R08.** Run-to-run and pose-to-pose variability can exceed the difference; report distributions/CIs. See: evo_metrics_wiki — statistics output of evo_ape
-**M6-R09.** Sequence alignment (e.g. Smith-Waterman-like local alignment); robustness where single places look alike. See: scan_context_paper — Section II "Related Work"
+**M6-R09.** Seed-and-extend search (BLAST): a fast index (ring key, k-d tree) shortlists candidates; the costly alignment (column-shift distance) runs only on those. See: scan_context_paper — Section III-C "Two-phase Search"
 **M6-R10.** Free space as well as occupied space, as log-odds per voxel updated along each ray. Rays that later pass through the car's old place clear it. See: octomap_paper — "OctoMap Mapping Framework"
 **M6-R11.** A truncated signed distance to the nearest surface plus a weight; new measurements are merged by a weighted running average. See: voxblox_paper — Section IV "TSDF Construction" (IV-A, IV-B)
 **M6-R12.** Training: labelled matching and non-matching places (from known poses) and a loss such as triplets; it may not generalize to new places. See: pointnetvlad_paper — abstract

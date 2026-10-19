@@ -1,6 +1,9 @@
 """Module 3: effect of an IMU–LiDAR time offset on deskewing.
 
 python modules/m3_sensors/starter/time_offset.py data/samples/skewed --build-dir build --plot offset.png
+
+The sample trajectory (traj_t) covers only the sweep, [0, 0.1] s. Shifted point times outside it are
+clamped to the end poses by poseAt, so the error at large offsets is slightly underestimated.
 """
 
 import argparse

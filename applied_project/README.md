@@ -1,6 +1,6 @@
 # Applied fusion project (after training)
 
-After the 8 weeks, trainees take the training pipeline into a sensor domain that plays to their own strengths. Length and scope are set per team need. There are no starter solutions: you scope, design and build.
+After the training, trainees take the training pipeline into a sensor domain that plays to their own strengths. Length and scope are set per team need. There are no starter solutions: you scope, design and build.
 
 ## Shared structure (all tracks)
 1. **Proposal** (one page, [`proposal_template.md`](proposal_template.md)): question, hypothesis, dataset, metrics, scope cut.
@@ -55,9 +55,10 @@ python applied_project/download.py neon-list --product DP1.30003.001 --site SJER
 export NEON_TOKEN=<your token>   # free NEON account
 python applied_project/download.py neon-get --product DP1.30003.001 --site SJER --month 2021-03 --dest data/neon --dry-run   # list files and sizes
 python applied_project/download.py neon-get --product DP1.30003.001 --site SJER --month 2021-03 --dest data/neon --pattern <part of a file name>
-python applied_project/download.py boreas --sequence boreas-2020-11-26-13-58 --sensors lidar applanix --dest data/boreas
+python applied_project/download.py boreas --sequence boreas-2020-11-26-13-58 --sensors lidar applanix --dest data/boreas --dry-run   # size per folder
+python applied_project/download.py boreas --sequence boreas-2020-11-26-13-58 --sensors lidar applanix --dest data/boreas   # refuses > --max-gb (5) without --yes
 python applied_project/download.py for-instance --dest data/for_instance
 python applied_project/download.py manual                            # Wild-Places, BotanicGarden, MulRan, Oxford, DFC2018
 ```
 
-NEON downloads need a free account token (`export NEON_TOKEN=...`) since 2026-06-30. Boreas uses the AWS CLI with `--no-sign-request`.
+NEON downloads need a free account token (`export NEON_TOKEN=...`) since 2026-06-30. Boreas needs the AWS CLI (`pip install awscli`; it is not in the dev image) and uses it with `--no-sign-request`.

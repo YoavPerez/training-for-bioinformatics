@@ -1,0 +1,1 @@
+{"_note": "Fixed baseline for the gate-logic tests; independent of modules/m7_production/baseline.json.", "ate": {"rmse": 0.122, "p95": 0.192}}

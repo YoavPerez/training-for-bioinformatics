@@ -2,7 +2,7 @@
 
 ## v1.0 — first cohort
 
-**Program:** modules 0, 0b, 1, 2, 3, 4, 4b, 5, 6, 7, 8 (about 10–11 weeks) in four phases with phase-gate self-checks,
+**Program:** modules 0, 0b, 1, 2, 3, 4, 4b, 5, 6, 7, 8 (about 11–13 weeks including the mini-project) in four phases with phase-gate self-checks,
 then an optional applied project. One LiDAR–inertial–GNSS mapping pipeline in `pipeline/` grows module by module.
 
 **Audience:** recent bioinformatics graduates. `GLOSSARY.md` opens with a "Coming from bioinformatics" table, and

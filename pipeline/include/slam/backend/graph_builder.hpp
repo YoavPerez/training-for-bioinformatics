@@ -14,6 +14,11 @@ namespace slam::backend {
 // Tangent-space sigmas in GTSAM Pose3 order: rotation [rad] (3), then translation [m] (3).
 using Sigmas6 = Eigen::Matrix<double, 6, 1>;
 
+// Width of the robust kernel on loop factors, in whitened units (multiples of sigma). run_pipeline
+// uses it unless --loop-kernel-width is given, and the module 6 tests use it. Module 6: choose the
+// kernel and this width together, by experiment.
+inline constexpr double kLoopKernelWidth = 5.0;
+
 class GraphBuilder {
  public:
   GraphBuilder();
@@ -25,7 +30,8 @@ class GraphBuilder {
   void addPrior(int i, const Pose& T_world_i, const Sigmas6& sigmas);
   void addOdometry(int i, int j, const Pose& T_i_j, const Sigmas6& sigmas);
   // Like addOdometry, but wrapped in a robust kernel (your choice) of the given width, so that a
-  // wrong loop closure cannot corrupt the trajectory.
+  // wrong loop closure cannot corrupt the trajectory. kernel_width is in whitened units (sigma):
+  // GTSAM applies the m-estimator to the residual divided by its sigmas.
   void addLoop(int i, int j, const Pose& T_i_j, const Sigmas6& sigmas, double kernel_width);
   // Position of body i in the world frame (e.g. GNSS in local ENU).
   void addGnss(int i, const Vec3& p_world, const Vec3& sigmas);

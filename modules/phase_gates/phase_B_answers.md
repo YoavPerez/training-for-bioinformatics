@@ -9,6 +9,6 @@
 **PB-07.** White noise dominates and the recording is too short (or the IMU too good) to see bias instability/random walk. See: kalibr_imu_noise — "From the Allan standard deviation (AD)"
 **PB-08.** Signal blockage/attenuation by foliage, multipath, fewer satellites (poor geometry). See: navipedia_multipath — whole page
 **PB-09.** Start and end points are measured 0.1 s apart (4.5° of rotation) but are neighbours in space. See: stachniss_lidar_odometry_5min — whole video
-**PB-10.** 0.2 m from translation plus 30 m × 0.0052 rad ≈ 0.16 m from rotation, so about 0.2–0.35 m. See: ct_icp_paper — Section V
+**PB-10.** 0.2 m from translation plus 30 m × 0.0052 rad ≈ 0.16 m from rotation, so about 0.2–0.35 m. See: kiss_icp_paper — Step 1 "Motion Prediction and Scan Deskewing"
 **PB-11.** The OXTS solution is both the measurement and the ground truth: the test is circular. See: kitti_raw — devkit readme
 **PB-12.** Hidden state ↔ pose; transition matrix ↔ motion model; emission ↔ measurement likelihood; forward variable ↔ the filter's belief (posterior). See: labbe_kalman — 02-Discrete-Bayes

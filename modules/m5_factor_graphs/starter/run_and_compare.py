@@ -35,8 +35,8 @@ def main() -> None:
     parser.add_argument("--build-dir", type=Path, default=Path("build"))
     parser.add_argument("--out", type=Path, default=Path("outputs/m5"))
     args = parser.parse_args()  # noqa: F841
-    # TODO(m5): run the variants, evaluate each with slampipe.evaluation.evaluate, and write a
-    # table (ATE RMSE, median, p95, CI) plus an overlay plot of the trajectories.
+    # TODO(m5): run the variants, evaluate each with slampipe.evaluation.evaluate_ate (RPE comes in module 6),
+    # and write a table (ATE RMSE, median, p95, CI) plus an overlay plot of the trajectories.
 
 
 if __name__ == "__main__":

@@ -133,6 +133,28 @@ TEST(M2Eskf, PredictionGrowsCovariance) {
   EXPECT_TRUE(filter.covariance().isApprox(filter.covariance().transpose(), 1e-9));
 }
 
+TEST(M2Eskf, CovarianceGrowthIsRateIndependent) {
+  // The same 1 s of motion sampled at 100 Hz and at 400 Hz must give the same covariance.
+  Eskf::Cov P[2];
+  const double rates[2] = {100.0, 400.0};
+  for (int r = 0; r < 2; ++r) {
+    const Truth t0 = truthAt(0.0);
+    NominalState x0;
+    x0.p = t0.p;
+    x0.v = t0.v;
+    x0.q = t0.q;
+    Eskf filter(x0, Eskf::Cov::Zero(), kNoise, Vec3(0.0, 0.0, -kGravity));
+    std::mt19937 rng(0);
+    const int steps = static_cast<int>(rates[r]);
+    for (int k = 0; k < steps; ++k) filter.predict(imuAt(k / rates[r], rng, false), 1.0 / rates[r]);
+    P[r] = filter.covariance();
+  }
+  for (int i = 0; i < Eskf::kDim; ++i) {
+    ASSERT_GT(P[0](i, i), 0.0) << "diagonal " << i;
+    EXPECT_NEAR(P[1](i, i) / P[0](i, i), 1.0, 0.05) << "diagonal " << i << " (400 Hz / 100 Hz)";
+  }
+}
+
 TEST(M2Eskf, UpdatePullsTowardsMeasurementAndShrinksCovariance) {
   NominalState x0;
   Eskf filter(x0, Eskf::Cov::Identity(), kNoise, Vec3(0.0, 0.0, -kGravity));

@@ -1,6 +1,15 @@
 # Module 7 STARTER: complete every TODO. Run the pipeline over N prepared sequences in parallel and publish a metrics summary.
 # Sized by default for 4 trainees x 3 sequences (one workflow per trainee, parallelism 3).
 #
+# PVC layout (mounted at /data; paths below are relative to the PVC root, the team provides the PVC and its contents):
+#   kitti/<date>/<date>_drive_<id>_sync/                         raw KITTI drives (data/download.py layout)
+#   samples/kitti/2011_09_26/2011_09_26_drive_0002_sync/         the CI sample
+#   prep/<name>/{gt.tum,gnss.csv,imu.csv,lidar_times.csv,T_imu_lidar.txt}   slampipe.prepare output, one folder per sequence
+#   outputs/<run-id>/<name>/                                     written by this workflow; must be writable by the image's non-root user
+# The summarize step's output artifact needs an artifact repository configured in the namespace.
+#
+# Register the template once (`argo template update` after changes), then submit from it:
+#   argo template create infra/argo/pipeline-workflow.yaml
 #   argo submit --from workflowtemplate/slam-pipeline-eval -p image=<registry>/slam-pipeline:<tag> \
 #     -p sequences='[{"name": "0027", "drive": "kitti/2011_09_30/2011_09_30_drive_0027_sync", "prep": "prep/0027"}]'
 apiVersion: argoproj.io/v1alpha1
@@ -15,7 +24,7 @@ spec:
       - name: image
         value: ghcr.io/example/slam-pipeline:0.1.0   # TODO(m7): your pushed runtime image, pinned tag, never :latest
       - name: data-claim
-        value: slam-data                             # PVC with data/ and outputs/
+        value: slam-data                             # PVC name; layout in the header
       - name: run-id
         value: "{{workflow.name}}"
       - name: flags

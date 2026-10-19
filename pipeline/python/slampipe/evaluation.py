@@ -1,4 +1,4 @@
-"""Module 6: trajectory evaluation on top of evo.
+"""Modules 5 and 6: trajectory evaluation on top of evo (module 5: ATE and bootstrap CI; module 6: RPE).
 
     python -m slampipe.evaluation <estimate.tum> <reference.tum> [--out metrics.json] [--no-align]
 
@@ -27,7 +27,7 @@ def ate_errors(est: PoseTrajectory3D, ref: PoseTrajectory3D, align: bool = True,
 
     Must not modify the inputs.
     """
-    # TODO(m6): use evo (sync, alignment, metrics.APE).
+    # TODO(m5): use evo (sync, alignment, metrics.APE).
     raise NotImplementedError("ate_errors")
 
 
@@ -47,7 +47,7 @@ def bootstrap_ci(
     seed: int = 0,
 ) -> tuple[float, float]:
     """Percentile bootstrap (1 - alpha) confidence interval of statistic(values)."""
-    # TODO(m6): implement.
+    # TODO(m5): implement.
     raise NotImplementedError("bootstrap_ci")
 
 
@@ -66,12 +66,17 @@ def summarize(errors: np.ndarray) -> dict[str, float]:
     }
 
 
+def evaluate_ate(est_path: Path, ref_path: Path, align: bool = True) -> dict:
+    """Provided: ATE summary only (module 5). `align` is passed to ate_errors and recorded as "aligned"."""
+    return {"aligned": align, **summarize(ate_errors(load_tum(est_path), load_tum(ref_path), align=align))}
+
+
 def evaluate(est_path: Path, ref_path: Path, rpe_delta_m: float = 10.0, align: bool = True) -> dict[str, dict]:
-    """Provided. `align` is passed to ate_errors and recorded as result["ate"]["aligned"]."""
-    est, ref = load_tum(est_path), load_tum(ref_path)
-    result = {"ate": {"aligned": align, **summarize(ate_errors(est, ref, align=align))}}
+    """Provided: ATE (as evaluate_ate) and, for trajectories longer than 2 * rpe_delta_m, RPE (module 6)."""
+    result = {"ate": evaluate_ate(est_path, ref_path, align=align)}
+    ref = load_tum(ref_path)
     if ref.path_length > 2.0 * rpe_delta_m:
-        result["rpe"] = summarize(rpe_errors(est, ref, rpe_delta_m))
+        result["rpe"] = summarize(rpe_errors(load_tum(est_path), ref, rpe_delta_m))
     return result
 
 

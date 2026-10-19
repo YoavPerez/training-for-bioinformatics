@@ -1,11 +1,12 @@
 """Runs the visible tests of one or all modules and reports pass/fail per module.
 
-    python tools/module_tests.py [--build-dir build] [--expect pass|fail] [m1 m2 ...]
+    python tools/module_tests.py [--build-dir build] [--expect pass|fail] [--no-build] [m1 m2 ...]
 
 --expect fail  asserts that every selected module's tests FAIL (untouched starter code).
 --expect pass  asserts that every selected module's tests PASS (solutions overlaid).
 A module's tests are its pytest files in modules/<module>/tests plus ctest tests labelled m<N>.
-The C++ build directory is rebuilt first (cmake --build) if it has been configured.
+The C++ build directory is rebuilt first (cmake --build) if it has been configured, unless --no-build
+(use it when the build directory is shared or already up to date).
 """
 
 import argparse
@@ -47,12 +48,13 @@ def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--build-dir", type=Path, default=Path(os.environ.get("SLAM_BUILD_DIR", REPO / "build")))
     parser.add_argument("--expect", choices=["pass", "fail"])
+    parser.add_argument("--no-build", action="store_true", help="do not run cmake --build first")
     parser.add_argument("modules", nargs="*")
     args = parser.parse_args()
     os.environ["SLAM_BUILD_DIR"] = str(args.build_dir.resolve())
 
     # Rebuild first, so the C++ tests never run stale binaries after you edit a source file (no-op when up to date).
-    if (args.build_dir / "CMakeCache.txt").is_file():
+    if not args.no_build and (args.build_dir / "CMakeCache.txt").is_file():
         if subprocess.run(["cmake", "--build", str(args.build_dir)], cwd=REPO).returncode != 0:
             print(f"ERROR: `cmake --build {args.build_dir}` failed: fix the compile errors above first")
             return 1

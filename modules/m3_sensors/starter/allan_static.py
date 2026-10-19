@@ -35,7 +35,7 @@ def main() -> None:
         gyro = np.loadtxt(args.imu_csv, delimiter=",", skiprows=1)[:, 4:7]
     # TODO(m3): for each gyro axis (and then each accelerometer axis): compute the Allan deviation,
     # fit N and K, plot the curves on log-log axes with the fitted lines, print a table next to
-    # the datasheet values.
+    # the reference values (datasheet, or for MILUV the authors' mavros_imu.yaml).
     del gyro
 
 

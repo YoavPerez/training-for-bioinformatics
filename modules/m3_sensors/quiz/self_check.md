@@ -32,7 +32,7 @@ Answer every question in writing **before** opening the answers file. Then score
 
 ## Self-check 2 — Apply
 
-**M3-A01.** What values of N and K did you obtain for the gyro z-axis, and how do they compare with the datasheet?
+**M3-A01.** What values of N and K did you obtain for the gyro z-axis, and how do they compare with the datasheet (team IMU) or the MILUV authors' `mavros_imu.yaml`?
 
 **M3-A02.** In your before/after deskew figure, where in the scan is the distortion largest, and why there?
 

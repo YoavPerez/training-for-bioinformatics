@@ -26,7 +26,8 @@ Answer every question in writing **before** opening the answers file. Then score
 
 **M6-R08.** You have 3 runs per configuration. Why is a single mean ATE not enough to claim configuration A beats B?
 
-**M6-R09.** SeqSLAM-style place recognition matches *sequences* of descriptors. Which bioinformatics method does that resemble, and what is gained over single-scan matching?
+**M6-R09.** Scan Context first retrieves candidates with a cheap key and only then aligns full descriptors. Which bioinformatics search strategy has the same two-phase structure, and what does each phase buy?
+
 **M6-R10.** A point map and an occupancy map (OctoMap) of the same street: what does the occupancy map store that the point map does not, and what does that give you for a car that has since driven away?
 
 **M6-R11.** What does a TSDF voxel store, and how is a new measurement merged into it?

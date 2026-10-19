@@ -3,7 +3,7 @@
 - [ ] Self-check 1 (Readiness) done — score: ___ / 10
 - [ ] `allan.py` complete; Allan plots per axis with fitted lines
 - [ ] Static recording used (length ___ h, rate ___ Hz) — or `--simulate` clearly labelled as a method check
-- [ ] Noise parameter table vs datasheet in the PR
+- [ ] Noise parameter table vs datasheet (team IMU) or the MILUV authors' results in the PR
 - [ ] `deskew.cpp` complete; `ctest --test-dir build -L '^m3$'` passes locally
 - [ ] Before/after deskew figure in the PR
 - [ ] Time-offset plot and write-up with a tolerable-offset number

@@ -2,13 +2,13 @@
 
 - [ ] Self-check 1 (Readiness) done — score: ___ / 12
 - [ ] Scan Context and `verifyLoop` complete; `ctest --test-dir build -L '^m6$'` passes locally
-- [ ] `addLoop` with a kernel chosen by experiment; false-loop evidence in the PR
-- [ ] `evaluation.py` complete
-- [ ] Loops detected on a drive with revisits; loop plot in the PR
+- [ ] `addLoop` with a kernel and `kLoopKernelWidth` chosen by experiment; false-loop evidence in the PR
+- [ ] `rpe_errors` in `evaluation.py` complete
+- [ ] Loops detected on a drive with revisits; plot of accepted and rejected loops (`loops.csv`) and ATE with/without `--loops` in the PR
 - [ ] Ablation on ≥ 2 drives with CIs; sweep assumption checked
 - [ ] GNSS rows repeated over ≥ 5 `prepare` seeds; spread across seeds reported next to the CIs
 - [ ] Every result tied to commit, flags, drive and `prepare` seed
-- [ ] Map figure: odometry vs optimized poses near a loop closure
+- [ ] Map figure: odometry vs optimized poses near a loop closure, plus one number per map that shows the change
 - [ ] `python tools/module_tests.py m6` passes
 - [ ] C++ focus: failure paths classified (optional / exception / assert) in the PR
 - [ ] Self-check 2 (Apply) done — score: ___ / 5

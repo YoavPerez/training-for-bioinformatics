@@ -89,13 +89,32 @@ def neon_get(
             urllib.request.urlretrieve(f["url"], target)
 
 
-def boreas(sequence: str, sensors: list[str], dest: Path) -> None:
+def _s3_size_gb(prefix: str) -> float:
+    """Total size of every key under an s3://boreas prefix (aws s3 ls --summarize pages through the whole listing)."""
+    cmd = ["aws", "s3", "ls", "--no-sign-request", "--recursive", "--summarize", prefix]
+    out = subprocess.run(cmd, check=True, capture_output=True, text=True).stdout
+    for line in out.splitlines():
+        if line.strip().startswith("Total Size:"):
+            return int(line.split(":")[1]) / 1e9
+    return 0.0
+
+
+def boreas(sequence: str, sensors: list[str], dest: Path, dry_run: bool, max_gb: float, yes: bool) -> None:
     if not shutil.which("aws"):
         sys.exit("needs the AWS CLI (pip install awscli)")
+    folders = [*sensors, "calib"]
+    sizes = {f: _s3_size_gb(f"s3://boreas/{sequence}/{f}/") for f in folders}
+    total = sum(sizes.values())
+    for f, gb in sizes.items():
+        print(f"  {sequence}/{f}/ {gb:.2f} GB")
+    print(f"total {total:.1f} GB -> {dest / sequence}")
+    if dry_run:
+        return
+    if total > max_gb and not yes:
+        sys.exit(f"{total:.1f} GB exceeds --max-gb {max_gb:g}: choose fewer --sensors (see --dry-run) or pass --yes")
     cmd = ["aws", "s3", "sync", "--no-sign-request", f"s3://boreas/{sequence}", str(dest / sequence), "--exclude", "*"]
-    for s in sensors:
-        cmd += ["--include", f"{s}/*"]
-    cmd += ["--include", "calib/*"]
+    for f in folders:
+        cmd += ["--include", f"{f}/*"]
     print(" ".join(cmd))
     subprocess.run(cmd, check=True)
 
@@ -131,6 +150,9 @@ def main() -> None:
     p.add_argument("--sequence", required=True)
     p.add_argument("--sensors", nargs="+", default=["lidar", "applanix"])
     p.add_argument("--dest", type=Path, required=True)
+    p.add_argument("--dry-run", action="store_true", help="print the size per folder, download nothing")
+    p.add_argument("--max-gb", type=float, default=5.0, help="refuse larger downloads unless --yes (default 5)")
+    p.add_argument("--yes", action="store_true", help="download even above --max-gb")
     p = sub.add_parser("for-instance")
     p.add_argument("--dest", type=Path, required=True)
     args = parser.parse_args()
@@ -146,7 +168,7 @@ def main() -> None:
     elif args.cmd == "neon-get":
         neon_get(args.product, args.site, args.month, args.dest, args.pattern, args.dry_run, args.max_gb, args.yes)
     elif args.cmd == "boreas":
-        boreas(args.sequence, args.sensors, args.dest)
+        boreas(args.sequence, args.sensors, args.dest, args.dry_run, args.max_gb, args.yes)
     elif args.cmd == "for-instance":
         for_instance(args.dest)
 
