@@ -4,6 +4,8 @@
 ## Goal
 Make the pipeline reproducible, testable and scalable on the team's infrastructure: a pinned runtime image, an Argo workflow over many sequences, a CI regression gate, and one small real contribution to the production codebase.
 
+**Builds on:** the complete pipeline (modules 1–6) and its metrics (module 6). **Used by:** the mini-project sweeps on Argo (module 8) and your work after training.
+
 ---
 
 ## Segment 1 — Learn

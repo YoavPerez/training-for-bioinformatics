@@ -4,6 +4,8 @@
 ## Goal
 Calibrate where you start, and agree on the conventions (frames, rotations, units, time) that prevent most frame and timestamp bugs later.
 
+**Builds on:** nothing. **Used by:** every module; `CONVENTIONS.md` names every frame, transform and timestamp from module 1 on.
+
 ---
 
 ## Segment 1 — Learn

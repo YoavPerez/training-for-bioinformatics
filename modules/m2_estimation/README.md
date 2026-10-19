@@ -4,6 +4,8 @@
 ## Goal
 Understand estimation as probabilistic inference, implement nonlinear least squares and a loosely coupled GNSS + IMU error-state EKF, and characterize its behaviour during a GNSS outage. Start the paper-summary habit.
 
+**Builds on:** transforms and ENU coordinates (module 1). **Used by:** the IMU noise model returns in module 3, Gauss-Newton is what ICP (module 4) and the factor graph (module 5) solve, and module 5 compares its graph against your ESKF.
+
 ---
 
 ## Segment 1 — Learn

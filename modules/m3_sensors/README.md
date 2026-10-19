@@ -4,6 +4,8 @@
 ## Goal
 Know how each sensor lies and how to correct for it: characterize IMU noise, understand GNSS error sources, deskew LiDAR scans, and measure what a clock offset between sensors does.
 
+**Builds on:** the ESKF noise parameters (module 2) and transforms (module 1). **Used by:** the IMU noise values in the factor graph (module 5); deskewing is a candidate mini-project question (module 8).
+
 ---
 
 ## Segment 1 — Learn

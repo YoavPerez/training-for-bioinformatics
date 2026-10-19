@@ -1,8 +1,10 @@
 # Module 5: Odometry to SLAM with factor graphs
-**Tentative effort:** ~1 week · **Phase:** C — Mapping core
+**Tentative effort:** ~1.5–2 weeks, including the wait for the design-doc review · **Phase:** C — Mapping core
 
 ## Goal
 Build a back-end that fuses LiDAR odometry, IMU and GNSS in a factor graph, starting from an approved design doc, and compare it with the module 2 filter.
+
+**Builds on:** ICP (module 4), the ESKF and its noise models (modules 2–3), transforms and GNSS in ENU (module 1). **Used by:** module 6 adds loop factors to your graph; modules 7–8 run the full pipeline you finish here.
 
 ---
 
@@ -30,7 +32,7 @@ Answer the Readiness part of [`quiz/self_check.md`](quiz/self_check.md) before w
 ## Segment 3 — Build
 
 ### Assignment
-1. **Design doc first.** Copy [`templates/design_doc.md`](../../templates/design_doc.md) to `modules/m5_factor_graphs/design_doc.md` and fill it in: state, factors and noise models, keyframe policy, data flow, failure modes, evaluation plan. Get it reviewed by a senior; set **Status: approved** only after that review. No back-end code before approval.
+1. **Design doc first.** Copy [`templates/design_doc.md`](../../templates/design_doc.md) to `modules/m5_factor_graphs/design_doc.md` and fill it in: state, factors and noise models, keyframe policy, data flow, failure modes, evaluation plan. Get it reviewed by a senior; set **Status: approved** only after that review. No back-end code before approval. If no senior can review within two working days, your mentor reviews it instead; meanwhile, start on the odometry (step 2), which does not depend on the design.
 2. **Odometry.** Implement `LidarOdometry::registerScan` in [`pipeline/src/odometry/lidar_odometry.cpp`](../../pipeline/src/odometry/lidar_odometry.cpp) on top of your module 4 ICP.
 3. **Pose graph.** Implement `addOdometry`, `addGnss`, `addImu` and `optimize` in [`pipeline/src/backend/graph_builder.cpp`](../../pipeline/src/backend/graph_builder.cpp) (`addPrior` is a worked example). `addLoop` belongs to module 6.
 4. **End to end.** Run `run_pipeline` (provided app, [`pipeline/apps/run_pipeline.cpp`](../../pipeline/apps/run_pipeline.cpp)) on at least two full drives (`data/README.md` suggests 0027 and 0018). The odometry noise and the keyframe policy from your design doc are flags (`--odom-sigma`, `--keyframe-dist`; see the usage comment at the top of the file). The app is provided but yours to change: the prior, the IMU noise and the LiDAR-to-body conversion are in its code. Record what you changed, and why, in the PR.

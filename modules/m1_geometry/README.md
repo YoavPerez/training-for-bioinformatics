@@ -1,8 +1,10 @@
 # Module 1: 3D geometry, frames, geodesy
-**Tentative effort:** ~1 week · **Phase:** A — Foundations
+**Tentative effort:** ~1.5 weeks · **Phase:** A — Foundations
 
 ## Goal
 Become fluent with rotations, rigid transforms and Earth-referenced coordinates, and put the first verified layer of the pipeline in place: the transform library and the GNSS → ENU conversion.
+
+**Builds on:** `CONVENTIONS.md` (module 0) and GoogleTest/Eigen habits (module 0b). **Used by:** your transform library is called by the ESKF (module 2), deskewing (module 3), ICP (module 4) and odometry (module 5); `geodesy.py` feeds `prepare`, which makes the GNSS input for modules 2–8.
 
 ---
 

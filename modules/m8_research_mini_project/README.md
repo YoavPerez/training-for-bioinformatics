@@ -4,6 +4,8 @@
 ## Goal
 Practise scoping, running and communicating a small research question end to end, on the pipeline you built, before the larger applied project.
 
+**Builds on:** everything: the pipeline (modules 1–6), the evaluation tools (modules 5–6) and Argo (module 7). **Used by:** the applied project.
+
 ---
 
 ## Segment 1 — Learn
@@ -14,7 +16,7 @@ Practise scoping, running and communicating a small research question end to end
 - [Statistics Done Wrong](https://www.statisticsdonewrong.com/) — book (free online) — chapters "Statistical power and underpowered statistics", "Pseudoreplication: choose your data wisely", "When differences in significance aren't significant differences"
 - [Sandve et al. — Ten Simple Rules for Reproducible Computational Research](https://journals.plos.org/ploscompbiol/article?id=10.1371/journal.pcbi.1003285) — paper — Rules 1, 3, 4, 6 and 9
 - [`templates/tech_report.md`](../../templates/tech_report.md) and [`templates/rubric.md`](../../templates/rubric.md) — how your report is judged
-- Internal: two past tech reports from the team (ask your mentor) as examples of the expected format
+- Internal: two past tech reports from the team (ask your mentor) as examples of the expected format. If none are available yet, the template sections and the rubric are the format; do not wait for examples to start.
 
 ## Segment 2 — Self-check 1: Readiness
 Answer the Readiness part of [`quiz/self_check.md`](quiz/self_check.md), then grade yourself.

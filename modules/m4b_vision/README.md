@@ -4,6 +4,8 @@
 ## Goal
 Add the camera to your toolbox: the pinhole model, LiDAR-to-image projection, two-view geometry (epipolar constraint, essential matrix, triangulation), feature matching with RANSAC, two-frame monocular visual odometry, a small bundle adjustment, and metric depth from a stereo pair. Know what a camera gives that a LiDAR does not (texture, cheap long-range bearing) and what it does not (metric scale from one camera).
 
+**Builds on:** transforms and the KITTI calibration (module 1), nonlinear least squares for the bundle adjustment (module 2), and ICP as the LiDAR counterpart of two-view pose (module 4). **Used by:** the camera place-recognition option of the mini-project (module 8, question 9) and the applied project.
+
 ---
 
 ## Segment 1 — Learn

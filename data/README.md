@@ -9,6 +9,16 @@
 
 Cite: A. Geiger, P. Lenz, C. Stiller, R. Urtasun, "Vision meets Robotics: The KITTI Dataset", IJRR 2013. Applied-project datasets have their own licenses, listed in `applied_project/README.md`.
 
+## How KITTI differs from current sensors
+
+KITTI raw was recorded in 2011. What you learn transfers, but expect these differences on the team's data:
+
+| KITTI raw | Typical current setup | Where it matters |
+|---|---|---|
+| Velodyne HDL-64E, 64 beams, 10 Hz; scans stored as x, y, z, reflectance with **no per-point time** | Spinning or solid-state LiDARs that stamp every point, often with a built-in MEMS IMU | Deskewing (module 3): you get the point times instead of deriving them from azimuth |
+| OXTS RT3003: a fused GNSS/IMU solution with RTK, used as both input and ground truth | Separate GNSS receiver (often multi-constellation, raw observables available) and a lower-grade MEMS IMU | GNSS is simulated here (modules 2, 5); real fixes have outages, multipath and reported σ that is not always honest |
+| Global-shutter grayscale and colour stereo cameras | Often rolling-shutter cameras | Two-view geometry and VO (module 4b) assume a global shutter |
+
 ## Getting data
 
 ```bash

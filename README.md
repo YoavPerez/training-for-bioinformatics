@@ -1,6 +1,6 @@
 # SLAM, LiDAR & Navigation Onboarding Program
 
-A self-serve onboarding program for researchers joining the SLAM / 3D LiDAR / GNSS-IMU fusion / mapping team. It is written for people coming from bioinformatics: strong in statistics, data analysis and scientific programming, new to robotics, geometry and computer vision. [`GLOSSARY.md`](GLOSSARY.md) starts with a map from bioinformatics terms you know to the SLAM terms you will meet. It takes roughly 11–13 weeks, including the research mini-project. Over modules 0–8 (plus 0b and 4b) you build **one LiDAR-inertial-GNSS mapping pipeline** in `pipeline/`, and each module adds one layer to it. An optional applied project follows.
+A self-serve onboarding program for researchers joining the SLAM / 3D LiDAR / GNSS-IMU fusion / mapping team. It is written for people coming from bioinformatics: strong in statistics, data analysis and scientific programming, new to robotics, geometry and computer vision. [`GLOSSARY.md`](GLOSSARY.md) starts with a map from bioinformatics terms you know to the SLAM terms you will meet. It takes roughly 12–14 weeks, including the research mini-project. Over modules 0–8 (plus 0b and 4b) you build **one LiDAR-inertial-GNSS mapping pipeline** in `pipeline/`, and each module adds one layer to it. An optional applied project follows.
 
 All teaching is done by external, free resources. This repository gives you the assignments, starter code, tests, self-check quizzes and review checklists. Your mentor answers questions and reviews your work.
 
@@ -12,14 +12,14 @@ The program has four **phases**. Each phase ends with a cumulative phase-gate se
 |---|---|---|---|
 | **A. Foundations** | 0. Diagnostic and team conventions | [`modules/m0_conventions`](modules/m0_conventions/) | a few days |
 | | 0b. C++ foundations | [`modules/m0b_cpp_foundations`](modules/m0b_cpp_foundations/) | ~1–1.5 weeks (1–2 days if strong in C++) |
-| | 1. 3D geometry, frames, geodesy | [`modules/m1_geometry`](modules/m1_geometry/) | ~1 week |
+| | 1. 3D geometry, frames, geodesy | [`modules/m1_geometry`](modules/m1_geometry/) | ~1.5 weeks |
 | | *Phase gate A* | [`modules/phase_gates/phase_A.md`](modules/phase_gates/phase_A.md) | |
 | **B. Estimation & sensors** | 2. State estimation fundamentals | [`modules/m2_estimation`](modules/m2_estimation/) | ~1 week |
 | | 3. Sensors in depth | [`modules/m3_sensors`](modules/m3_sensors/) | ~1 week |
 | | *Phase gate B* | [`modules/phase_gates/phase_B.md`](modules/phase_gates/phase_B.md) | |
 | **C. Mapping core** | 4. Point clouds and registration (mid-program checkpoint) | [`modules/m4_registration`](modules/m4_registration/) | ~1 week |
 | | 4b. Camera geometry and visual odometry | [`modules/m4b_vision`](modules/m4b_vision/) | ~1 week |
-| | 5. Odometry to SLAM with factor graphs | [`modules/m5_factor_graphs`](modules/m5_factor_graphs/) | ~1 week |
+| | 5. Odometry to SLAM with factor graphs | [`modules/m5_factor_graphs`](modules/m5_factor_graphs/) | ~1.5–2 weeks (design-doc review included) |
 | | 6. Loop closure, maps, evaluation | [`modules/m6_loop_closure_eval`](modules/m6_loop_closure_eval/) | ~1–1.5 weeks (plus unattended compute) |
 | | *Phase gate C* | [`modules/phase_gates/phase_C.md`](modules/phase_gates/phase_C.md) | |
 | **D. Production & research** | 7. Productionizing the pipeline | [`modules/m7_production`](modules/m7_production/) | ~1–1.5 weeks; the production PR may run in parallel into module 8 (it is an exit criterion) |

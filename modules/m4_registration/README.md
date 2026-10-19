@@ -4,6 +4,8 @@
 ## Goal
 Implement point-to-plane ICP, benchmark it honestly against established libraries (accuracy, runtime, convergence basin), and make one measured performance optimization.
 
+**Builds on:** transforms (module 1) and Gauss-Newton (module 2). **Used by:** LiDAR odometry (module 5) and loop verification (module 6) run on your ICP.
+
 ---
 
 ## Segment 1 — Learn

@@ -4,6 +4,8 @@
 ## Goal
 Write modern C++ the way the team does: value semantics, RAII and clear ownership, templates and the standard library, Eigen without hidden copies or aliasing bugs, sanitizers and a debugger as daily tools, and target-based CMake. Every later module builds on this.
 
+**Builds on:** the dev container from module 0. **Used by:** every C++ TODO in `pipeline/` and the C++ focus task of modules 1–7 and 4b.
+
 ---
 
 ## Segment 1 — Learn

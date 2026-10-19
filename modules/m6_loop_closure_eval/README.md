@@ -4,6 +4,8 @@
 ## Goal
 Close loops reliably, survive wrong loop closures, and evaluate the pipeline with statistical rigour: distributions, confidence intervals and ablations instead of single numbers.
 
+**Builds on:** the factor graph and `ate_errors`/`bootstrap_ci` (module 5), ICP (module 4). **Used by:** the regression gate (module 7) and every number in the mini-project (module 8).
+
 ---
 
 ## Segment 1 — Learn
